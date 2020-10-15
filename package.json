@@ -6,7 +6,6 @@
   "dependencies": {
     "husky": "^4.3.0"
   },
-  "devDependencies": {},
   "scripts": {
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "lint": "eslint . --ext .ts"

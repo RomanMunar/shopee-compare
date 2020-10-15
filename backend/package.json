@@ -13,10 +13,18 @@
   "author": "RomanMunar",
   "license": "ISC",
   "devDependencies": {
+    "@types/express": "^4.17.8",
     "@types/node": "^14.11.8",
+    "@types/node-fetch": "^2.5.7",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
     "@typescript-eslint/parser": "^4.4.1",
     "eslint": "^7.11.0",
     "typescript": "^4.0.3"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "nodemon": "^2.0.5",
+    "ts-node": "^9.0.0"
   }
 }

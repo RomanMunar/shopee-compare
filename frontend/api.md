@@ -1,7 +1,7 @@
 Search   
 "https://shopee.ph/api/v2/search_items/?by=relevancy&keyword=ssd&limit=50&newest=0&order=desc&page_type=search&version=2"  
 items  
-  id    
+  itemid    
   adsid check for null  
   name  
   image  
@@ -30,6 +30,14 @@ https://shopee.ph/api/v2/shop/get?is_brief=1&shopid=194193277
     name  
     follower_count  
     response_rate  
+    response_time
+    is_shopee_verified
+    preparation_time
+    rating_bad
+    rating_good
+    rating_normal
+    rating_star
+    vacation
   
 Item   
 https://shopee.ph/api/v2/item/get?itemid=6643760845&shopid=73467985  
@@ -37,18 +45,26 @@ item
   brand  
   name  
   image, images  
-  sold  
+  liked_count
+  historical_sold  
+  sold /month
   description  
   item_rating  
     rating_star  
     rating_count  
     rcount_with_context with message  
     rcount_with_image  
-  if tier?
+  tier_variations
+    [0].images, name, [options]
+  if tier_variations
     model 
-      item[0] price  
-      item[...]
-  :el price  
+      [0] price name 
+      extinfo
+        tier_index
+  :el price
+  price_min   
+  price_max == p_min ? return price : [min, max]  
+  price    
     
 Ratings  https://shopee.ph/api/v2/item/get_ratings?filter=0&flag=1&itemid=6643760845&limit=6&offset=0&shopid=73467985&type=0  
 ratings
@@ -59,5 +75,6 @@ ratings
   images
   rating_star
 ? product_items
+    model_name
   tags
     .map(tag => description: tag.description)

@@ -1,11 +1,11 @@
-import express, { Response } from "express";
+import express from "express";
 import fetch from "node-fetch";
-import { Item, SearchResponse } from "./interfaces";
+import { Item, SearchResponse, Shop, ShopeeResponse } from "./interfaces";
 const app = express();
 
 app.use(express.json());
 
-app.get("/:keyword", async (req, res) => {
+app.get("/search/:keyword", async (req, res) => {
   try {
     const keyword = req.params.keyword;
 
@@ -62,8 +62,8 @@ app.get("/item/:itemid/shop/:shopid", async (req, res) => {
   const { itemid, shopid } = req.params;
   console.log({ itemid, shopid });
   try {
-    const data: Response<Item> = await fetch(
-      "https://shopee.ph/api/v2/item/get?itemid=6643760845&shopid=73467985",
+    const response: ShopeeResponse<Item> = await fetch(
+      "https://shopee.ph/api/v2/item/get_ratings?filter=0&flag=1&itemid=6643760845&limit=6&offset=0&shopid=73467985",
       {
         headers: {
           accept: "*/*",
@@ -73,7 +73,95 @@ app.get("/item/:itemid/shop/:shopid", async (req, res) => {
       }
     ).then((res) => res.json());
 
-    res.status(200).json({ data });
+    const { data, error, error_msg } = response;
+
+    const newData = {
+      itemid: data.itemid,
+      name: data.name,
+      image: data.image,
+      images: data.images,
+      item_rating: data.item_rating,
+      rating_star: data.rating_star,
+      rating_count: data.rating_count,
+      rcount_with_context: data.rcount_with_context,
+      rcount_with_image: data.rcount_with_image,
+      price_min: data.price_min,
+      price_max: data.price_max,
+      price: data.price,
+      sold: data.sold,
+      shopee_verified: data.shopee_verified,
+      location: data.location,
+      tier_variations: data.tier_variations,
+    };
+
+    res.status(200).json({ data: newData, error, error_msg });
+  } catch (e) {
+    console.error("Engk! " + e.message);
+    res.status(500).send("Error");
+  }
+});
+
+app.get("/shop/:shopid", async (req, res) => {
+  const { shopid } = req.params;
+  console.log({ shopid });
+  try {
+    const response: ShopeeResponse<Shop> = await fetch(
+      "https://shopee.ph/api/v2/shop/get?is_brief=1&shopid=194193277"
+    ).then((res) => res.json());
+    const { data, error, error_msg } = response;
+    const newData = {
+      data: data.data,
+      account: data.account,
+      total_avg_star: data.total_avg_star,
+      portrait: data.portrait,
+      name: data.name,
+      follower_count: data.follower_count,
+      response_rate: data.response_rate,
+    };
+    res.status(200).json({ data: newData, error, error_msg });
+  } catch (e) {
+    console.error("Engk! " + e.message);
+    res.status(500).send("Error");
+  }
+});
+
+app.get("/ratings/:itemid/shop/:shopid", async (req, res) => {
+  const { itemid, shopid } = req.params;
+  console.log({ itemid, shopid });
+  try {
+    const response: ShopeeResponse<Item> = await fetch(
+      "https://shopee.ph/api/v2/item/get_ratings?filter=0&flag=1&itemid=6643760845&limit=6&offset=0&shopid=73467985",
+      {
+        headers: {
+          accept: "*/*",
+          "accept-language": "en-US,en;q=0.9",
+          "if-none-match-": "55b03-28973ef21cfd832b5433b48bb7d49c51",
+        },
+      }
+    ).then((res) => res.json());
+
+    const { data, error, error_msg } = response;
+
+    const newData = {
+      itemid: data.itemid,
+      name: data.name,
+      image: data.image,
+      images: data.images,
+      item_rating: data.item_rating,
+      rating_star: data.rating_star,
+      rating_count: data.rating_count,
+      rcount_with_context: data.rcount_with_context,
+      rcount_with_image: data.rcount_with_image,
+      price_min: data.price_min,
+      price_max: data.price_max,
+      price: data.price,
+      sold: data.sold,
+      shopee_verified: data.shopee_verified,
+      location: data.location,
+      tier_variations: data.tier_variations,
+    };
+
+    res.status(200).json({ data: newData, error, error_msg });
   } catch (e) {
     console.error("Engk! " + e.message);
     res.status(500).send("Error");

@@ -1,4 +1,4 @@
-export interface ShopeeResponse<T> {
+export interface Response<T> {
   data: T;
   error: number;
   error_msg: string | null;
@@ -63,8 +63,7 @@ export interface Item {
   rating_count: number;
   rcount_with_context: number;
   rcount_with_image: number;
-  itemid: number;
-  tier_variations: [
+  tier_variation: [
     {
       images: [string];
       name: string;
@@ -84,8 +83,6 @@ export interface Item {
   price_min: string;
   price_max: string;
   price: string;
-  shopee_verified: boolean;
-  location: string;
 }
 // price_max == p_min ? return price : [min, max] :string
 // if tier_variation:string

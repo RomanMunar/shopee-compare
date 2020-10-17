@@ -1,28 +1,45 @@
-interface SearchResponse {
-  itemid: string;
-  adsid: string;
-  name: string;
-  image: string;
-  images: string;
-  item_rating: {
-    rating_star: string;
-    rating_count: string;
-    rcount_with_context: string;
-    rcount_with_image: string;
-  };
-  price_min: number;
-  price_max: number;
-  price: number;
-  sold: string;
-  shopee_verified: string;
-  shopid: string;
-  location: string;
-  tier_variations: string;
+export interface Response<T> {
+  data: T;
+  error: number;
+  error_msg: string | null;
 }
+
+export interface SearchResponse {
+  error: number | string | null;
+  error_msg: string | null;
+  items: [
+    {
+      itemid: number;
+      name: string;
+      adsid: number;
+      image: string;
+      images: string[];
+      item_rating: {
+        rating_star: number;
+        rating_count: number;
+        rcount_with_context: number;
+        rcount_with_image: number;
+      };
+      price_min: number;
+      price_max: number;
+      price: number;
+      sold: number;
+      shopee_verified: boolean;
+      shopid: number;
+      location: string;
+      tier_variations: Tier[];
+    }
+  ];
+}
+type Tier = {
+  images: string[];
+  name: string;
+  options: string[];
+};
 // tier = map i => {i.name i.images i.options}
 // price_max == p_min ? return price : [min, max]  :string
 
-interface ShopResponse {
+export interface Shop {
   data: string;
   account: string;
   total_avg_star: string;
@@ -32,7 +49,7 @@ interface ShopResponse {
   response_rate: string;
 }
 
-interface ItemResponse {
+export interface Item {
   brand: string;
   name: string;
   image: string;
@@ -71,7 +88,7 @@ interface ItemResponse {
 // if tier_variation:string
 // :el pric:string
 
-interface RatingsResponse {
+export interface Rating {
   anonymous: string;
   author_portrait: string;
   author_username: string;

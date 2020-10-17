@@ -1,6 +1,6 @@
-import express from "express";
+import express, { Response } from "express";
 import fetch from "node-fetch";
-import { SearchResponse } from "./interfaces";
+import { Item, SearchResponse } from "./interfaces";
 const app = express();
 
 app.use(express.json());
@@ -52,6 +52,28 @@ app.get("/:keyword", async (req, res) => {
       error_msg,
       newItems,
     });
+  } catch (e) {
+    console.error("Engk! " + e.message);
+    res.status(500).send("Error");
+  }
+});
+
+app.get("/item/:itemid/shop/:shopid", async (req, res) => {
+  const { itemid, shopid } = req.params;
+  console.log({ itemid, shopid });
+  try {
+    const data: Response<Item> = await fetch(
+      "https://shopee.ph/api/v2/item/get?itemid=6643760845&shopid=73467985",
+      {
+        headers: {
+          accept: "*/*",
+          "accept-language": "en-US,en;q=0.9",
+          "if-none-match-": "55b03-28973ef21cfd832b5433b48bb7d49c51",
+        },
+      }
+    ).then((res) => res.json());
+
+    res.status(200).json({ data });
   } catch (e) {
     console.error("Engk! " + e.message);
     res.status(500).send("Error");

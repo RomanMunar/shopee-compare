@@ -7,37 +7,25 @@ export interface ShopeeResponse<T> {
 export interface SearchResponse {
   error: number | string | null;
   error_msg: string | null;
-  items: [
-    {
-      itemid: number;
-      name: string;
-      adsid: number;
-      image: string;
-      images: string[];
-      item_rating: {
-        rating_star: number;
-        rating_count: number;
-        rcount_with_context: number;
-        rcount_with_image: number;
-      };
-      price_min: number;
-      price_max: number;
-      price: number;
-      sold: number;
-      shopee_verified: boolean;
-      shopid: number;
-      location: string;
-      tier_variations: Tier[];
-    }
-  ];
+  items: SearchItem[];
 }
+
+interface SearchItem extends Item {
+  adsid: number;
+}
+
+type ItemRating = {
+  rating_star: number;
+  rating_count: number;
+  rcount_with_context: number;
+  rcount_with_image: number;
+};
+
 type Tier = {
   images: string[];
   name: string;
   options: string[];
 };
-// tier = map i => {i.name i.images i.options}
-// price_max == p_min ? return price : [min, max]  :string
 
 export interface Shop {
   data: string;
@@ -51,45 +39,36 @@ export interface Shop {
 
 export interface Item {
   brand: string;
-  name: string;
+  historical_sold: number;
   image: string;
   images: string;
-  liked_count: number;
-  historical_sold: number;
-  sold: number;
-  description: string;
-  item_rating: number;
-  rating_star: number;
-  rating_count: number;
-  rcount_with_context: number;
-  rcount_with_image: number;
+  item_rating: ItemRating;
   itemid: number;
-  tier_variations: [
-    {
-      images: [string];
-      name: string;
-      options: [string];
-    }
-  ];
+  liked_count: number;
+  location: string;
+  name: string;
+  price_max: number;
+  price_min: number;
+  price: number;
+  shopee_verified: boolean;
+  shopid: number;
+  sold: number;
+  tier_variations: Tier[];
+}
+
+export interface ItemDetailed extends Item {
+  description: string;
   model: [
     {
-      price: string;
+      price: number;
       image: string;
       name: string;
-      extinf: string;
-      tier_index: string;
+      extinfo: {
+        tier_index: [number, number];
+      };
     }
   ];
-  options: string;
-  price_min: string;
-  price_max: string;
-  price: string;
-  shopee_verified: boolean;
-  location: string;
 }
-// price_max == p_min ? return price : [min, max] :string
-// if tier_variation:string
-// :el pric:string
 
 export interface Rating {
   anonymous: string;

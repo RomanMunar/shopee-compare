@@ -1,6 +1,6 @@
 import express from "express";
 import fetch from "node-fetch";
-import { Item, SearchResponse, Shop, ShopeeResponse } from "./interfaces";
+import { Item, ItemDetailed, SearchResponse, Shop, ShopeeResponse } from "./interfaces";
 const app = express();
 
 app.use(express.json());
@@ -62,7 +62,7 @@ app.get("/item/:itemid/shop/:shopid", async (req, res) => {
   const { itemid, shopid } = req.params;
   console.log({ itemid, shopid });
   try {
-    const response: ShopeeResponse<Item> = await fetch(
+    const response: ShopeeResponse<ItemDetailed> = await fetch(
       "https://shopee.ph/api/v2/item/get_ratings?filter=0&flag=1&itemid=6643760845&limit=6&offset=0&shopid=73467985",
       {
         headers: {
@@ -77,14 +77,16 @@ app.get("/item/:itemid/shop/:shopid", async (req, res) => {
 
     const newData = {
       itemid: data.itemid,
+      brand: data.brand,
       name: data.name,
       image: data.image,
       images: data.images,
-      item_rating: data.item_rating,
-      rating_star: data.rating_star,
-      rating_count: data.rating_count,
-      rcount_with_context: data.rcount_with_context,
-      rcount_with_image: data.rcount_with_image,
+      item_rating: {
+        rating_count: data.item_rating.rating_count,
+        rating_star: data.item_rating.rating_star,
+        rcount_with_context: data.item_rating.rcount_with_context,
+        rcount_with_image: data.item_rating.rcount_with_image,
+      },
       price_min: data.price_min,
       price_max: data.price_max,
       price: data.price,
@@ -147,11 +149,12 @@ app.get("/ratings/:itemid/shop/:shopid", async (req, res) => {
       name: data.name,
       image: data.image,
       images: data.images,
-      item_rating: data.item_rating,
-      rating_star: data.rating_star,
-      rating_count: data.rating_count,
-      rcount_with_context: data.rcount_with_context,
-      rcount_with_image: data.rcount_with_image,
+      item_rating: {
+        rating_count: data.item_rating.rating_count,
+        rating_star: data.item_rating.rating_star,
+        rcount_with_context: data.item_rating.rcount_with_context,
+        rcount_with_image: data.item_rating.rcount_with_image,
+      },
       price_min: data.price_min,
       price_max: data.price_max,
       price: data.price,

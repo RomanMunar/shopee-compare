@@ -1,12 +1,13 @@
 import React, { Fragment } from "react";
-import styled from "styled-components";
+import NormalizedStyles from "./NormalizedStyles";
 import BaseStyles from "./BaseStyles";
 import Routes from "./Routes";
-import "./fontStyles";
+import "./fontStyles.css";
 
 function App() {
   return (
     <Fragment>
+      <NormalizedStyles />
       <BaseStyles />
       <Routes />
     </Fragment>

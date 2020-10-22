@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-
 import { font, sizes, color, mixin, zIndexValues } from "../../styles";
 import { Logo } from "../Logo";
+import { Icon } from "../Icon";
 
 export const NavLeft = styled.aside`
   z-index: 100;
@@ -12,7 +12,7 @@ export const NavLeft = styled.aside`
   overflow-x: hidden;
   height: 100vh;
   width: 64px;
-  background: ${color.backgroundDarkPrimary};
+  background: ${color.backgroundLight};
   transition: all 0.1s;
   ${mixin.hardwareAccelerate}
   &:hover {
@@ -21,12 +21,17 @@ export const NavLeft = styled.aside`
   }
 `;
 
+export const StyledIcon = styled(Icon)`
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+`;
+
 export const LogoLink = styled(NavLink)`
   display: block;
-  position: relative;
-  left: 0;
-  margin: 20px 0 10px;
-  transition: left 0.1s;
+  margin: 20px 0 20px 5px;
 `;
 
 export const StyledLogo = styled(Logo)`
@@ -39,25 +44,21 @@ export const StyledLogo = styled(Logo)`
 export const Bottom = styled.div`
   position: absolute;
   bottom: 20px;
-  left: 0;
+  left: 16px;
   width: 100%;
 `;
 
 export const Item = styled.div`
   position: relative;
+  display: flex;
+  align-items: center;
   width: 100%;
   height: 42px;
   line-height: 42px;
-  padding-left: 64px;
-  color: #deebff;
-  transition: color 0.1s;
+  color: ${color.textLink};
   ${mixin.clickable}
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
-  i {
-    position: absolute;
-    left: 18px;
+    background: rgba(0, 0, 0, 0.1);
   }
 `;
 
@@ -70,7 +71,7 @@ export const ItemText = styled.div`
   transition: all 0.1s;
   transition-property: right, visibility, opacity;
   ${font.bold}
-  font-size: 16px;
+  font-size:12;
   ${NavLeft}:hover & {
     right: 0;
     visibility: visible;

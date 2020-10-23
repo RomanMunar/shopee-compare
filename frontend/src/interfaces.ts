@@ -10,13 +10,13 @@ export interface SearchResponse {
   items: SearchItem[];
 }
 
-interface SearchItem extends Item {
-  adsid: number;
+export interface SearchItem extends Item {
+  adsid: number | null;
 }
 
 type ItemRating = {
   rating_star: number;
-  rating_count: number;
+  rating_count: number[];
   rcount_with_context: number;
   rcount_with_image: number;
 };
@@ -26,8 +26,6 @@ type Tier = {
   name: string;
   options: string[];
 };
-// tier = map i => {i.name i.images i.options}
-// price_max == p_min ? return price : [min, max]  :string
 
 export interface Shop {
   data: string;
@@ -40,25 +38,28 @@ export interface Shop {
 }
 
 export interface Item {
-  brand: string;
-  historical_sold: number;
+  has_lowest_price_guarantee: boolean;
+  is_adult: boolean;
   image: string;
-  images: string;
+  images: string[];
   item_rating: ItemRating;
   itemid: number;
-  liked_count: number;
-  location: string;
+  raw_discount: number;
   name: string;
   price_max: number;
   price_min: number;
   price: number;
+  shop_location: string;
   shopee_verified: boolean;
   shopid: number;
   sold: number;
   tier_variations: Tier[];
+  liked_count: number;
+  brand: string;
 }
 
 export interface ItemDetailed extends Item {
+  historical_sold: number;
   description: string;
   model: [
     {
@@ -71,10 +72,6 @@ export interface ItemDetailed extends Item {
     }
   ];
 }
-
-// price_max == p_min ? return price : [min, max] :string
-// if tier_variation:string
-// :el pric:string
 
 export interface Rating {
   anonymous: string;

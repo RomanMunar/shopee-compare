@@ -1,6 +1,12 @@
 import express from "express";
 import fetch from "node-fetch";
-import { Item, ItemDetailed, SearchResponse, Shop, ShopeeResponse } from "./interfaces";
+import {
+  ItemDetailed,
+  Rating,
+  SearchResponse,
+  Shop,
+  ShopeeResponse,
+} from "./interfaces";
 const app = express();
 
 app.use(express.json());
@@ -26,9 +32,11 @@ app.get("/search/:keyword", async (req, res) => {
 
     const { error, error_msg, items } = data;
     const newItems = items.map((item) => ({
+      has_lowest_price_guarantee: item.has_lowest_price_guarantee,
       itemid: item.itemid,
       name: item.name,
       adsid: item.adsid,
+      brand: item.brand,
       image: item.image,
       images: item.images,
       item_rating: {
@@ -43,8 +51,17 @@ app.get("/search/:keyword", async (req, res) => {
       sold: item.sold,
       shopee_verified: item.shopee_verified,
       shopid: item.shopid,
-      location: item.location,
-      tier_variations: item.tier_variations,
+      shop_location: item.shop_location,
+      tier_variations: item.tier_variations.map((tier) => {
+        return {
+          images: tier.images,
+          name: tier.name,
+          options: tier.options,
+        };
+      }),
+      liked_count: item.liked_count,
+      is_adult: item.is_adult,
+      raw_discount: item.raw_discount,
     }));
 
     res.status(200).json({
@@ -92,7 +109,7 @@ app.get("/item/:itemid/shop/:shopid", async (req, res) => {
       price: data.price,
       sold: data.sold,
       shopee_verified: data.shopee_verified,
-      location: data.location,
+      shop_location: data.shop_location,
       tier_variations: data.tier_variations,
     };
 
@@ -131,7 +148,7 @@ app.get("/ratings/:itemid/shop/:shopid", async (req, res) => {
   const { itemid, shopid } = req.params;
   console.log({ itemid, shopid });
   try {
-    const response: ShopeeResponse<Item> = await fetch(
+    const response: ShopeeResponse<Rating> = await fetch(
       "https://shopee.ph/api/v2/item/get_ratings?filter=0&flag=1&itemid=6643760845&limit=6&offset=0&shopid=73467985",
       {
         headers: {
@@ -145,23 +162,14 @@ app.get("/ratings/:itemid/shop/:shopid", async (req, res) => {
     const { data, error, error_msg } = response;
 
     const newData = {
-      itemid: data.itemid,
-      name: data.name,
-      image: data.image,
+      anonymous: data.anonymous,
+      author_portrait: data.author_portrait,
+      author_username: data.author_username,
+      comment: data.comment,
       images: data.images,
-      item_rating: {
-        rating_count: data.item_rating.rating_count,
-        rating_star: data.item_rating.rating_star,
-        rcount_with_context: data.item_rating.rcount_with_context,
-        rcount_with_image: data.item_rating.rcount_with_image,
-      },
-      price_min: data.price_min,
-      price_max: data.price_max,
-      price: data.price,
-      sold: data.sold,
-      shopee_verified: data.shopee_verified,
-      location: data.location,
-      tier_variations: data.tier_variations,
+      rating_star: data.rating_star,
+      product_items: data.product_items,
+      tags: data.tags,
     };
 
     res.status(200).json({ data: newData, error, error_msg });

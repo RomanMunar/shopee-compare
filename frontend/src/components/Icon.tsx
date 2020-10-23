@@ -1,6 +1,4 @@
 import React from "react";
-import { font } from "../styles";
-// import styled from "styled-components";
 
 interface Props {
   type:

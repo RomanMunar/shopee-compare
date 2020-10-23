@@ -1,7 +1,3 @@
 import React, { ReactElement } from "react";
 
-interface Props {}
-
-export default function ({}: Props): ReactElement {
-  return <div>Bookmarks</div>;
-}
+export default (): ReactElement => <div>Bookmarks</div>;

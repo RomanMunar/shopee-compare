@@ -9,7 +9,7 @@ import Bookmarks from "../Bookmarks";
 import Settings from "../Settings";
 
 const Router = () => (
-  <BrowserRouter >
+  <BrowserRouter>
     <Navbar />
     <Routes>
       <Route path='/' element={<Main />} />

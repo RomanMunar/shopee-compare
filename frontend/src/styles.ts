@@ -152,7 +152,7 @@ export const font = {
 
 export const shadows = {
   shadowSm: css`
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.1);
   `,
   shadow: css`
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);

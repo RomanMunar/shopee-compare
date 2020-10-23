@@ -1,8 +1,7 @@
-import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import { font, sizes, color, mixin, zIndexValues } from "../../styles";
+import styled from "styled-components";
+import { color, font, mixin } from "../../styles";
 import { Logo } from "../Logo";
-import { Icon } from "../Icon";
 
 export const NavLeft = styled.aside`
   z-index: 100;
@@ -21,31 +20,29 @@ export const NavLeft = styled.aside`
   }
 `;
 
-export const StyledIcon = styled(Icon)`
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-`;
-
 export const LogoLink = styled(NavLink)`
-  display: block;
+  display: flex;
   margin: 20px 0 20px 5px;
 `;
 
 export const StyledLogo = styled(Logo)`
   display: inline-block;
   margin-left: 8px;
-  padding: 10px;
   ${mixin.clickable}
 `;
 
 export const Bottom = styled.div`
   position: absolute;
   bottom: 20px;
-  left: 16px;
+  display: flex;
+  align-items: center;
   width: 100%;
+  height: 42px;
+  line-height: 42px;
+  ${mixin.clickable}
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
 `;
 
 export const Item = styled.div`
@@ -55,7 +52,6 @@ export const Item = styled.div`
   width: 100%;
   height: 42px;
   line-height: 42px;
-  color: ${color.textLink};
   ${mixin.clickable}
   &:hover {
     background: rgba(0, 0, 0, 0.1);
@@ -63,8 +59,9 @@ export const Item = styled.div`
 `;
 
 export const ItemText = styled.div`
+  color: ${color.textLink};
   position: relative;
-  right: 12px;
+  right: 20px;
   visibility: hidden;
   opacity: 0;
   text-transform: uppercase;

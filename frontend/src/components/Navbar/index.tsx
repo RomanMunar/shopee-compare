@@ -8,7 +8,6 @@ import {
   Bottom,
   Item,
   ItemText,
-  StyledIcon,
 } from "./Styles";
 
 interface Props {
@@ -22,24 +21,25 @@ export const Navbar = (props: Props) => (
     </LogoLink>
     <NavLink to='/search'>
       <Item>
-        <NavIcon left={3} size={24} type='Search' />
+        <NavIcon size={24} type='Search' />
         <ItemText>Search</ItemText>
       </Item>
     </NavLink>
     <NavLink to='/bookmarks'>
       <Item>
-        <NavIcon left={3} size={24} type='Bookmark' />
+        <NavIcon size={24} type='Bookmark' />
         <ItemText>Bookmarks</ItemText>
       </Item>
     </NavLink>
     <NavLink to='/settings'>
       <Item>
-        <NavIcon left={3} size={24} type='Setting' />
+        <NavIcon size={24} type='Setting' />
         <ItemText>Settings</ItemText>
       </Item>
     </NavLink>
     <Bottom>
-      <StyledIcon size={24} type='Help' />
+      <NavIcon size={24} type='Help' />
+      <ItemText>About</ItemText>
     </Bottom>
   </NavLeft>
 );

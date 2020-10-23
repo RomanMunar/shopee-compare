@@ -1,25 +1,39 @@
 import React from "react";
+import { font } from "../styles";
 // import styled from "styled-components";
 
 interface Props {
-  type: "Search" | "Bookmark" | "Help" | "Setting" | "SearchBar";
+  type:
+    | "Search"
+    | "Bookmark"
+    | "Help"
+    | "Setting"
+    | "SearchBar"
+    | "Checkmark"
+    | "Like"
+    | "ExpandLeft"
+    | "ExpandRight"
+    | "Fire"
+    | "LowPrice"
+    | "Discount"
+    | "LowStarsCount"
+    | "PriceLow";
   size: number;
-  left?: number;
-  top?: number;
+  percent?: number | string;
 }
 
-export const Icon = ({ type, size, left, top }: Props) => {
+export const Icon = ({ percent, type, size }: Props) => {
   let Icon = Icons[type];
 
-  return <Icon size={size} left={left} top={top} />;
+  return <Icon percent={percent} size={size} />;
 };
 
-export const NavIcon = ({ type, size, left, top }: Props) => {
+export const NavIcon = ({ type, size }: Props) => {
   let Icon = Icons[type];
 
   return (
     <div style={{ margin: "18px 12px 0 16px" }}>
-      <Icon size={size} left={left} top={top} />
+      <Icon size={size} />
     </div>
   );
 };
@@ -152,6 +166,8 @@ const SearchBarIcon = ({ size }: { size: number }) => (
     xmlns='http://www.w3.org/2000/svg'
     viewBox='0 0 20 20'
     fill='currentColor'
+    width={size}
+    height={size}
   >
     <path
       fill-rule='evenodd'
@@ -160,6 +176,277 @@ const SearchBarIcon = ({ size }: { size: number }) => (
     />
   </svg>
 );
+const CheckmarkIcon = ({ size }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <path
+      d='M24 44C29.5228 44 34.5228 41.7614 38.1421 38.1421C41.7614 34.5228 44 29.5228 44 24C44 18.4772 41.7614 13.4772 38.1421 9.85786C34.5228 6.23858 29.5228 4 24 4C18.4772 4 13.4772 6.23858 9.85786 9.85786C6.23858 13.4772 4 18.4772 4 24C4 29.5228 6.23858 34.5228 9.85786 38.1421C13.4772 41.7614 18.4772 44 24 44Z'
+      fill='#FD6132'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M16 24L22 30L34 18'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+const LikeIcon = ({ size = 24 }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <path
+      d='M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z'
+      fill='#2F88FF'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+const ExpandLeftIcon = ({ size = 24 }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect
+      x='4'
+      y='4'
+      width='40'
+      height='40'
+      rx='3'
+      fill='#2F88FF'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M16 4V44'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M9 4H34'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M9 44H34'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M32 20L28 24L32 28'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+const ExpandRightIcon = ({ size = 24 }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect
+      x='4'
+      y='4'
+      width='40'
+      height='40'
+      rx='3'
+      fill='#2F88FF'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M16 4V44'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M9 4H34'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M9 44H34'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M32 20L28 24L32 28'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+const FireIcon = ({ size = 24 }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <path
+      d='M24 44C32.2347 44 38.9998 37.4742 38.9998 29.0981C38.9998 27.0418 38.8953 24.8375 37.7555 21.4116C36.6157 17.9858 36.3861 17.5436 35.1809 15.4279C34.666 19.7454 31.911 21.5448 31.2111 22.0826C31.2111 21.5231 29.5445 15.3359 27.0176 11.6339C24.537 8 21.1634 5.61592 19.1853 4C19.1853 7.06977 18.3219 11.6339 17.0854 13.9594C15.8489 16.2849 15.6167 16.3696 14.0722 18.1002C12.5278 19.8308 11.8189 20.3653 10.5274 22.4651C9.23596 24.565 9 27.3618 9 29.4181C9 37.7942 15.7653 44 24 44Z'
+      fill='#D0021B'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+const LowPriceIcon = ({ size = 24 }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <circle
+      cx='11'
+      cy='11'
+      r='5'
+      fill='#2F88FF'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <circle
+      cx='37'
+      cy='37'
+      r='5'
+      fill='#2F88FF'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M42 6L6 42'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+const DiscountIcon = ({
+  size = 24,
+  percent = 0,
+}: {
+  size: number;
+  percent: number | string;
+}) => (
+  <div
+    style={{
+      backgroundColor: "#FD6132",
+      height: size,
+      width: size,
+      border: "1px solid #333",
+      borderRadius: "50%",
+      color: "#FFF",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      marginRight: "2px",
+    }}
+  >
+    <span style={{ fontSize: "0.5rem" }}>{percent}</span>
+    <span style={{ fontSize: "0.35rem" }}>%</span>
+  </div>
+);
+const LowStarsCountIcon = ({
+  size,
+  percent = 0,
+}: {
+  size: number;
+  percent?: number | string;
+}) => (
+  <div
+    style={{
+      backgroundColor: "#D0021B",
+      height: size,
+      width: size,
+      border: "1px solid #333",
+      borderRadius: "50%",
+      color: "#FFF",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+  >
+    <span style={{ fontSize: "0.5rem" }}>{percent}</span>
+    <span style={{ fontSize: "0.35rem" }}>%</span>
+  </div>
+);
+const PriceLowIcon = ({ size = 24 }: { size: number }) => (
+  <svg height='16px' width='16px' viewBox='0 0 100 100'>
+    <g>
+      <path
+        fill='#2F88FF'
+        stroke='#333'
+        stroke-width='7'
+        stroke-linejoin='round'
+        d='M87.2,49H73.9V4.7c0-1.2-1-2.2-2.2-2.2H28.2c-1.2,0-2.2,1-2.2,2.2V49H12.8c-1.8,0-2.8,2.1-1.6,3.5l37.2,44.2    c0.9,1,2.4,1,3.3,0l37.2-44.2C90,51.2,89,49,87.2,49z'
+      ></path>
+      <path
+        // stroke='#fff'
+        fill='#fff'
+        stroke-width='4'
+        stroke-linejoin='round'
+        d='M52.9,60.6v3.7c0,0.8-0.7,1.5-1.5,1.5h-2.9c-0.8,0-1.5-0.7-1.5-1.5v-3.7    c-4.6-0.2-8.5-3.6-9.3-8.1c-0.2-0.9,0.5-1.8,1.5-1.8h2.9c0.7,0,1.3,0.4,1.4,1.1c0.5,1.7,2,3,3.9,3h4.8c2.1,0,4-1.6,4.2-3.7    c0.2-2.4-1.7-4.4-4-4.4h-4.7c-5.5,0-10.1-4.5-10.1-9.9c0-5.3,4.2-9.6,9.4-9.8v-3.7c0-0.8,0.7-1.5,1.5-1.5h2.9    c0.8,0,1.5,0.7,1.5,1.5v3.7c4.6,0.2,8.5,3.6,9.3,8.1c0.2,0.9-0.5,1.8-1.5,1.8h-2.9c-0.7,0-1.3-0.4-1.4-1.1c-0.5-1.7-2-3-3.9-3    h-4.8c-2.1,0-4,1.6-4.2,3.7c-0.2,2.4,1.7,4.4,4,4.4h4.7c5.5,0,10.1,4.5,10.1,9.9C62.3,56,58.2,60.3,52.9,60.6z'
+      ></path>
+    </g>
+  </svg>
+);
+/* flex   border/rad font white biggerfont */
+// #FD6132
 
 const Icons: Record<keyof any, React.ElementType> = {
   Search: SearchIcon,
@@ -167,4 +454,13 @@ const Icons: Record<keyof any, React.ElementType> = {
   Help: HelpIcon,
   Setting: SettingIcon,
   SearchBar: SearchBarIcon,
+  Checkmark: CheckmarkIcon,
+  Like: LikeIcon,
+  ExpandRight: ExpandRightIcon,
+  ExpandLeft: ExpandLeftIcon,
+  Fire: FireIcon,
+  LowPrice: LowPriceIcon,
+  Discount: DiscountIcon,
+  LowStarsCount: LowStarsCountIcon,
+  PriceLow: PriceLowIcon,
 };

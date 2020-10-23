@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { createBrowserHistory } from "history";
 import Auth from "../Auth/Auth";
 import { PageError } from "../components/PageError.tsx";
 import { Main } from "../Main";
@@ -9,9 +8,8 @@ import Search from "../Search";
 import Bookmarks from "../Bookmarks";
 import Settings from "../Settings";
 
-const history = createBrowserHistory();
-const BrowserRoutes = () => (
-  <BrowserRouter>
+const Router = () => (
+  <BrowserRouter >
     <Navbar />
     <Routes>
       <Route path='/' element={<Main />} />
@@ -24,4 +22,4 @@ const BrowserRoutes = () => (
   </BrowserRouter>
 );
 
-export default BrowserRoutes;
+export default Router;

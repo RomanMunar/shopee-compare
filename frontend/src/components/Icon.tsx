@@ -1,4 +1,5 @@
 import React from "react";
+import { color } from "../styles";
 
 interface Props {
   type:
@@ -443,8 +444,40 @@ const PriceLowIcon = ({ size = 24 }: { size: number }) => (
     </g>
   </svg>
 );
-/* flex   border/rad font white biggerfont */
-// #FD6132
+export const StarIcon = ({
+  size,
+  percent = 0,
+  red = false,
+}: {
+  size: number;
+  percent?: number;
+  red?: boolean;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <defs>
+      <linearGradient id='grad2'>
+        <stop offset='0%' stop-color='#2F88FF' />
+        <stop offset={percent + "%"} stop-color='#2F88FF' />
+        <stop offset={percent + "%"} stop-color='white' />
+        <stop offset='100%' stop-color='white' />
+      </linearGradient>
+    </defs>
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <path
+      d='M23.9986 5L17.8856 17.4776L4 19.4911L14.0589 29.3251L11.6544 43L23.9986 36.4192L36.3454 43L33.9586 29.3251L44 19.4911L30.1913 17.4776L23.9986 5Z'
+      fill={red ? color.danger : "url(#grad2)"}
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
 
 const Icons: Record<keyof any, React.ElementType> = {
   Search: SearchIcon,

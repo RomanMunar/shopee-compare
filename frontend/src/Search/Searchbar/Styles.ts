@@ -23,7 +23,7 @@ export const InputElement = styled.input`
   ${font.regular}
   font-size:15px;
   padding-left: 32px;
-  padding-right: 32px;
+  padding-right: 30%;
   &:hover {
     background: ${color.backgroundLight};
   }

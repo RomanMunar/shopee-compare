@@ -1,28 +1,15 @@
 import React, { ReactElement, useState } from "react";
-import { Icon, StarIcon } from "../components/Icon";
-import Tag from "../components/Tag";
 import { SearchItem } from "../interfaces";
 import { useQueryParams } from "../useQueryParams";
 import Searchbar from "./Searchbar";
-import { kFormatter, priceCompare } from "./utils";
-import {
-  Badges,
-  GridContainer,
-  Label,
-  Price,
-  ResultItem,
-  ResultItemFixedContainer,
-  ResultItemImage,
-  ResultItemTitle,
-  ResultSection,
-  SearchPanel,
-  Small,
-  Tags
-} from "./Styles";
+import Results from "./Results";
+import { Container, Label, SearchPanel } from "./Styles";
+import Toolbar from "./Toolbar";
+import styled from "styled-components";
 
 export default (): ReactElement => {
   let query = useQueryParams().get("keyword");
-  const [mockSearchResponse] = useState<SearchItem[]>([
+  const [results] = useState<SearchItem[]>([
     {
       raw_discount: 22,
       has_lowest_price_guarantee: true,
@@ -222,112 +209,19 @@ export default (): ReactElement => {
       liked_count: 1003,
     },
   ]);
-  let tags = [
-    "laptop",
-    "shoes",
-    "headphones",
-    "fleshlight",
-    "bagina candles",
-    "100% real dragon",
-  ];
+  const [isSearchPanelOpen, setIsSearchPanelOpen] = useState(true);
 
   return (
-    <SearchPanel>
-      <Tags>
-        <Tag primary={true}>Popular</Tag>
-        {tags.map((t) => (
-          <Tag>{t}</Tag>
-        ))}
-      </Tags>
-      <Searchbar />
-      <Icon type='ExpandLeft' size={24} />
-      <Label>Search results for "{query}"</Label>
-      <ResultSection>
-        {mockSearchResponse.map(
-          (res) =>
-            // res.adsid !== null && (
-            true && (
-              <ResultItem>
-                <ResultItemFixedContainer>
-                  <ResultItemImage
-                    src={`https://cf.shopee.ph/file/${res.image}`}
-                  />
-                </ResultItemFixedContainer>
-                <ResultItemTitle>
-                  {res.name.replace(/[^a-zA-Z0-9 ]/g, "")}
-                </ResultItemTitle>
-                <GridContainer>
-                  <div>
-                    <span style={{ fontSize: "0.8rem" }}>₱</span>
-                    <Price>
-                      {priceCompare({
-                        price: res.price,
-                        price_max: res.price_max,
-                        price_min: res.price_min,
-                      })}
-                    </Price>
-                  </div>
-                  <div style={{ justifySelf: "end" }}>
-                    {res.item_rating.rating_star.toFixed(1)}{" "}
-                    <StarIcon
-                      size={16}
-                      percent={res.item_rating.rating_star * 20 - 20}
-                    />
-                  </div>
-                  <div>
-                    {kFormatter(res.sold)}
-                    <Small>sold/mon</Small>
-                  </div>
-                  <div style={{ justifySelf: "end" }}>
-                    {kFormatter(res.liked_count)}
-                    <Icon size={16} type='Like' />
-                  </div>
-                  <Badges>
-                    {/* {res.shopee_verified && (
-                      <span>
-                        Verified <Icon size={16} type='Checkmark' />
-                      </span>
-                    )} */}
-                    {res.shopee_verified && (
-                      <div>
-                        <Icon size={16} type='Checkmark' />
-                      </div>
-                    )}
-                    {res.is_adult && (
-                      <div>
-                        <Icon size={16} type='Fire' />
-                      </div>
-                    )}
-                    <div>
-                      <Icon size={16} type='PriceLow' />
-                    </div>
-                    <div>
-                      <Icon
-                        size={16}
-                        type='Discount'
-                        percent={res.raw_discount}
-                      />
-                    </div>
-                    <div>
-                      <Icon
-                        size={16}
-                        percent={Math.abs(
-                          ((res.item_rating.rating_count[1] +
-                            res.item_rating.rating_count[2]) /
-                            res.item_rating.rating_count[0]) *
-                            100
-                        ).toFixed(1)}
-                        type='LowStarsCount'
-                      />
-                    </div>
-                  </Badges>
-
-                  {res.brand !== "No Brand" && <div>{res.brand}</div>}
-                </GridContainer>
-              </ResultItem>
-            )
-        )}
-      </ResultSection>
-    </SearchPanel>
+    <Container>
+      <Toolbar
+        isSearchPanelOpen={isSearchPanelOpen}
+        setIsSearchPanelOpen={setIsSearchPanelOpen}
+      />
+      <SearchPanel isSearchPanelOpen={isSearchPanelOpen}>
+        <Searchbar />
+        <Label>Search results for "{query}"</Label>
+        <Results results={results} />
+      </SearchPanel>
+    </Container>
   );
 };

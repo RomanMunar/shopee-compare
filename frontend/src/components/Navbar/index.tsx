@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink,  useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { NavIcon } from "../Icon";
 import {
   NavLeft,
@@ -26,19 +26,19 @@ export const Navbar = (props: Props) => {
         <StyledLogo />
       </LogoLink>
       <NavLink to='/search'>
-        <Item active={activeRoute == "/search"}>
+        <Item active={activeRoute === "/search"}>
           <NavIcon size={28} type='Search' />
           <ItemText>Search</ItemText>
         </Item>
       </NavLink>
       <NavLink to='/bookmarks'>
-        <Item active={activeRoute == "/bookmarks"}>
+        <Item active={activeRoute === "/bookmarks"}>
           <NavIcon size={28} type='Bookmark' />
           <ItemText>Bookmarks</ItemText>
         </Item>
       </NavLink>
       <NavLink to='/settings'>
-        <Item active={activeRoute == "/settings"}>
+        <Item active={activeRoute === "/settings"}>
           <NavIcon size={28} type='Setting' />
           <ItemText>Settings</ItemText>
         </Item>

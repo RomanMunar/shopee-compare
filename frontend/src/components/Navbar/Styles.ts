@@ -45,16 +45,15 @@ export const Bottom = styled.div`
   }
 `;
 
-export const Item = styled.div`
+export const Item = styled.div<{ active: boolean }>`
   position: relative;
   display: flex;
   align-items: center;
   width: 100%;
-  height: 42px;
-  line-height: 42px;
   ${mixin.clickable}
+  background-color:${(props) => props.active && "#fff"};
   &:hover {
-    background: rgba(0, 0, 0, 0.1);
+    background: ${(props) => !props.active && "rgba(0, 0, 0, 0.1)"};
   }
 `;
 

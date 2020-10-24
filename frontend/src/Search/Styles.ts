@@ -5,10 +5,9 @@ export const Tags = styled.div`
   flex-wrap: nowrap;
   ${mixin.scrollableX}
   ${mixin.customScrollbar({ height: 4 })}
-  padding:0.5rem 1.25rem;
+  padding:1rem 0;
   border-bottom: 2px solid #2f88ff;
   width: 100%;
-  height: 2.5rem;
 `;
 export const Label = styled.div`
   text-align: start;
@@ -50,7 +49,7 @@ export const Small = styled.span`
   font-size: 0.5rem;
 `;
 
-export const ResultItemTitle = styled.a`
+export const ResultItemTitle = styled.a<{ text: string }>`
   font-size: 0.75rem;
   width: 95%;
   padding-right: 0.3rem;
@@ -60,6 +59,9 @@ export const ResultItemTitle = styled.a`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  &:before {
+    content: "${(props) => props.text}";
+  }
 `;
 export const ResultItemImage = styled.img`
   position: absolute;
@@ -80,6 +82,8 @@ export const ResultSection = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto;
   width: 86%;
+  ${mixin.scrollableY}
+  ${mixin.customScrollbar()}
 `;
 
 export const ResultItem = styled.div`
@@ -93,12 +97,32 @@ export const ResultItem = styled.div`
   margin-bottom: 0.5rem;
 `;
 
-export const SearchPanel = styled.div`
-  margin-left: 80px;
-  height: 100vh;
+export const SearchPanel = styled.div<{ isSearchPanelOpen: boolean }>`
   display: flex;
   flex-direction: column;
+  border-radius: 15px;
+  overflow: hidden;
+  position: absolute;
+  bottom: 10px;
+  height: 90vh;
   width: 35%;
   background-color: ${color.backgroundLight};
   align-items: center;
+  transition: all 0.2s;
+  transition-property: all;
+  visibility: hidden;
+  opacity: 0;
+  transform: ${(props) =>
+    props.isSearchPanelOpen ? "translateX()" : "translateX(-80px)"};
+  visibility: ${(props) => props.isSearchPanelOpen && "visible"};
+  opacity: ${(props) => props.isSearchPanelOpen && 1};
+  ${shadows.shadowMd}
+`;
+
+export const Container = styled.div`
+  margin-left: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
 `;

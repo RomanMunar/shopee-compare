@@ -1,13 +1,27 @@
-import React, { useState, ReactElement } from "react";
-import styled from "styled-components";
-import Searchbar from "./Searchbar";
-import { color, font, mixin, shadows } from "../styles";
-import { useQuery } from "../useQuery";
+import React, { ReactElement, useState } from "react";
+import { Icon, StarIcon } from "../components/Icon";
+import Tag from "../components/Tag";
 import { SearchItem } from "../interfaces";
-import { Icon } from "../components/Icon";
+import { useQueryParams } from "../useQueryParams";
+import Searchbar from "./Searchbar";
+import { kFormatter, priceCompare } from "./utils";
+import {
+  Badges,
+  GridContainer,
+  Label,
+  Price,
+  ResultItem,
+  ResultItemFixedContainer,
+  ResultItemImage,
+  ResultItemTitle,
+  ResultSection,
+  SearchPanel,
+  Small,
+  Tags
+} from "./Styles";
 
 export default (): ReactElement => {
-  let query = useQuery().get("keyword");
+  let query = useQueryParams().get("keyword");
   const [mockSearchResponse] = useState<SearchItem[]>([
     {
       raw_discount: 22,
@@ -216,44 +230,17 @@ export default (): ReactElement => {
     "bagina candles",
     "100% real dragon",
   ];
-  const kFormatter = (num: number) =>
-    Math.abs(num) > 999
-      ? (Math.abs(num) / 1000).toFixed(1) + "k"
-      : Math.abs(num);
-
-  const priceCompare = ({
-    price,
-    price_max,
-    price_min,
-  }: {
-    price: number;
-    price_max: number;
-    price_min: number;
-  }) =>
-    price === price_max
-      ? price.toString().slice(0, price.toString().split("").length - 5)
-      : `${price_min
-          .toString()
-          .slice(0, price_min.toString().split("").length - 5)}-${kFormatter(
-          parseInt(
-            price_max
-              .toString()
-              .slice(0, price_max.toString().split("").length - 5)
-          )
-        )}`;
 
   return (
     <SearchPanel>
       <Tags>
-        <TagItemLabel>Popular</TagItemLabel>
+        <Tag primary={true}>Popular</Tag>
         {tags.map((t) => (
-          <TagItem>{t}</TagItem>
+          <Tag>{t}</Tag>
         ))}
       </Tags>
-      <div>
-        <Searchbar />
-        <Icon type='ExpandLeft' size={24} />
-      </div>
+      <Searchbar />
+      <Icon type='ExpandLeft' size={24} />
       <Label>Search results for "{query}"</Label>
       <ResultSection>
         {mockSearchResponse.map(
@@ -344,163 +331,3 @@ export default (): ReactElement => {
     </SearchPanel>
   );
 };
-const Label = styled.div`
-  text-align: start;
-  width: 86%;
-  margin-bottom: 0.5rem;
-  ${font.bold}
-`;
-const Price = styled.span`
-  font-size: 1.1rem;
-  ${font.regular}
-`;
-
-const Badges = styled.div`
-  align-self: end;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr;
-  grid-template-areas: ". . . . .";
-  grid-area: test;
-`;
-
-const GridContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 0.9fr 0.9fr 1.2fr;
-  grid-template-areas:
-    ". ."
-    ". ."
-    "test test";
-  font-size: 13px;
-  ${font.bold}
-  padding:5px;
-  white-space: nowrap;
-  justify-items: start;
-  align-items: center;
-  line-height: 14px;
-`;
-const Small = styled.span`
-  font-size: 0.5rem;
-`;
-
-
-const ResultItemTitle = styled.a`
-  font-size: 0.75rem;
-  width: 95%;
-  padding-right: 0.3rem;
-  padding-left: 0.3rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-`;
-const ResultItemImage = styled.img`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-`;
-const ResultItemFixedContainer = styled.div`
-  position: relative;
-  padding-bottom: 66%;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
-  margin-bottom: 0.3rem;
-`;
-
-const ResultSection = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto;
-  width: 86%;
-`;
-
-const ResultItem = styled.div`
-  background-color: ${color.backgroundLightest};
-  ${shadows.shadowSm}
-  text-align: center;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  width: 8.3125rem;
-  height: 12rem;
-  margin-bottom: 0.5rem;
-`;
-
-const SearchPanel = styled.div`
-  margin-left: 80px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  width: 35%;
-  background-color: ${color.backgroundLight};
-  align-items: center;
-`;
-
-const Tags = styled.div`
-  flex-wrap: nowrap;
-  ${mixin.scrollableX}
-  ${mixin.customScrollbar({ height: 4 })}
-  padding:0.5rem 1.25rem;
-  border-bottom: 2px solid #2f88ff;
-  width: 100%;
-  height: 2.5rem;
-`;
-
-const Tag = styled.span`
-  padding: 0.5rem 1rem;
-  cursor: point;
-  word-wrap: none;
-  white-space: nowrap;
-  border-radius: 9999px;
-  width: 100%;
-  padding: 5px 10px;
-  margin-right: 0.35rem;
-`;
-const TagItem = styled(Tag)`
-  background-color: ${color.backgroundLightest};
-  transition: background-color 150ms;
-  &:hover {
-    background-color: ${color.backgroundLightPrimary};
-  }
-`;
-
-const TagItemLabel = styled(Tag)`
-  background-color: ${color.backgroundDarkPrimary};
-  color: ${color.backgroundLightest};
-`;
-const StarIcon = ({
-  size,
-  percent = 0,
-  red = false,
-}: {
-  size: number;
-  percent?: number;
-  red?: boolean;
-}) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox='0 0 48 48'
-    fill='none'
-    xmlns='http://www.w3.org/2000/svg'
-  >
-    <defs>
-      <linearGradient id='grad2'>
-        <stop offset='0%' stop-color='#2F88FF' />
-        <stop offset={percent + "%"} stop-color='#2F88FF' />
-        <stop offset={percent + "%"} stop-color='white' />
-        <stop offset='100%' stop-color='white' />
-      </linearGradient>
-    </defs>
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
-    <path
-      d='M23.9986 5L17.8856 17.4776L4 19.4911L14.0589 29.3251L11.6544 43L23.9986 36.4192L36.3454 43L33.9586 29.3251L44 19.4911L30.1913 17.4776L23.9986 5Z'
-      fill={red ? color.danger : "url(#grad2)"}
-      stroke='#333'
-      stroke-width='4'
-      stroke-linejoin='round'
-    />
-  </svg>
-);

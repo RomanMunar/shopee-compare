@@ -5,7 +5,6 @@ import Searchbar from "./Searchbar";
 import Results from "./Results";
 import { Container, Label, SearchPanel } from "./Styles";
 import Toolbar from "./Toolbar";
-import styled from "styled-components";
 
 export default (): ReactElement => {
   let query = useQueryParams().get("keyword");
@@ -222,6 +221,15 @@ export default (): ReactElement => {
         <Label>Search results for "{query}"</Label>
         <Results results={results} />
       </SearchPanel>
+
+      {/* 
+        CompareContainer{
+          items.length ? 
+            CompareItem 
+              Title, Images, Model, Price...
+          :<BlankDashedContainer/>
+          }
+       */}
     </Container>
   );
 };

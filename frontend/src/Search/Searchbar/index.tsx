@@ -19,12 +19,21 @@ export default (): ReactElement => (
     <InputElement />
     <Filter>
       <Select>
-        <option selected disabled hidden>
+        <option dir='rtl' selected disabled hidden>
           Sort By
         </option>
 
-        {["Relevance", "Sales", "Recent"].map((option) => (
-          <option>{option}</option>
+        {["Relevance", "Sales", "Recent", "Rating"].map((option) => (
+          <option dir='rtl'>{option}</option>
+        ))}
+      </Select>
+      <Select>
+        <option dir='rtl' selected disabled hidden>
+          Price Range
+        </option>
+
+        {["₱0-200", "₱200-500", "₱500-1000", "₱1000-2000"].map((option) => (
+          <option dir='rtl'>{option}</option>
         ))}
       </Select>
     </Filter>
@@ -37,6 +46,7 @@ const Select = styled.select`
   ${font.medium}
   color: #172b4d;
   margin-left: -5px;
+  text-align-last: right;
 `;
 const Filter = styled.div`
   top: 4px;

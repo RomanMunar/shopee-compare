@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { Icon, StarIcon } from "../../components/Icon";
+import { Icon } from "../../components/Icon";
 import { SearchItem } from "../../interfaces";
 import {
   Badges,
@@ -9,7 +9,7 @@ import {
   ResultSection,
   Small,
   ResultItemTitle,
-} from "../Styles";
+} from "./Styles";
 import ResultItemImage from "./ResultItemImage";
 import { kFormatter, priceCompare } from "../utils";
 interface Props {
@@ -36,9 +36,14 @@ function Results({ results }: Props): ReactElement {
             </div>
             <div style={{ justifySelf: "end" }}>
               {res.item_rating.rating_star.toFixed(1)}{" "}
-              <StarIcon
+              <Icon
+                type='Star'
                 size={16}
-                percent={res.item_rating.rating_star * 20 - 20}
+                percent={
+                  res.item_rating.rating_star === 0
+                    ? 0
+                    : res.item_rating.rating_star * 20 - 20
+                }
               />
             </div>
             <div>
@@ -61,12 +66,16 @@ function Results({ results }: Props): ReactElement {
               {res.item_rating.rating_count[0] !== 0 && (
                 <Icon
                   size={16}
-                  percent={Math.abs(
-                    ((res.item_rating.rating_count[1] +
-                      res.item_rating.rating_count[2]) /
-                      res.item_rating.rating_count[0]) *
-                      100
-                  ).toFixed(1)}
+                  percent={
+                    res.item_rating.rating_star === 0
+                      ? 0
+                      : Math.abs(
+                          ((res.item_rating.rating_count[1] +
+                            res.item_rating.rating_count[2]) /
+                            res.item_rating.rating_count[0]) *
+                            100
+                        ).toFixed(1)
+                  }
                   type='LowStarsCount'
                 />
               )}

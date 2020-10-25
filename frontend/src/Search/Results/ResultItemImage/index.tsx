@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  ResultItemFixedContainer,
-  ResultItemImage as Image,
-} from "../../Styles";
+import { ResultItemFixedContainer, ResultItemImage as Image } from "../Styles";
 
 interface Props {
   src: string;

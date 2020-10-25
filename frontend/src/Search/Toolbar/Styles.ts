@@ -1,7 +1,12 @@
 import styled from "styled-components";
-import { color, shadows } from "../../styles";
+import { font, color, shadows } from "../../styles";
 
 export const ToolbarButton = styled.button`
+  ${font.bold}
+  color:#2F88FF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: all 0.2s;
   margin-top: 4px;
   &:hover {
@@ -18,7 +23,7 @@ export const Toolbar = styled.div`
   justify-items: flex-start;
   height: 30px;
   top: 10px;
-  width: 90%;
+  width: auto;
   border-radius: 15px;
   padding: 0 10px;
   position: absolute;

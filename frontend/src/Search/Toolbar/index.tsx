@@ -14,17 +14,31 @@ export default ({ isSearchPanelOpen, setIsSearchPanelOpen }: Props) => {
 
   return (
     <Toolbar>
-      <button onClick={(e) => handleClick(e)}>
-        {isSearchPanelOpen ? (
-          <ToolbarButton>
-            <Icon type='ExpandLeft' size={16} />
-          </ToolbarButton>
-        ) : (
-          <ToolbarButton>
-            <Icon type='ExpandRight' size={16} />
-          </ToolbarButton>
-        )}
-      </button>
+      {isSearchPanelOpen ? (
+        <ToolbarButton onClick={(e) => handleClick(e)}>
+          <Icon type='ExpandLeft' size={16} />
+        </ToolbarButton>
+      ) : (
+        <ToolbarButton onClick={(e) => handleClick(e)}>
+          <Icon type='ExpandRight' size={16} />
+        </ToolbarButton>
+      )}
+      <ToolbarButton>
+        <Icon type='Pdf' size={16} />
+      </ToolbarButton>
+      <ToolbarButton>
+        <Icon type='Grid' size={16} />
+      </ToolbarButton>
+      <ToolbarButton>
+        A<Icon type='Sort' size={16} />
+      </ToolbarButton>
+      <ToolbarButton>
+        ₱<Icon type='Sort' size={16} />
+      </ToolbarButton>
+      <ToolbarButton>
+        <Icon type='Star' size={17} />
+        <Icon type='Sort' size={16} />
+      </ToolbarButton>
     </Toolbar>
   );
 };

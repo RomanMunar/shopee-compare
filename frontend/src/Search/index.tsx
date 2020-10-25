@@ -3,8 +3,10 @@ import { SearchItem } from "../interfaces";
 import { useQueryParams } from "../useQueryParams";
 import Searchbar from "./Searchbar";
 import Results from "./Results";
-import { Container, Label, SearchPanel } from "./Styles";
+import { Label, SearchPanel } from "./Styles";
 import Toolbar from "./Toolbar";
+import Compare from "./Compare/index.jsx";
+import Container from "../components/Container";
 
 export default (): ReactElement => {
   let query = useQueryParams().get("keyword");
@@ -208,7 +210,7 @@ export default (): ReactElement => {
       liked_count: 1003,
     },
   ]);
-  const [isSearchPanelOpen, setIsSearchPanelOpen] = useState(true);
+  const [isSearchPanelOpen, setIsSearchPanelOpen] = useState(false);
 
   return (
     <Container>
@@ -221,7 +223,7 @@ export default (): ReactElement => {
         <Label>Search results for "{query}"</Label>
         <Results results={results} />
       </SearchPanel>
-
+      <Compare results={results} />
       {/* 
         CompareContainer{
           items.length ? 

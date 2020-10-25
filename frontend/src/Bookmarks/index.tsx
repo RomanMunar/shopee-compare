@@ -1,3 +1,4 @@
 import React, { ReactElement } from "react";
+import Container from "../components/Container";
 
-export default (): ReactElement => <div>Bookmarks</div>;
+export default (): ReactElement => <Container>Bookmarks</Container>;

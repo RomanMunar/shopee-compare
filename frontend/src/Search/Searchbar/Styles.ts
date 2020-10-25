@@ -5,7 +5,7 @@ export const StyledInput = styled.div`
   position: relative;
   display: inline-block;
   height: 32px;
-  width: 80%;
+  width: 86%;
   margin-top: 2rem;
   margin-bottom: 1.1rem;
 `;
@@ -13,7 +13,6 @@ export const StyledInput = styled.div`
 export const InputElement = styled.input`
   height: 100%;
   width: 100%;
-  padding: 0 7px;
   border-radius: 999px;
   text-align: center;
   border: 1px solid ${color.borderLightest};
@@ -23,7 +22,7 @@ export const InputElement = styled.input`
   ${font.regular}
   font-size:15px;
   padding-left: 32px;
-  padding-right: 30%;
+  padding-right: 45%;
   &:hover {
     background: ${color.backgroundLight};
   }

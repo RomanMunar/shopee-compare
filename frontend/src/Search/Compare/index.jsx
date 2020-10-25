@@ -1,9 +1,6 @@
-import React, { useState, ReactElement } from "react";
-import styled from "styled-components";
-import { SearchItem } from "../../interfaces";
-import { color, mixin, shadows } from "../../styles";
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import styled from "styled-components";
+import { color, mixin, shadows } from "../../styles";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 // fake data generator
@@ -44,7 +41,7 @@ const getListStyle = (isDraggingOver) => ({
   overflow: "auto",
 });
 
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -109,7 +106,6 @@ class App extends Component {
 }
 
 // Put the thing into the DOM!
-ReactDOM.render(<App />, document.getElementById("root"));
 
 const Compare = styled.div`
   display: grid;

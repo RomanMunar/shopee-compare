@@ -11,7 +11,7 @@ import {
   ResultItemTitle,
 } from "./Styles";
 import ResultItemImage from "./ResultItemImage";
-import { kFormatter, priceCompare } from "../utils";
+import { kFormatter, priceCompare } from "../../shared/utils/utils";
 interface Props {
   results: SearchItem[];
 }

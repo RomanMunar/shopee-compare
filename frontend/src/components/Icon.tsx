@@ -4,6 +4,8 @@ import { color } from "../styles";
 
 interface Props {
   type:
+    | "Star"
+    | "Grid"
     | "Search"
     | "Bookmark"
     | "Help"
@@ -20,7 +22,9 @@ interface Props {
     | "PriceLow"
     | "Plus"
     | "Close"
-    | "ChevronDown";
+    | "ChevronDown"
+    | "Pdf"
+    | "Sort";
   size: number;
   percent?: number | string;
 }
@@ -458,14 +462,12 @@ const PriceLowIcon = ({ size = 24 }: { size: number }) => (
     </g>
   </svg>
 );
-export const StarIcon = ({
+const StarIcon = ({
   size,
-  percent = 0,
-  red = false,
+  percent = 100,
 }: {
   size: number;
   percent?: number;
-  red?: boolean;
 }) => (
   <svg
     width={size}
@@ -485,7 +487,7 @@ export const StarIcon = ({
     <rect width='48' height='48' fill='white' fill-opacity='0.01' />
     <path
       d='M23.9986 5L17.8856 17.4776L4 19.4911L14.0589 29.3251L11.6544 43L23.9986 36.4192L36.3454 43L33.9586 29.3251L44 19.4911L30.1913 17.4776L23.9986 5Z'
-      fill={red ? color.danger : "url(#grad2)"}
+      fill='url(#grad2)'
       stroke='#333'
       strokeWidth='4'
       stroke-linejoin='round'
@@ -532,6 +534,122 @@ const ChevronDownIcon = ({ size = 24 }: { size: number }) => (
   </svg>
 );
 
+const PdfIcon = ({ size = 24 }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <path d='M48 0H0V48H48V0Z' fill='white' fill-opacity='0.01' />
+    <path
+      d='M10 4H30L40 14V42C40 43.1046 39.1046 44 38 44H10C8.89543 44 8 43.1046 8 42V6C8 4.89543 8.89543 4 10 4Z'
+      fill='#2F88FF'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <path
+      fill-rule='evenodd'
+      clip-rule='evenodd'
+      d='M18 18H30V25.9917L18.0083 26L18 18Z'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path d='M18 18V34' stroke='#FFF' stroke-width='4' stroke-linecap='butt' />
+  </svg>
+);
+const SortIcon = ({ size }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <path
+      d='M24 42L15 29H33L24 42Z'
+      fill='#2F88FF'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M24 6L15 19H33L24 6Z'
+      fill='#2F88FF'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+const GridIcon = ({ size }: { size: number }) => (
+  <svg
+    width='16px'
+    height='16px'
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect
+      x='4'
+      y='4'
+      width='40'
+      height='40'
+      rx='3'
+      fill='#2F88FF'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <rect
+      x='12'
+      y='12'
+      width='8'
+      height='8'
+      fill='#43CCF8'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <rect
+      x='28'
+      y='12'
+      width='8'
+      height='8'
+      fill='#43CCF8'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <rect
+      x='12'
+      y='28'
+      width='8'
+      height='8'
+      fill='#43CCF8'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <rect
+      x='28'
+      y='28'
+      width='8'
+      height='8'
+      fill='#43CCF8'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
 const Icons: Record<keyof any, React.ElementType> = {
   Search: SearchIcon,
   Bookmark: BookmarkIcon,
@@ -550,4 +668,8 @@ const Icons: Record<keyof any, React.ElementType> = {
   Plus: PlusIcon,
   Close: CloseIcon,
   ChevronDown: ChevronDownIcon,
+  Pdf: PdfIcon,
+  Sort: SortIcon,
+  Grid: GridIcon,
+  Star: StarIcon,
 };

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Icon } from "../../components/Icon";
 import Select from "../../components/Select";
 import { font } from "../../styles";
-import useOnOutsideClick from "../../useOnOutsideClick";
+import useOnOutsideClick from "../../shared/hooks/useOnOutsideClick";
 import { StyledInput, InputElement } from "./Styles";
 
 export default (): ReactElement => {

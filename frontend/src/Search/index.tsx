@@ -1,16 +1,73 @@
 import React, { ReactElement, useState } from "react";
 import { SearchItem } from "../interfaces";
-import { useQueryParams } from "../useQueryParams";
+import { useQueryParams } from "../shared/hooks/useQueryParams";
 import Searchbar from "./Searchbar";
 import Results from "./Results";
 import { Label, SearchPanel } from "./Styles";
 import Toolbar from "./Toolbar";
-import Compare from "./Compare/index.jsx";
+import Compare from "./Compare/index";
 import Container from "../components/Container";
 
 export default (): ReactElement => {
   let query = useQueryParams().get("keyword");
   const [results] = useState<SearchItem[]>([
+    {
+      raw_discount: 22,
+      has_lowest_price_guarantee: true,
+      is_adult: true,
+      itemid: 6539310796,
+      name:
+        "【Noise Cancelling Microphone&Headphone】New Upgrade online class headset noise cancellation mic with Dual 3.5mm port and built-in noise reduction headphones",
+      adsid: 1423743,
+      brand: "No Brand",
+      image: "c64b792e4163a401233d483d6fe55efa",
+      images: [
+        "c64b792e4163a401233d483d6fe55efa",
+        "d99f8b6b86a20557aa12876404ecf4c2",
+        "c7de1b9bd3688d6647ed704e3d75bb44",
+        "1100512d6bf48f1360801fd04a23c87a",
+        "c9cd90eb2e846c2953816eeff5550c5f",
+        "aff4a7ea8b9d11cb228b8dae5d577371",
+        "c2cbe8b4fdfe31b5583f1943f2cef992",
+        "43097c1f0bf98ce025135eb78b804a86",
+        "d3469b08df904e91e17b835561dd90d9",
+      ],
+      item_rating: {
+        rating_count: [10721, 96, 48, 203, 830, 9544],
+        rating_star: 4.835977,
+        rcount_with_context: 3593,
+        rcount_with_image: 2228,
+      },
+      price_min: 54900000,
+      price_max: 549200000,
+      price: 54900000,
+      sold: 4067,
+      shopee_verified: true,
+      shopid: 181860033,
+      shop_location: "Overseas",
+      tier_variations: [
+        {
+          images: [
+            "558ae7630c7207f045febfd7ad92745f",
+            "76ca44b377c44b505a3e5c20ed152b2d",
+            "28ab2fd9eaba0c7069bbed7074526f29",
+            "91aca3db6b3aa56c57f500829ec24d15",
+            "2252e4de59d4026fc554051a63d3f106",
+            "b576ca60a5da046de54b40e28cac3b41",
+          ],
+          name: "Type",
+          options: [
+            "Noise Reduction Mic",
+            "Grey（Dual 3.5MM）",
+            "Grey（Single 3.5MM)",
+            "White(Dual 3.5mm）",
+            "Gold(Dual 3.5mm）",
+            "Gold（Single 3.5MM）",
+          ],
+        },
+      ],
+      liked_count: 7110,
+    },
     {
       raw_discount: 22,
       has_lowest_price_guarantee: true,
@@ -111,63 +168,6 @@ export default (): ReactElement => {
         },
       ],
       liked_count: 26,
-    },
-    {
-      raw_discount: 22,
-      has_lowest_price_guarantee: true,
-      is_adult: false,
-      itemid: 6539310796,
-      name:
-        "【Noise Cancelling Microphone&Headphone】New Upgrade online class headset noise cancellation mic with Dual 3.5mm port and built-in noise reduction headphones",
-      adsid: null,
-      brand: "No Brand",
-      image: "c64b792e4163a401233d483d6fe55efa",
-      images: [
-        "c64b792e4163a401233d483d6fe55efa",
-        "d99f8b6b86a20557aa12876404ecf4c2",
-        "c7de1b9bd3688d6647ed704e3d75bb44",
-        "1100512d6bf48f1360801fd04a23c87a",
-        "c9cd90eb2e846c2953816eeff5550c5f",
-        "aff4a7ea8b9d11cb228b8dae5d577371",
-        "c2cbe8b4fdfe31b5583f1943f2cef992",
-        "43097c1f0bf98ce025135eb78b804a86",
-        "d3469b08df904e91e17b835561dd90d9",
-      ],
-      item_rating: {
-        rating_count: [10721, 96, 48, 203, 830, 9544],
-        rating_star: 4.835977,
-        rcount_with_context: 3593,
-        rcount_with_image: 2228,
-      },
-      price_min: 54900000,
-      price_max: 66900000,
-      price: 54900000,
-      sold: 4067,
-      shopee_verified: true,
-      shopid: 181860033,
-      shop_location: "Overseas",
-      tier_variations: [
-        {
-          images: [
-            "558ae7630c7207f045febfd7ad92745f",
-            "76ca44b377c44b505a3e5c20ed152b2d",
-            "28ab2fd9eaba0c7069bbed7074526f29",
-            "91aca3db6b3aa56c57f500829ec24d15",
-            "2252e4de59d4026fc554051a63d3f106",
-            "b576ca60a5da046de54b40e28cac3b41",
-          ],
-          name: "Type",
-          options: [
-            "Noise Reduction Mic",
-            "Grey（Dual 3.5MM）",
-            "Grey（Single 3.5MM)",
-            "White(Dual 3.5mm）",
-            "Gold(Dual 3.5mm）",
-            "Gold（Single 3.5MM）",
-          ],
-        },
-      ],
-      liked_count: 7110,
     },
     {
       raw_discount: 22,

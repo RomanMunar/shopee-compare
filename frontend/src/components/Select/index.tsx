@@ -1,5 +1,5 @@
 import React, { ReactElement, useRef, useState } from "react";
-import useOnOutsideClick from "../../useOnOutsideClick";
+import useOnOutsideClick from "../../shared/hooks/useOnOutsideClick";
 import { Icon } from "../Icon";
 import {
   SelectContainer,

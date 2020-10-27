@@ -6,7 +6,7 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import styled from "styled-components";
-import { color, mixin, shadows } from "../../styles";
+import { color, font, mixin, shadows } from "../../styles";
 import { SearchItem } from "../../interfaces";
 
 // a little function to help us with reordering the result
@@ -42,7 +42,7 @@ export default ({ results }: { results: SearchItem[] }) => {
 
     setItems(newItems);
   };
-  return displayedResults ? (
+  return false ? (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId='droppable' direction='horizontal'>
         {(provided, snapshot) => (
@@ -76,9 +76,18 @@ export default ({ results }: { results: SearchItem[] }) => {
       </Droppable>
     </DragDropContext>
   ) : (
-    <EmptyContainer />
+    <EmptyContainer>
+      <Title>Hey Search</Title> Some items and added them to the list so I can
+      render them
+    </EmptyContainer>
   );
 };
+const Title = styled.span`
+  display: block;
+  font-size: 24px;
+  ${font.bold}
+  margin-bottom: 10px;
+`;
 
 const Compare = styled.div<{ isDraggingOver: boolean }>`
   display: grid;
@@ -98,10 +107,15 @@ const Compare = styled.div<{ isDraggingOver: boolean }>`
 
 const EmptyContainer = styled.div`
   position: absolute;
-  width: 93%;
-  height: 90%;
-  top: 50px;
-  border: 5px dashed #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+  height: 25%;
+  top: 25vh;
+  left: 30vw;
+  border: 5px dashed rgba(51, 51, 51, 0.6);
 `;
 
 const CompareItem = styled.div<{ draggingStyle: any; isDragging: boolean }>`

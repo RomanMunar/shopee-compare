@@ -4,7 +4,7 @@ import { color, font, mixin } from "../../styles";
 import { Logo } from "../Logo";
 
 export const NavLeft = styled.aside`
-  z-index: 100;
+  z-index: 1000;
   position: fixed;
   top: 0;
   left: 0;

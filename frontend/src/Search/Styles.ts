@@ -20,7 +20,6 @@ export const SearchPanel = styled.div<{ isSearchPanelOpen: boolean }>`
   display: flex;
   flex-direction: column;
   border-radius: 15px;
-  overflow: hidden;
   position: absolute;
   bottom: 10px;
   height: 90vh;

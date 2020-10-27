@@ -19,14 +19,7 @@ const reorder = (list: SearchItem[], startIndex: number, endIndex: number) => {
 };
 
 export default ({ results }: { results: SearchItem[] }) => {
-  const displayedResults: SearchItem[] = [];
-  const filteredResults = results.filter(function (item) {
-    return displayedResults.findIndex((x) => x.itemid === item.itemid) === -1
-      ? displayedResults.push(item)
-      : null;
-  });
-  console.log({ filteredResults });
-  const [items, setItems] = useState(displayedResults);
+  const [items, setItems] = useState(results);
 
   const onDragEnd = (result: DropResult) => {
     // dropped outside the list

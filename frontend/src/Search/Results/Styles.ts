@@ -62,16 +62,20 @@ export const ResultItemFixedContainer = styled.div`
   margin-bottom: 0.3rem;
 `;
 
-export const ResultSection = styled.div`
+export const ResultSection = styled.div<{ isDraggingOver: boolean }>`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto;
   width: 86%;
+  border: ${(props) => props.isDraggingOver && "1px solid #000"};
   ${mixin.scrollableY}
   ${mixin.customScrollbar()}
 `;
 
-export const ResultItem = styled.div`
+export const ResultItem = styled.div<{
+  isDragging: boolean;
+  draggingStyle: any;
+}>`
   background-color: ${color.backgroundLightest};
   ${shadows.shadowSm}
   text-align: center;
@@ -80,4 +84,41 @@ export const ResultItem = styled.div`
   width: 8.3125rem;
   height: 12rem;
   margin-bottom: 0.5rem;
+`;
+
+export const Title = styled.span`
+  font-size: 20px;
+  ${font.medium}
+  line-height: 20px;
+`;
+
+export const Items = styled.div<{ isDraggingOver: boolean }>`
+  background-color: ${(props) =>
+    props.isDraggingOver ? color.primary : color.backgroundLightPrimary};
+  margin-top: 15px;
+  margin-bottom: 10px;
+`;
+
+export const Item = styled.div<{ isDragging: boolean; draggingStyle: any }>`
+  border: ${(props) => props.isDragging && "2px solid #000"};
+  font-size: 16px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  ${(props) => props.draggingStyle}
+`;
+
+export const SelectPanel = styled.div`
+  padding: 20px;
+  border-radius: 15px;
+  background-color: ${color.backgroundLight};
+  position: absolute;
+  width: 55%;
+  height: 55%;
+  top: 110px;
+  left: 500px;
 `;

@@ -34,7 +34,7 @@ export const GridContainer = styled.div`
 export const Small = styled.span`
   font-size: 0.5rem;
 `;
-export const ResultItemTitle = styled.a<{ text: string }>`
+export const ResultItemTitle = styled.a`
   font-size: 0.75rem;
   width: 95%;
   padding-right: 0.3rem;
@@ -44,21 +44,25 @@ export const ResultItemTitle = styled.a<{ text: string }>`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  &:before {
-    content: "${(props) => props.text}";
-  }
 `;
-export const ResultItemImage = styled.img`
+export const ResultItemImage = styled.img<{ direction: "left" | "top" }>`
+  ${(props) => props.direction === "left" && "border-radius: 10px;"}
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 100%;
 `;
-export const ResultItemFixedContainer = styled.div`
+export const ResultItemFixedContainer = styled.div<{
+  direction: "top" | "left";
+}>`
   position: relative;
-  padding-bottom: 66%;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
+  ${(props) =>
+    props.direction === "top"
+      ? "padding-bottom:66%"
+      : "padding-right:35%;padding-bottom:20%;margin-top:3px;"};
+  ${(props) =>
+    props.direction === "top" && "box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);"};
   margin-bottom: 0.3rem;
 `;
 
@@ -75,9 +79,11 @@ export const ResultSection = styled.div<{ isDraggingOver: boolean }>`
 export const ResultItem = styled.div<{
   isDragging: boolean;
   draggingStyle: any;
+  selected: boolean;
 }>`
   background-color: ${color.backgroundLightest};
   ${shadows.shadowSm}
+  border:  ${(props) => props.selected && `2px solid rgba(11, 135, 91, 0.5)`};
   text-align: center;
   border-radius: 0.5rem;
   overflow: hidden;
@@ -94,22 +100,35 @@ export const Title = styled.span`
 
 export const Items = styled.div<{ isDraggingOver: boolean }>`
   background-color: ${(props) =>
-    props.isDraggingOver ? color.primary : color.backgroundLightPrimary};
+    props.isDraggingOver
+      ? color.backgroundMedium
+      : color.backgroundLightPrimary};
+  padding: 5px 10px;
   margin-top: 15px;
+  border-radius: 15px;
   margin-bottom: 10px;
 `;
 
 export const Item = styled.div<{ isDragging: boolean; draggingStyle: any }>`
-  border: ${(props) => props.isDragging && "2px solid #000"};
-  font-size: 16px;
   margin-top: 15px;
   margin-bottom: 15px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   width: 100%;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   ${(props) => props.draggingStyle}
+`;
+
+export const ItemImage = styled.img`
+  width: 20%;
+`;
+
+export const ItemText = styled.span`
+  font-size: 13px;
+  margin-left: 5px;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 `;
 
 export const SelectPanel = styled.div`

@@ -3,12 +3,13 @@ import { ResultItemFixedContainer, ResultItemImage as Image } from "../Styles";
 
 interface Props {
   src: string;
+  direction?: "top" | "left";
 }
 
-const ResultItemImage = ({ src }: Props) => {
+const ResultItemImage = ({ src, direction = "top" }: Props) => {
   return (
-    <ResultItemFixedContainer>
-      <Image src={`https://cf.shopee.ph/file/${src}`} />
+    <ResultItemFixedContainer direction={direction}>
+      <Image direction={direction} src={`https://cf.shopee.ph/file/${src}`} />
     </ResultItemFixedContainer>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import {
   DragDropContext,
   Droppable,
@@ -7,20 +7,11 @@ import {
 } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { color, font, mixin, shadows } from "../../styles";
-import { SearchItem } from "../../interfaces";
+import { SelectedItemsContext } from "../../useSelectedItemsContext";
+import { reorder } from "../../shared/utils/utils";
 
-// a little function to help us with reordering the result
-const reorder = (list: SearchItem[], startIndex: number, endIndex: number) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
-
-export default ({ results }: { results: SearchItem[] }) => {
-  const [items, setItems] = useState(results);
-
+export default () => {
+  const { selectedItems, setSelectedItems } = useContext(SelectedItemsContext);
   const onDragEnd = (result: DropResult) => {
     // dropped outside the list
     if (!result.destination) {
@@ -28,14 +19,14 @@ export default ({ results }: { results: SearchItem[] }) => {
     }
 
     const newItems = reorder(
-      items,
+      selectedItems,
       result.source.index,
       result.destination.index
     );
 
-    setItems(newItems);
+    setSelectedItems(newItems);
   };
-  return false ? (
+  return selectedItems.length !== 0 ? (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId='droppable' direction='horizontal'>
         {(provided, snapshot) => (
@@ -44,7 +35,7 @@ export default ({ results }: { results: SearchItem[] }) => {
             isDraggingOver={snapshot.isDraggingOver}
             {...provided.droppableProps}
           >
-            {items.map((item, index) => (
+            {selectedItems.map((item, index) => (
               <Draggable
                 key={item.itemid}
                 draggableId={`item-${item.itemid}`}

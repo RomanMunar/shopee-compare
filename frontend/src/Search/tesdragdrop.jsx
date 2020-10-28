@@ -37,8 +37,6 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   return result;
 };
 
-const grid = 8;
-
 const Content = styled.div`
   margin-right: 200px;
 `;

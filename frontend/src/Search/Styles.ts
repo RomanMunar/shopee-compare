@@ -1,3 +1,4 @@
+import { memo } from "react";
 import styled from "styled-components";
 import { color, font, mixin, shadows } from "../styles";
 
@@ -16,7 +17,7 @@ export const Label = styled.div`
   ${font.bold}
 `;
 
-export const SearchPanel = styled.div<{ isSearchPanelOpen: boolean }>`
+export const SearchPanel = memo(styled.div<{ isSearchPanelOpen: boolean }>`
   display: flex;
   flex-direction: column;
   border-radius: 15px;
@@ -36,4 +37,4 @@ export const SearchPanel = styled.div<{ isSearchPanelOpen: boolean }>`
   opacity: ${(props) => props.isSearchPanelOpen && 1};
   ${shadows.shadowMd}
   z-index: 300;
-`;
+`);

@@ -9,7 +9,7 @@ import Compare from "./Compare/index";
 import Container from "../components/Container";
 import { filterByField } from "../shared/utils/utils";
 import { mockData } from "./mochResponses";
-import SelectItems from "../components/SelectedItems";
+import SelectedItemsProvider from "../useSelectedItemsContext";
 
 export default (): ReactElement => {
   let query = useQueryParams().get("keyword");
@@ -22,12 +22,14 @@ export default (): ReactElement => {
         isSearchPanelOpen={isSearchPanelOpen}
         setIsSearchPanelOpen={setIsSearchPanelOpen}
       />
-      <SearchPanel isSearchPanelOpen={isSearchPanelOpen}>
-        <Searchbar />
-        <Label>Search results for "{query}"</Label>
-        <Results results={results} />
-      </SearchPanel>
-      <Compare results={results} />
+      <SelectedItemsProvider>
+        <SearchPanel isSearchPanelOpen={isSearchPanelOpen}>
+          <Searchbar />
+          <Label>Search results for "{query}"</Label>
+          <Results results={results} />
+        </SearchPanel>
+        <Compare />
+      </SelectedItemsProvider>
     </Container>
   );
 };

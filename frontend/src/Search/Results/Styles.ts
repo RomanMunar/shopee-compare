@@ -67,9 +67,10 @@ export const ResultItemFixedContainer = styled.div<{
 `;
 
 export const ResultSection = styled.div<{ isDraggingOver: boolean }>`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
   width: 86%;
   border: ${(props) => props.isDraggingOver && "1px solid #000"};
   ${mixin.scrollableY}
@@ -90,6 +91,29 @@ export const ResultItem = styled.div<{
   width: 8.3125rem;
   height: 12rem;
   margin-bottom: 0.5rem;
+  margin-right: 4px;
+  &:last-of-type {
+    margin-right: 0;
+  }
+`;
+
+//******************************** Select Panel ********************************//
+export const SelectPanel = styled.div<{ isSelectPanelOpen: boolean }>`
+  ${shadows.shadowMd}
+  ${(props) =>
+    !props.isSelectPanelOpen && "transform: translateX(-100%);opacity:0;"}
+  padding: 20px;
+  border-radius: 15px;
+  background-color: ${color.backgroundLight};
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  height: 55%;
+  top: 80px;
+  left: 500px;
 `;
 
 export const Title = styled.span`
@@ -98,11 +122,16 @@ export const Title = styled.span`
   line-height: 20px;
 `;
 
-export const Items = styled.div<{ isDraggingOver: boolean }>`
+export const Items = styled.div<{
+  isDraggingOver: boolean;
+  isSelectedItemsEmpty: boolean;
+}>`
   background-color: ${(props) =>
-    props.isDraggingOver
-      ? color.backgroundMedium
-      : color.backgroundLightPrimary};
+    !props.isSelectedItemsEmpty && color.backgroundLightPrimary};
+  overflow: auto;
+  ${mixin.scrollableX};
+  ${mixin.customScrollbar()};
+  flex-grow: 1;
   padding: 5px 10px;
   margin-top: 15px;
   border-radius: 15px;
@@ -129,15 +158,4 @@ export const ItemText = styled.span`
   margin-left: 5px;
   -webkit-line-clamp: 2;
   overflow: hidden;
-`;
-
-export const SelectPanel = styled.div`
-  padding: 20px;
-  border-radius: 15px;
-  background-color: ${color.backgroundLight};
-  position: absolute;
-  width: 55%;
-  height: 55%;
-  top: 110px;
-  left: 500px;
 `;

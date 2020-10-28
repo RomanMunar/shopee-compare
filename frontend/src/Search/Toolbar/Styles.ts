@@ -17,16 +17,22 @@ export const ToolbarButton = styled.button`
   }
 `;
 
-export const Toolbar = styled.div`
+type ToolbarVariants = "right-top" | "default";
+export const Toolbar = styled.div<{
+  isSearchPanelOpen?: boolean;
+  place: ToolbarVariants;
+  withoutMargin?:boolean
+}>`
   display: flex;
+  ${(props) =>
+    props.place === "right-top" &&  "align-self:flex-end;"}
+  ${(props) => !props.withoutMargin && "margin:15px 15px 0 0;"}
   align-items: center;
   justify-items: flex-start;
   height: 30px;
-  top: 10px;
   width: auto;
   border-radius: 15px;
   padding: 0 10px;
-  position: absolute;
   background-color: ${color.backgroundLight};
   ${shadows.shadowMd}
   transition: background 0.1s;

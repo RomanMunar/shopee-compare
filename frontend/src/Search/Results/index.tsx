@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useState } from "react";
+import React, {  ReactElement, useContext, useState } from "react";
 import { Icon } from "../../components/Icon";
 import { SearchItem } from "../../interfaces";
 import {
@@ -25,20 +25,43 @@ import {
 import {
   DragDropContext,
   Draggable,
-  DragStart,
   Droppable,
   DropResult,
 } from "react-beautiful-dnd";
 import { SelectedItemsContext } from "../../useSelectedItemsContext";
+import Button from "../../components/Button/index.jsx";
+import { Toolbar, ToolbarButton } from "../Toolbar/Styles";
+import ReactTooltip from "react-tooltip";
+
 interface Props {
   results: SearchItem[];
+  isSelectPanelOpen: boolean;
+  setIsSelectPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isSearchPanelOpen: boolean;
+  setIsSearchPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isSearchPanelMaximized: boolean;
+  setIsSearchPanelMaximized: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Results({ results }: Props): ReactElement {
+function Results({
+  results,
+  isSelectPanelOpen,
+  setIsSelectPanelOpen,
+  isSearchPanelOpen,
+  setIsSearchPanelOpen,
+  isSearchPanelMaximized,
+  setIsSearchPanelMaximized,
+}: Props): ReactElement {
   const [items, setItems] = useState(results);
-  const { selectedItems, setSelectedItems } = useContext(SelectedItemsContext);
-  const [isSelectedDisabled, setIsSelectedDisabled] = useState(false);
+  const { setSelectedItems } = useContext(SelectedItemsContext);
+  const [initialSelectedItems, setInitialSelectedItems] = useState<
+    SearchItem[]
+  >([]);
 
+  const onSelectItemsSubmit = () => {
+    setSelectedItems(initialSelectedItems);
+    setIsSearchPanelOpen(false);
+  };
   const onDragEnd = function onDragEnd(result: DropResult) {
     const { destination, source } = result;
 
@@ -61,30 +84,19 @@ function Results({ results }: Props): ReactElement {
       },
       list2: {
         id: "SELECTEDRESULTS",
-        values: selectedItems,
+        values: initialSelectedItems,
       },
       source,
       destination,
     });
 
     setItems(list1.values);
-    setSelectedItems(list2.values);
+    setInitialSelectedItems(list2.values);
   };
+  const onBeforeCapture = () => setIsSelectPanelOpen(true);
 
-  const onDragStart = (initial: DragStart) => {
-    const { draggableId } = initial;
-    if (
-      selectedItems.map((item) => item.itemid).includes(parseInt(draggableId))
-    ) {
-      // setIsSelectedDisabled(true);
-    } else {
-      setIsSelectedDisabled(false);
-    }
-  };
-
-  // onBeforeCapture={onBeforeCapture}
   return (
-    <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
+    <DragDropContext onBeforeCapture={onBeforeCapture} onDragEnd={onDragEnd}>
       <Droppable
         droppableId='RESULTS'
         isDropDisabled={true}
@@ -98,7 +110,7 @@ function Results({ results }: Props): ReactElement {
           >
             {results.map((res, index) => (
               <Draggable
-                isDragDisabled={selectedItems
+                isDragDisabled={initialSelectedItems
                   .map((item) => item.itemid)
                   .includes(res.itemid)}
                 key={res.itemid}
@@ -107,7 +119,7 @@ function Results({ results }: Props): ReactElement {
               >
                 {(provided, snapshot) => (
                   <ResultItem
-                    selected={selectedItems
+                    selected={initialSelectedItems
                       .map((item) => item.itemid)
                       .includes(res.itemid)}
                     ref={provided.innerRef}
@@ -192,48 +204,114 @@ function Results({ results }: Props): ReactElement {
           </ResultSection>
         )}
       </Droppable>
-      <SelectPanel>
-        <Title>Selected Items</Title>
-        <Droppable
-          droppableId='SELECTEDRESULTS'
-          direction='vertical'
-          isDropDisabled={isSelectedDisabled}
-        >
-          {(provided, snapshot) => (
-            <Items
-              ref={provided.innerRef}
-              isDraggingOver={snapshot.isDraggingOver}
-              {...provided.droppableProps}
+      {!isSearchPanelMaximized && (
+        <SelectPanel isSelectPanelOpen={isSelectPanelOpen}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <Title>Selected Items</Title>
+            <Toolbar
+              withoutMargin
+              isSearchPanelOpen={isSearchPanelOpen}
+              place='right-top'
             >
-              {selectedItems.map((res, index) => (
-                <Draggable
-                  key={index}
-                  draggableId={`res-${index}`}
-                  index={index}
-                >
-                  {(provided, snapshot) => (
-                    <Item
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      isDragging={snapshot.isDragging}
-                      draggingStyle={provided.draggableProps.style}
-                    >
-                      <ResultItemImage src={res.image} direction='left' />
-                      <ItemText>
-                        {res.name
-                          .replace(/[^a-zA-Z0-9 ]/g, "")
-                          .split("")
-                          .slice(0, 40)}
-                      </ItemText>
-                    </Item>
-                  )}
-                </Draggable>
-              ))}
-            </Items>
-          )}
-        </Droppable>
-      </SelectPanel>
+              <ToolbarButton
+                onClick={() => setIsSelectPanelOpen(false)}
+                data-tip='Minimize'
+                data-for='Minimize'
+              >
+                <Icon type='ArrowCircleLeft' size={16} />
+              </ToolbarButton>
+              <ReactTooltip
+                place='bottom'
+                type='dark'
+                effect='float'
+                id='Minimize'
+              />
+              <ToolbarButton
+                onClick={() => setIsSearchPanelMaximized(true)}
+                data-tip='Maximize'
+                data-for='Maximize'
+              >
+                <Icon type='Grid' size={16} />
+              </ToolbarButton>
+              <ReactTooltip
+                place='bottom'
+                type='dark'
+                effect='float'
+                id='Maximize'
+              />
+              <ToolbarButton
+                onClick={() => setIsSearchPanelOpen(false)}
+                data-tip='Close'
+                data-for='Close'
+              >
+                <Icon type='Close' size={16} />
+              </ToolbarButton>
+              <ReactTooltip
+                place='bottom'
+                type='dark'
+                effect='float'
+                id='Close'
+              />
+            </Toolbar>
+          </div>
+          <Droppable droppableId='SELECTEDRESULTS' direction='vertical'>
+            {(provided, snapshot) => (
+              <Items
+                isSelectedItemsEmpty={initialSelectedItems.length === 0}
+                ref={provided.innerRef}
+                isDraggingOver={snapshot.isDraggingOver}
+                {...provided.droppableProps}
+              >
+                {initialSelectedItems.map((res, index) => (
+                  <Draggable
+                    key={index}
+                    draggableId={`res-${index}`}
+                    index={index}
+                  >
+                    {(provided, snapshot) => (
+                      <Item
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        isDragging={snapshot.isDragging}
+                        draggingStyle={provided.draggableProps.style}
+                      >
+                        <ResultItemImage src={res.image} direction='left' />
+                        <ItemText>
+                          {res.name
+                            .replace(/[^a-zA-Z0-9 ]/g, "")
+                            .split("")
+                            .slice(0, 40)}
+                        </ItemText>
+                      </Item>
+                    )}
+                  </Draggable>
+                ))}
+              </Items>
+            )}
+          </Droppable>
+          <div style={{ display: "flex", flexShrink: 0 }}>
+            {/*//@ts-ignore */}
+            <Button
+              variant='secondary'
+              onClick={() => setIsSelectPanelOpen(false)}
+            >
+              Hide
+            </Button>
+            {/*//@ts-ignore */}
+            <Button variant='primary' onClick={onSelectItemsSubmit}>
+              Compare
+            </Button>
+          </div>
+        </SelectPanel>
+      )}
     </DragDropContext>
   );
 }

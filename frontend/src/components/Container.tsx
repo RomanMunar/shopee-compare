@@ -10,6 +10,7 @@ export default ({ children }: Props): ReactElement => {
 };
 
 export const Container = styled.main`
+  overflow: hidden;
   margin-left: 80px;
   width: 100%;
   display: flex;

@@ -10,21 +10,22 @@ export const Tags = styled.div`
   border-bottom: 2px solid #2f88ff;
   width: 100%;
 `;
-export const Label = styled.div`
-  text-align: start;
+export const Label = styled.span`
   width: 86%;
-  margin-bottom: 0.5rem;
   ${font.bold}
 `;
 
-export const SearchPanel = memo(styled.div<{ isSearchPanelOpen: boolean }>`
+export const SearchPanel = memo(styled.div<{
+  isSearchPanelOpen: boolean;
+  isSearchPanelMaximized: boolean;
+}>`
   display: flex;
   flex-direction: column;
   border-radius: 15px;
   position: absolute;
-  bottom: 10px;
-  height: 90vh;
-  width: 35%;
+  bottom: 20px;
+  height: 95vh;
+  width: ${(props) => (props.isSearchPanelMaximized ? "86%" : "35%")};
   background-color: ${color.backgroundLight};
   align-items: center;
   transition: all 0.2s;

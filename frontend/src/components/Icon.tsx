@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 interface Props {
   type:
+    | "ArrowCircleLeft"
+    | "ArrowCircleRight"
     | "Star"
     | "Grid"
     | "Search"
@@ -589,8 +591,8 @@ const SortIcon = ({ size }: { size: number }) => (
 );
 const GridIcon = ({ size }: { size: number }) => (
   <svg
-    width='16px'
-    height='16px'
+    width={size}
+    height={size}
     viewBox='0 0 48 48'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
@@ -649,6 +651,71 @@ const GridIcon = ({ size }: { size: number }) => (
     />
   </svg>
 );
+const ArrowCircleLeftIcon = ({ size }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <path
+      d='M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z'
+      fill='#2F88FF'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M32.4917 24.5H14.4917'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M23.4917 15.5L14.4917 24.5L23.4917 33.5'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+const ArrowCircleRightIcon = ({ size }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <path
+      d='M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z'
+      fill='#2F88FF'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M14.4917 24.5H32.4917'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M23.4917 15.5L32.4917 24.5L23.4917 33.5'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+
 const Icons: Record<keyof any, React.ElementType> = {
   Search: SearchIcon,
   Bookmark: BookmarkIcon,
@@ -671,4 +738,6 @@ const Icons: Record<keyof any, React.ElementType> = {
   Sort: SortIcon,
   Grid: GridIcon,
   Star: StarIcon,
+  ArrowCircleLeft: ArrowCircleLeftIcon,
+  ArrowCircleRight: ArrowCircleRightIcon,
 };

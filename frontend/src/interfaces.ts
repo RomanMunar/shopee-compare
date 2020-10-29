@@ -83,3 +83,30 @@ export interface Rating {
   product_items: { modelname: string };
   tags: [{ description: string }];
 }
+
+export type IconType =
+  | "ArrowLeftC"
+  | "ArrowRightC"
+  | "ArrowCircleLeft"
+  | "ArrowCircleRight"
+  | "Star"
+  | "Grid"
+  | "Search"
+  | "Bookmark"
+  | "Help"
+  | "Setting"
+  | "SearchBar"
+  | "Checkmark"
+  | "Like"
+  | "ExpandLeft"
+  | "ExpandRight"
+  | "Fire"
+  | "LowPrice"
+  | "Discount"
+  | "LowStarsCount"
+  | "PriceLow"
+  | "Plus"
+  | "Close"
+  | "ChevronDown"
+  | "Pdf"
+  | "Sort";

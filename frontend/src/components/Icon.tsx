@@ -1,39 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+import { IconType } from "../interfaces";
 
 interface Props {
-  type:
-    | "ArrowCircleLeft"
-    | "ArrowCircleRight"
-    | "Star"
-    | "Grid"
-    | "Search"
-    | "Bookmark"
-    | "Help"
-    | "Setting"
-    | "SearchBar"
-    | "Checkmark"
-    | "Like"
-    | "ExpandLeft"
-    | "ExpandRight"
-    | "Fire"
-    | "LowPrice"
-    | "Discount"
-    | "LowStarsCount"
-    | "PriceLow"
-    | "Plus"
-    | "Close"
-    | "ChevronDown"
-    | "Pdf"
-    | "Sort";
+  type: IconType;
   size: number;
   percent?: number | string;
+  onClick?: () => void;
 }
 
-export const Icon = ({ percent, type, size }: Props) => {
+export const Icon = ({ onClick, percent, type, size }: Props) => {
   let Icon = Icons[type];
 
-  return <Icon percent={percent} size={size} />;
+  return <Icon onClick={onClick} percent={percent} size={size} />;
 };
 
 export const NavIcon = ({ type, size }: Props) => {
@@ -716,6 +695,58 @@ const ArrowCircleRightIcon = ({ size }: { size: number }) => (
   </svg>
 );
 
+const ArrowLeftCIcon = ({ size }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <path
+      d='M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z'
+      fill='#2F88FF'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M27 33L18 24L27 15'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+
+const ArrowRightCIcon = ({ size }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <path
+      d='M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z'
+      fill='#2F88FF'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M21 33L30 24L21 15'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+
 const Icons: Record<keyof any, React.ElementType> = {
   Search: SearchIcon,
   Bookmark: BookmarkIcon,
@@ -740,4 +771,6 @@ const Icons: Record<keyof any, React.ElementType> = {
   Star: StarIcon,
   ArrowCircleLeft: ArrowCircleLeftIcon,
   ArrowCircleRight: ArrowCircleRightIcon,
+  ArrowLeftC: ArrowLeftCIcon,
+  ArrowRightC: ArrowRightCIcon,
 };

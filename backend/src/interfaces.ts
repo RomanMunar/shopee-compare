@@ -4,6 +4,22 @@ export interface ShopeeResponse<T> {
   error_msg: string | null;
 }
 
+export interface ShopeeRatingResponse<T> {
+  data: {
+    item: any;
+    ratings: T;
+  };
+  error: number;
+  error_msg: string | null;
+}
+
+export interface ShopeeItemResponse<T> {
+  data: any;
+  error: number;
+  error_msg: string | null;
+  item: T;
+}
+
 export interface SearchResponse {
   error: number | string | null;
   error_msg: string | null;
@@ -61,7 +77,7 @@ export interface Item {
 export interface ItemDetailed extends Item {
   historical_sold: number;
   description: string;
-  model: [
+  models: [
     {
       price: number;
       image: string;
@@ -74,11 +90,11 @@ export interface ItemDetailed extends Item {
 }
 
 export interface Rating {
-  anonymous: string;
+  anonymous: boolean;
   author_portrait: string;
   author_username: string;
   comment: string;
-  images: string;
+  images: string[];
   rating_star: number;
   product_items: { modelname: string };
   tags: [{ description: string }];

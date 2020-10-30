@@ -5,6 +5,8 @@ import {
   Rating,
   SearchResponse,
   Shop,
+  ShopeeItemResponse,
+  ShopeeRatingResponse,
   ShopeeResponse,
 } from "./interfaces";
 const app = express();
@@ -77,40 +79,36 @@ app.get("/search/:keyword", async (req, res) => {
 
 app.get("/item/:itemid/shop/:shopid", async (req, res) => {
   const { itemid, shopid } = req.params;
-  console.log({ itemid, shopid });
+  // "https://shopee.ph/api/v2/item/get_ratings?filter=0&flag=1&itemid=6643760845&limit=6&offset=0&shopid=73467985",
   try {
-    const response: ShopeeResponse<ItemDetailed> = await fetch(
-      "https://shopee.ph/api/v2/item/get_ratings?filter=0&flag=1&itemid=6643760845&limit=6&offset=0&shopid=73467985",
-      {
-        headers: {
-          accept: "*/*",
-          "accept-language": "en-US,en;q=0.9",
-          "if-none-match-": "55b03-28973ef21cfd832b5433b48bb7d49c51",
-        },
-      }
+    const response: ShopeeItemResponse<ItemDetailed> = await fetch(
+      `https://shopee.ph/api/v2/item/get?itemid=${itemid}&shopid=${shopid}`
     ).then((res) => res.json());
 
-    const { data, error, error_msg } = response;
+    const { item, error, error_msg } = response;
 
     const newData = {
-      itemid: data.itemid,
-      brand: data.brand,
-      name: data.name,
-      image: data.image,
-      images: data.images,
+      itemid: item.itemid,
+      description: item.description,
+      brand: item.brand,
+      name: item.name,
+      image: item.image,
+      images: item.images,
       item_rating: {
-        rating_count: data.item_rating.rating_count,
-        rating_star: data.item_rating.rating_star,
-        rcount_with_context: data.item_rating.rcount_with_context,
-        rcount_with_image: data.item_rating.rcount_with_image,
+        rating_count: item.item_rating.rating_count,
+        rating_star: item.item_rating.rating_star,
+        rcount_with_context: item.item_rating.rcount_with_context,
+        rcount_with_image: item.item_rating.rcount_with_image,
       },
-      price_min: data.price_min,
-      price_max: data.price_max,
-      price: data.price,
-      sold: data.sold,
-      shopee_verified: data.shopee_verified,
-      shop_location: data.shop_location,
-      tier_variations: data.tier_variations,
+      price_min: item.price_min,
+      price_max: item.price_max,
+      price: item.price,
+      sold: item.sold,
+      historical_sold: item.historical_sold,
+      shopee_verified: item.shopee_verified,
+      shop_location: item.shop_location,
+      tier_variations: item.tier_variations,
+      models: item.models,
     };
 
     res.status(200).json({ data: newData, error, error_msg });
@@ -146,31 +144,25 @@ app.get("/shop/:shopid", async (req, res) => {
 
 app.get("/ratings/:itemid/shop/:shopid", async (req, res) => {
   const { itemid, shopid } = req.params;
-  console.log({ itemid, shopid });
   try {
-    const response: ShopeeResponse<Rating> = await fetch(
-      "https://shopee.ph/api/v2/item/get_ratings?filter=0&flag=1&itemid=6643760845&limit=6&offset=0&shopid=73467985",
-      {
-        headers: {
-          accept: "*/*",
-          "accept-language": "en-US,en;q=0.9",
-          "if-none-match-": "55b03-28973ef21cfd832b5433b48bb7d49c51",
-        },
-      }
+    const response: ShopeeRatingResponse<Rating[]> = await fetch(
+      `https://shopee.ph/api/v2/item/get_ratings?filter=0&flag=1&itemid=${itemid}&limit=6&offset=0&shopid=${shopid}`
     ).then((res) => res.json());
 
     const { data, error, error_msg } = response;
 
-    const newData = {
-      anonymous: data.anonymous,
-      author_portrait: data.author_portrait,
-      author_username: data.author_username,
-      comment: data.comment,
-      images: data.images,
-      rating_star: data.rating_star,
-      product_items: data.product_items,
-      tags: data.tags,
-    };
+    const newData = data.ratings.map((rating) => {
+      return {
+        anonymous: rating.anonymous,
+        author_portrait: rating.author_portrait,
+        author_username: rating.author_username,
+        comment: rating.comment,
+        images: rating.images,
+        rating_star: rating.rating_star,
+        product_items: rating.product_items,
+        tags: rating.tags,
+      };
+    });
 
     res.status(200).json({ data: newData, error, error_msg });
   } catch (e) {

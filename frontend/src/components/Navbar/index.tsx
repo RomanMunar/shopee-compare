@@ -44,8 +44,10 @@ export const Navbar = (props: Props) => {
         </Item>
       </NavLink>
       <Bottom>
-        <NavIcon size={28} type='Help' />
-        <ItemText>About</ItemText>
+        <Item active={false}>
+          <NavIcon size={28} type='Help' />
+          <ItemText>About</ItemText>
+        </Item>
       </Bottom>
     </NavLeft>
   );

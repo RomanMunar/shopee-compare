@@ -1,34 +1,33 @@
 import styled from "styled-components";
 import { mixin, shadows, color, font } from "../../styles";
 
-export const Price = styled.span`
-  font-size: 1.1rem;
+export const Price = styled.span<{ on ?:"results"|"compare"}>`
+  font-size: ${props => props.on === "results"? "1.1rem":"1.6rem"};
   ${font.regular}
 `;
-export const Badges = styled.div`
+export const Badges = styled.div<{wide?:boolean}>`
   align-self: end;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr;
+  grid-template-columns: ${props => props.wide ?"1fr" :"1fr 1fr 1fr 1fr 1fr"};
   grid-template-areas: ". . . . .";
   grid-area: test;
 `;
 
-export const GridContainer = styled.div`
+export const GridContainer = styled.div<{ wide?: boolean }>`
+  width: ${(props) => props.wide && "100%"};
+  font-size: ${(props) => (props.wide ? "20px" : "13px")};
+  justify-items: ${(props) => (props.wide ? "center" : "start")};
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 0.9fr 0.9fr 1.2fr;
+  grid-template-rows: 0.9fr 0.9fr ${props => !props.wide && "1.2fr"};
   grid-template-areas:
     ". ."
     ". ."
     "test test";
-  font-size: 13px;
   ${font.bold}
-  padding:5px;
+  padding:${(props) => props.wide ? "5px 15px":"5px"};
   white-space: nowrap;
-  justify-items: start;
   align-items: center;
-  line-height: 14px;
 `;
 
 export const Small = styled.span`
@@ -138,7 +137,7 @@ export const Items = styled.div<{
   margin-bottom: 10px;
 `;
 
-export const Item = styled.div<{ isDragging: boolean; draggingStyle: any }>`
+export const Item = styled.div`
   margin-top: 15px;
   margin-bottom: 15px;
   width: 100%;
@@ -146,7 +145,6 @@ export const Item = styled.div<{ isDragging: boolean; draggingStyle: any }>`
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  ${(props) => props.draggingStyle}
 `;
 
 export const ItemImage = styled.img`

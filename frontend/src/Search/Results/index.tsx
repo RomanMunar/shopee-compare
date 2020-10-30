@@ -1,37 +1,38 @@
-import React, {  ReactElement, useContext, useState } from "react";
-import { Icon } from "../../components/Icon";
-import { SearchItem } from "../../interfaces";
-import {
-  Badges,
-  GridContainer,
-  Price,
-  ResultItem,
-  ResultSection,
-  Small,
-  ResultItemTitle,
-  SelectPanel,
-  Item,
-  Items,
-  Title,
-  ItemText,
-} from "./Styles";
-import ResultItemImage from "./ResultItemImage";
-import {
-  kFormatter,
-  moveBetween,
-  priceCompare,
-  reorder,
-} from "../../shared/utils/utils";
+import React, { ReactElement, useContext, useState } from "react";
 import {
   DragDropContext,
   Draggable,
   Droppable,
   DropResult,
 } from "react-beautiful-dnd";
-import { SelectedItemsContext } from "../../useSelectedItemsContext";
+import styled from "styled-components";
 import Button from "../../components/Button/index.jsx";
-import { Toolbar, ToolbarButton } from "../Toolbar/Styles";
-import ReactTooltip from "react-tooltip";
+import { Icon } from "../../components/Icon";
+import { ToolbarButton } from "../../components/Toolbar";
+import { Toolbar } from "../../components/Toolbar/Styles";
+import { SearchItem } from "../../interfaces";
+import {
+  kFormatter,
+  moveBetween,
+  priceCompare,
+  reorder,
+} from "../../shared/utils/utils";
+import { SelectedItemsContext } from "../../useSelectedItemsContext";
+import ResultItemImage from "./ResultItemImage";
+import {
+  Badges,
+  GridContainer,
+  Item,
+  Items,
+  ItemText,
+  Price,
+  ResultItem,
+  ResultItemTitle,
+  ResultSection,
+  SelectPanel,
+  Small,
+  Title,
+} from "./Styles";
 
 interface Props {
   results: SearchItem[];
@@ -134,7 +135,7 @@ function Results({
                     </ResultItemTitle>
                     <GridContainer>
                       <div>
-                        <span style={{ fontSize: "0.8rem" }}>₱</span>
+                        <Small style={{ fontSize: "0.8rem" }}>₱</Small>
                         <Price>
                           {priceCompare({
                             price: res.price,
@@ -206,14 +207,7 @@ function Results({
       </Droppable>
       {!isSearchPanelMaximized && (
         <SelectPanel isSelectPanelOpen={isSelectPanelOpen}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              width: "100%",
-            }}
-          >
+          <MenuWrapper>
             <Title>Selected Items</Title>
             <Toolbar
               withoutMargin
@@ -222,45 +216,20 @@ function Results({
             >
               <ToolbarButton
                 onClick={() => setIsSelectPanelOpen(false)}
-                data-tip='Minimize'
-                data-for='Minimize'
-              >
-                <Icon type='ArrowCircleLeft' size={16} />
-              </ToolbarButton>
-              <ReactTooltip
-                place='bottom'
-                type='dark'
-                effect='float'
-                id='Minimize'
+                name='Minimize'
+                icon='ArrowCircleLeft'
               />
               <ToolbarButton
                 onClick={() => setIsSearchPanelMaximized(true)}
-                data-tip='Maximize'
-                data-for='Maximize'
-              >
-                <Icon type='Grid' size={16} />
-              </ToolbarButton>
-              <ReactTooltip
-                place='bottom'
-                type='dark'
-                effect='float'
-                id='Maximize'
+                name='Maximize'
+                icon='Grid'
               />
               <ToolbarButton
                 onClick={() => setIsSearchPanelOpen(false)}
-                data-tip='Close'
-                data-for='Close'
-              >
-                <Icon type='Close' size={16} />
-              </ToolbarButton>
-              <ReactTooltip
-                place='bottom'
-                type='dark'
-                effect='float'
-                id='Close'
+                name='Close'
               />
             </Toolbar>
-          </div>
+          </MenuWrapper>
           <Droppable droppableId='SELECTEDRESULTS' direction='vertical'>
             {(provided, snapshot) => (
               <Items
@@ -270,29 +239,16 @@ function Results({
                 {...provided.droppableProps}
               >
                 {initialSelectedItems.map((res, index) => (
-                  <Draggable
-                    key={index}
-                    draggableId={`res-${index}`}
-                    index={index}
-                  >
-                    {(provided, snapshot) => (
-                      <Item
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        isDragging={snapshot.isDragging}
-                        draggingStyle={provided.draggableProps.style}
-                      >
-                        <ResultItemImage src={res.image} direction='left' />
-                        <ItemText>
-                          {res.name
-                            .replace(/[^a-zA-Z0-9 ]/g, "")
-                            .split("")
-                            .slice(0, 40)}
-                        </ItemText>
-                      </Item>
-                    )}
-                  </Draggable>
+                  <Item>
+                    <ResultItemImage src={res.image} direction='left' />
+                    <ItemText>
+                      {res.name
+                        .replace(/[^a-zA-Z0-9 ]/g, "")
+                        .split("")
+                        .slice(0, 50)}
+                      ...
+                    </ItemText>
+                  </Item>
                 ))}
               </Items>
             )}
@@ -315,5 +271,12 @@ function Results({
     </DragDropContext>
   );
 }
+
+const MenuWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`;
 
 export default Results;

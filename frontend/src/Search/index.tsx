@@ -1,22 +1,22 @@
-import React, { Fragment, ReactElement, useState } from "react";
-import ReactTooltip from "react-tooltip";
-import { Toolbar, ToolbarButton } from "./Toolbar/Styles";
+import React, { ReactElement, useState } from "react";
+import Container from "../components/Container";
+import { Icon } from "../components/Icon";
+import { Toolbar } from "../components/Toolbar/Styles";
 import { SearchItem } from "../interfaces";
 import { useQueryParams } from "../shared/hooks/useQueryParams";
-import Searchbar from "./Searchbar";
-import Results from "./Results";
-import { Label, SearchPanel } from "./Styles";
-import Compare from "./Compare/index";
-import Container from "../components/Container";
 import { filterByField } from "../shared/utils/utils";
-import { mockData } from "./mochResponses";
 import SelectedItemsProvider from "../useSelectedItemsContext";
-import { Icon } from "../components/Icon";
+import { mockData } from "./mochResponses";
+import Compare from "./Compare";
+import Results from "./Results";
+import Searchbar from "./Searchbar";
+import { Label, MenuWrapper, SearchPanel } from "./Styles";
+import { ToolbarButton } from "../components/Toolbar";
 
 export default (): ReactElement => {
   let query = useQueryParams().get("keyword");
   const [results] = useState<SearchItem[]>(filterByField(mockData, "itemid"));
-  const [isSearchPanelOpen, setIsSearchPanelOpen] = useState(true);
+  const [isSearchPanelOpen, setIsSearchPanelOpen] = useState(false);
   const [isSearchPanelMaximized, setIsSearchPanelMaximized] = useState(true);
   const [isSelectPanelOpen, setIsSelectPanelOpen] = useState(true);
 
@@ -29,94 +29,53 @@ export default (): ReactElement => {
         >
           <Toolbar isSearchPanelOpen={isSearchPanelOpen} place='right-top'>
             {isSearchPanelMaximized ? (
-              <Fragment>
-                <ToolbarButton
-                  onClick={() => setIsSearchPanelMaximized(false)}
-                  data-tip='Minimize'
-                  data-for='Minimize'
-                >
-                  <Icon type='ArrowCircleLeft' size={16} />
-                </ToolbarButton>
-                <ReactTooltip
-                  place='bottom'
-                  type='dark'
-                  effect='float'
-                  id='Minimize'
-                />
-              </Fragment>
+              <ToolbarButton
+                onClick={() => setIsSearchPanelMaximized(false)}
+                name='Minimize'
+                icon='ArrowCircleLeft'
+                tooltipPlace='bottom'
+              />
             ) : (
-              <Fragment>
-                <ToolbarButton
-                  onClick={() => setIsSearchPanelMaximized(true)}
-                  data-tip='Maximize'
-                  data-for='Maximize'
-                >
-                  <Icon type='ArrowCircleRight' size={16} />
-                </ToolbarButton>
-                <ReactTooltip
-                  place='bottom'
-                  type='dark'
-                  effect='float'
-                  id='Maximize'
-                />
-              </Fragment>
+              <ToolbarButton
+                onClick={() => setIsSearchPanelMaximized(true)}
+                icon='ArrowCircleRight'
+                name='Show'
+                tooltipPlace='bottom'
+              />
             )}
             <ToolbarButton
+              tooltipPlace='bottom'
               onClick={() => setIsSearchPanelMaximized(true)}
-              data-tip='Maximize'
-              data-for='Maximize'
-            >
-              <Icon type='Grid' size={16} />
-            </ToolbarButton>
-            <ReactTooltip
-              place='bottom'
-              type='dark'
-              effect='float'
-              id='Maximize'
+              name='Test'
+              icon='Grid'
             />
             <ToolbarButton
               onClick={() => setIsSearchPanelOpen(false)}
-              data-tip='Close'
-              data-for='Close'
-            >
-              <Icon type='Close' size={16} />
-            </ToolbarButton>
-            <ReactTooltip
-              place='bottom'
-              type='dark'
-              effect='float'
-              id='Close'
+              icon='Close'
+              name='Close'
+              tooltipPlace='bottom'
             />
           </Toolbar>
           <Searchbar />
-          <div
-            style={{
-              width: "86%",
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "flex-end",
-  marginBottom: "0.5rem"
-            }}
-          >
+          <MenuWrapper>
             <Label>Search results for "{query}"</Label>
             <Toolbar withoutMargin place='default'>
-              <ToolbarButton data-tip='tooltip'>
+              <ToolbarButton name='tooltip'>
                 <Icon type='Grid' size={16} />
                 <Icon type='Sort' size={16} />
               </ToolbarButton>
-              <ReactTooltip place='top' type='dark' effect='float' />
-              <ToolbarButton>
+              <ToolbarButton name='AlphabetSort'>
                 A<Icon type='Sort' size={16} />
               </ToolbarButton>
-              <ToolbarButton>
+              <ToolbarButton name='PriceSort'>
                 ₱<Icon type='Sort' size={16} />
               </ToolbarButton>
-              <ToolbarButton>
+              <ToolbarButton name='StarSort'>
                 <Icon type='Star' size={17} />
                 <Icon type='Sort' size={16} />
               </ToolbarButton>
             </Toolbar>
-          </div>
+          </MenuWrapper>
           <Results
             results={results}
             isSelectPanelOpen={isSelectPanelOpen}

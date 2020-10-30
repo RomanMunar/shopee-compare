@@ -1,5 +1,7 @@
 import React, { createContext, ReactNode, useState } from "react";
 import { SearchItem } from "./interfaces";
+import { mockData } from "./Search/mochResponses";
+import { filterByField } from "./shared/utils/utils";
 
 const initialState: {
   selectedItems: SearchItem[];
@@ -15,7 +17,7 @@ export default function SelectedItemsProvider({
 }: {
   children: ReactNode;
 }) {
-  const [selectedItems, setSelectedItems] = useState<SearchItem[]>([]);
+  const [selectedItems, setSelectedItems] = useState<SearchItem[]>(filterByField(mockData, "itemid"));
 
   return (
     <SelectedItemsContext.Provider value={{ selectedItems, setSelectedItems }}>

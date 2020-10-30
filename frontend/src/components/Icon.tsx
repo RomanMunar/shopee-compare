@@ -380,7 +380,7 @@ const DiscountIcon = ({
   size: number;
   percent: number | string;
 }) => (
-  <div
+  <span
     style={{
       backgroundColor: "#FD6132",
       height: size,
@@ -388,7 +388,7 @@ const DiscountIcon = ({
       border: "1px solid #333",
       borderRadius: "50%",
       color: "#FFF",
-      display: "flex",
+      display: "inline-flex",
       alignItems: "center",
       justifyContent: "center",
       marginRight: "2px",
@@ -396,7 +396,7 @@ const DiscountIcon = ({
   >
     <span style={{ fontSize: "0.5rem" }}>{percent}</span>
     <span style={{ fontSize: "0.35rem" }}>%</span>
-  </div>
+  </span>
 );
 const LowStarsCountIcon = ({
   size,
@@ -405,7 +405,7 @@ const LowStarsCountIcon = ({
   size: number;
   percent?: number | string;
 }) => (
-  <div
+  <span
     style={{
       backgroundColor: "#D0021B",
       height: size,
@@ -413,14 +413,14 @@ const LowStarsCountIcon = ({
       border: "1px solid #333",
       borderRadius: "50%",
       color: "#FFF",
-      display: "flex",
+      display: "inline-flex",
       alignItems: "center",
-      justifyContent: "center",
+      justifyContent: "center"
     }}
   >
     <span style={{ fontSize: "0.5rem" }}>{percent}</span>
     <span style={{ fontSize: "0.35rem" }}>%</span>
-  </div>
+  </span>
 );
 const PriceLowIcon = ({ size = 24 }: { size: number }) => (
   <svg height='16px' width='16px' viewBox='0 0 100 100'>
@@ -460,8 +460,8 @@ const StarIcon = ({
       <linearGradient id='grad2'>
         <stop offset='0%' stopColor='#2F88FF' />
         <stop offset={percent + "%"} stopColor='#2F88FF' />
-        <stop offset={percent + "%"} stopColor='white' />
-        <stop offset='100%' stopColor='white' />
+        <stop offset={percent + "%"} stopColor='#fff' />
+        <stop offset='100%' stopColor='#fff' />
       </linearGradient>
     </defs>
     <rect width='48' height='48' fill='white' fill-opacity='0.01' />

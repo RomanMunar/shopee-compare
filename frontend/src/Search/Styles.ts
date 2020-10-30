@@ -2,6 +2,14 @@ import { memo } from "react";
 import styled from "styled-components";
 import { color, font, mixin, shadows } from "../styles";
 
+export const MenuWrapper = styled.div`
+  width: 86%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-bottom: 0.5rem;
+`;
+
 export const Tags = styled.div`
   flex-wrap: nowrap;
   ${mixin.scrollableX}

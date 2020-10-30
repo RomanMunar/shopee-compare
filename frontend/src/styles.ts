@@ -83,14 +83,13 @@ export const mixin = {
     -webkit-overflow-scrolling: touch;
   `,
   scrollableX: css`
-    overflow-y: hidden;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   `,
   customScrollbar: ({
     width = 8,
     height = 8,
-    background = color.backgroundMedium,
+    background = color.backgroundLightSuccess,
   } = {}) => css`
     &::-webkit-scrollbar {
       width: ${width}px;

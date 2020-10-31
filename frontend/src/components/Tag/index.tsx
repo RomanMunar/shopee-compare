@@ -12,9 +12,9 @@ export default ({ primary, children }: Props): ReactElement => {
 };
 
 export const Tag = styled.span<Props>`
-  display:inline-flex;
-  justify-content:center;
-  align-items:center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   padding: 0.5rem 1rem;
   cursor: point;
   word-wrap: none;
@@ -32,4 +32,5 @@ export const Tag = styled.span<Props>`
     background-color: ${color.backgroundLight};
     ${shadows.shadowMd}
   }
+  margin-bottom: 5px;
 `;

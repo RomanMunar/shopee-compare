@@ -6,17 +6,16 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import styled from "styled-components";
-import { Icon } from "../../components/Icon";
 import Button from "../../components/Button";
-import { kFormatter, priceCompare, reorder } from "../../shared/utils/utils";
+import GridStats from "../../components/GridStats";
+import { Icon } from "../../components/Icon";
+import Select from "../../components/Select";
+import { reorder } from "../../shared/utils/utils";
 import { color, font, mixin, shadows } from "../../styles";
 import { SelectedItemsContext } from "../../useSelectedItemsContext";
-import { GridContainer, Price, Small } from "../Results/Styles";
 import { MultipleImage } from "./MultipleImage";
-import { MultipleRating } from "./MultipleRating";
 import { ratings } from "./ratings";
-import { Tag } from "../../components/Tag/";
-import Select from "../../components/Select";
+import Tags from "./Tags";
 
 type Layout = "single" | "double" | "none";
 
@@ -26,7 +25,16 @@ export default () => {
   const [isDescriptionHidden, setIsDescriptionHidden] = useState(false);
   const [isRatingsHidden, setIsRatingsHidden] = useState(true);
   const [ratingsDropdownOpen, setRatingsDropdownOpen] = useState(false);
-
+  const shop = {
+    account: {
+      portrait: "b07ac6d8449d4f84abb1ba58d9371759",
+      total_avg_star: 4.893882,
+    },
+    name: "PIDO YOGA",
+    follower_count: 35344,
+    response_rate: 100,
+    response_time: 166,
+  };
   const { data } = ratings;
 
   const onDragEnd = (result: DropResult) => {
@@ -71,108 +79,31 @@ export default () => {
                       {res.name
                         .replace(/[^a-zA-Z0-9 ]/g, "")
                         .split(" ")
-                        .map((word) =>
-                          word.split("").length > 10 ? "" : word + " "
-                        )}
+                        .map((word) => (word.length > 10 ? "" : word + " "))}
                     </CompareItemTitle>
-                    <GridContainer wide={true}>
-                      <div style={{ justifySelf: "start" }}>
-                        <Small style={{ fontSize: "1.5rem" }}>₱</Small>
-                        <Price>
-                          {priceCompare({
-                            price: res.price,
-                            price_max: res.price_max,
-                            price_min: res.price_min,
-                          })}
-                        </Price>
+                    <GridStats item={res} on='compare' />
+                    <Tags item={res} />
+                    <SectionWrapper>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                          width: "max-content",
+                          margin: "auto",
+                        }}
+                      >
+                        <AuthorImage src={"https://cf.shopee.ph/file/"+shop.account.portrait} />
+                        <div>
+                          <div>
+                            {shop.account.total_avg_star.toFixed(1)}{" "}
+                            <Icon type='Star' size={12} />
+                          </div>
+                      <span>-{shop.name}</span>
+                        </div>
                       </div>
-                      <div>
-                        {res.item_rating.rating_star.toFixed(1)}{" "}
-                        <Icon
-                          type='Star'
-                          size={16}
-                          percent={
-                            res.item_rating.rating_star === 0
-                              ? 0
-                              : res.item_rating.rating_star * 20 - 20
-                          }
-                        />
-                      </div>
-                      <div style={{ justifySelf: "start" }}>
-                        {kFormatter(res.sold)}
-                        <Small>sold/mon</Small>
-                      </div>
-                      <div>
-                        {kFormatter(res.liked_count)}
-                        <Icon size={16} type='Like' />
-                      </div>
-                      {/* {res.brand !== "No Brand" && <div>{res.brand}</div>} */}
-                    </GridContainer>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        padding: "0 15px",
-                      }}
-                    >
-                      {res.shopee_verified && (
-                        <Tag>
-                          <Icon size={16} type='Checkmark' />
-                          <span>Verified</span>
-                        </Tag>
-                      )}
-                      {res.is_adult && (
-                        <Tag>
-                          <Icon size={16} type='Fire' />
-                          <span>Hot</span>
-                        </Tag>
-                      )}
-                      {res.has_lowest_price_guarantee && (
-                        <Tag>
-                          <Icon size={16} type='PriceLow' />
-                          <span>Lowest Price</span>
-                        </Tag>
-                      )}
-                      {res.raw_discount && (
-                        <Tag>
-                          <Icon
-                            size={16}
-                            type='Discount'
-                            percent={res.raw_discount}
-                          />
-                          <span>Discount</span>
-                        </Tag>
-                      )}
-                      {res.item_rating.rating_count[0] !== 0 && (
-                        <Tag>
-                          <Icon
-                            size={16}
-                            percent={
-                              res.item_rating.rating_star === 0
-                                ? 0
-                                : Math.abs(
-                                    ((res.item_rating.rating_count[1] +
-                                      res.item_rating.rating_count[2]) /
-                                      res.item_rating.rating_count[0]) *
-                                      100
-                                  ).toFixed(1)
-                            }
-                            type='LowStarsCount'
-                          />
-                          <span>Negative Reviews</span>
-                        </Tag>
-                      )}
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                        width: "90%",
-                        alignItems: "center",
-                        marginTop: "15px",
-                      }}
-                    >
+                    </SectionWrapper>
+                    <SectionWrapper>
                       <div
                         style={{
                           display: "flex",
@@ -203,7 +134,7 @@ export default () => {
                             .replace(/\\n|\\r\\n|\\n\\r|\\r/g, " ")}
                         </DescriptionParagraph>
                       )}
-                    </div>
+                    </SectionWrapper>
                     <RatingsSummary>
                       {res.item_rating.rating_count
                         .slice(1)
@@ -223,16 +154,7 @@ export default () => {
                           </RatingItem>
                         ))}
                     </RatingsSummary>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                        width: "90%",
-                        alignItems: "center",
-                        marginTop: "15px",
-                      }}
-                    >
+                    <SectionWrapper>
                       <div
                         style={{
                           display: "flex",
@@ -303,7 +225,7 @@ export default () => {
                           </div>
                         </div>
                       )}
-                    </div>
+                    </SectionWrapper>
                   </CompareItem>
                 )}
               </Draggable>
@@ -368,16 +290,11 @@ const CompareItem = styled.div<{ draggingStyle: any; isDragging: boolean }>`
     props.isDragging ? "#fef3ab" : color.backgroundLight};
 `;
 
-const CompareItemTitle = styled.span`
+const CompareItemTitle = styled.div`
   margin-top: 15px;
   width: 95%;
   padding-right: 0.3rem;
   padding-left: 0.3rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
 `;
 const DescriptionTitle = styled.span`
   ${font.bold}
@@ -426,4 +343,12 @@ const RatingCount = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+const SectionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 90%;
+  align-items: center;
+  margin-top: 15px;
 `;

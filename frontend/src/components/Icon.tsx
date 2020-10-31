@@ -415,10 +415,12 @@ const LowStarsCountIcon = ({
       color: "#FFF",
       display: "inline-flex",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     }}
   >
-    <span style={{ fontSize: "0.5rem" }}>{percent}</span>
+    <span style={{ fontSize: "0.5rem", fontFamily: "Robot-Bold" }}>
+      {percent}
+    </span>
     <span style={{ fontSize: "0.35rem" }}>%</span>
   </span>
 );

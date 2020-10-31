@@ -1,14 +1,16 @@
 import styled from "styled-components";
 import { mixin, shadows, color, font } from "../../styles";
 
-export const Price = styled.span<{ on ?:"results"|"compare"}>`
-  font-size: ${props => props.on === "results"? "1.1rem":"1.6rem"};
+export const Price = styled.span<{ on?: "results" | "compare" }>`
+  font-size: ${(props) => (props.on === "results" ? "1.1rem" : "1.6rem")};
   ${font.regular}
 `;
-export const Badges = styled.div<{wide?:boolean}>`
+export const Badges = styled.div<{ wide?: boolean }>`
+  margin-bottom: 5px;
   align-self: end;
   display: grid;
-  grid-template-columns: ${props => props.wide ?"1fr" :"1fr 1fr 1fr 1fr 1fr"};
+  grid-template-columns: ${(props) =>
+    props.wide ? "1fr" : "1fr 1fr 1fr 1fr 1fr"};
   grid-template-areas: ". . . . .";
   grid-area: test;
 `;
@@ -19,19 +21,20 @@ export const GridContainer = styled.div<{ wide?: boolean }>`
   justify-items: ${(props) => (props.wide ? "center" : "start")};
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 0.9fr 0.9fr ${props => !props.wide && "1.2fr"};
+  grid-template-rows: 0.9fr 0.9fr ${(props) => !props.wide && "1.2fr"};
   grid-template-areas:
     ". ."
     ". ."
     "test test";
   ${font.bold}
-  padding:${(props) => props.wide ? "5px 15px":"5px"};
+  padding:${(props) => (props.wide ? "5px 15px 15px 15px" : "5px")};
   white-space: nowrap;
   align-items: center;
 `;
 
-export const Small = styled.span`
-  font-size: 0.5rem;
+export const Small = styled.span<{ on?: "results" | "compare" }>`
+  font-size: ${(props) => (props.on === "compare" ? "0.9rem" : "0.4rem")};
+  ${font.regular}
 `;
 export const ResultItemTitle = styled.a`
   font-size: 0.75rem;

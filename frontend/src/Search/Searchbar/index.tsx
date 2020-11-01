@@ -4,7 +4,7 @@ import { Icon } from "../../components/Icon";
 import Select from "../../components/Select";
 import { font } from "../../styles";
 import useOnOutsideClick from "../../shared/hooks/useOnOutsideClick";
-import { StyledInput, InputElement } from "./Styles";
+import {Filter,IconWrapper, StyledInput, InputElement } from "./Styles";
 
 export default (): ReactElement => {
   const [PriceDropdownOpen, setPriceDropdownOpen] = useState(false);
@@ -14,18 +14,12 @@ export default (): ReactElement => {
   const $sortRef = useRef<HTMLDivElement>(null);
   useOnOutsideClick($sortRef, () => setSortDropdownOpen(!SortDropdownOpen));
   useOnOutsideClick($priceRef, () => setPriceDropdownOpen(!PriceDropdownOpen));
+  
   return (
     <StyledInput>
-      <div
-        style={{
-          position: "absolute",
-          pointerEvents: "none",
-          top: "5px",
-          left: "9px",
-        }}
-      >
+      <IconWrapper>
         <Icon size={24} type='SearchBar' />
-      </div>
+      </IconWrapper>
       <InputElement />
       <Filter>
         <Select
@@ -44,11 +38,3 @@ export default (): ReactElement => {
     </StyledInput>
   );
 };
-
-const Filter = styled.div`
-  top: 2px;
-  right: 4px;
-  ${font.medium}
-  position: absolute;
-  padding: 2px;
-`;

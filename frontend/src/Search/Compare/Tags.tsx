@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { Icon } from "../../components/Icon";
 import { Tag } from "../../components/Tag";
 import { SearchItem } from "../../interfaces";
@@ -9,13 +10,7 @@ interface Props {
 
 const Tags = ({ item }: Props) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        padding: "0 15px",
-      }}
-    >
+    <TagsWrapper>
       {item.shopee_verified && (
         <Tag>
           <Icon size={16} type='Checkmark' />
@@ -59,8 +54,14 @@ const Tags = ({ item }: Props) => {
           <span>Negative Reviews</span>
         </Tag>
       )}
-    </div>
+    </TagsWrapper>
   );
 };
+
+const TagsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 15px;
+`;
 
 export default Tags;

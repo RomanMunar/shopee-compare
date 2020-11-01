@@ -42,3 +42,16 @@ export const InputElement = styled.input`
       }
     `}
 `;
+export const Filter = styled.div`
+  top: 2px;
+  right: 4px;
+  ${font.medium}
+  position: absolute;
+  padding: 2px;
+`;
+export const IconWrapper = styled.div`
+  position: absolute;
+  pointer-events: none;
+  top: 5px;
+  left: 9px;
+`;

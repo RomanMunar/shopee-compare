@@ -27,22 +27,15 @@ export default (): ReactElement => {
           isSearchPanelMaximized={isSearchPanelMaximized}
           isSearchPanelOpen={isSearchPanelOpen}
         >
-          <Toolbar isSearchPanelOpen={isSearchPanelOpen} place='right-top'>
-            {isSearchPanelMaximized ? (
-              <ToolbarButton
-                onClick={() => setIsSearchPanelMaximized(false)}
-                name='Minimize'
-                icon='ArrowCircleLeft'
-                tooltipPlace='bottom'
-              />
-            ) : (
-              <ToolbarButton
-                onClick={() => setIsSearchPanelMaximized(true)}
-                icon='ArrowCircleRight'
-                name='Show'
-                tooltipPlace='bottom'
-              />
-            )}
+          <Toolbar place='right-top'>
+            <ToolbarButton
+              onClick={() => setIsSearchPanelMaximized(!isSearchPanelMaximized)}
+              name={isSearchPanelMaximized ? "Minimize" : "Maximize"}
+              icon={
+                isSearchPanelMaximized ? "ArrowCircleLeft" : "ArrowCircleRight"
+              }
+              tooltipPlace='bottom'
+            />
             <ToolbarButton
               tooltipPlace='bottom'
               onClick={() => setIsSearchPanelMaximized(true)}
@@ -60,7 +53,7 @@ export default (): ReactElement => {
           <MenuWrapper>
             <Label>Search results for "{query}"</Label>
             <Toolbar withoutMargin place='default'>
-              <ToolbarButton name='tooltip'>
+              <ToolbarButton name='Layou'>
                 <Icon type='Grid' size={16} />
                 <Icon type='Sort' size={16} />
               </ToolbarButton>

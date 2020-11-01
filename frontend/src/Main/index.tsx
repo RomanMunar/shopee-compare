@@ -1,10 +1,10 @@
 import React from "react";
 import Container from "../components/Container";
-import Tesdragdrop from "../Search/tesdragdrop.jsx";
+import Spinner from "../components/Spinner";
 export const Main = () => {
   return (
     <Container>
-      <Tesdragdrop />
+      <Spinner size={50} />
     </Container>
   );
 };

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-import { color, font, mixin } from "../../styles";
+import { shadows, color, font, mixin } from "../../styles";
 import Spinner from "../Spinner";
 
 export const StyledButton = styled.button`
@@ -48,7 +48,8 @@ const secondaryAndEmptyShared = css`
   ${font.regular}
   &:not(:disabled) {
     &:hover {
-      background: ${color.backgroundLight};
+      background: ${color.backgroundLightest};
+      ${shadows.shadow}
     }
     &:active {
       color: ${color.primary};

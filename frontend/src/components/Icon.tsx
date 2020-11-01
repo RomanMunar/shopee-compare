@@ -749,6 +749,158 @@ const ArrowRightCIcon = ({ size }: { size: number }) => (
   </svg>
 );
 
+const SpeedIcon = ({ size }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <path
+      d='M30.2972 18.7786C30.2972 18.7786 27.0679 27.8808 25.5334 29.4699C23.9988 31.0591 21.4665 31.1033 19.8774 29.5687C18.2882 28.0341 18.244 25.5018 19.7786 23.9127C21.3132 22.3236 30.2972 18.7786 30.2972 18.7786Z'
+      fill='#2F88FF'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M38.8492 38.8492C42.6495 35.049 45 29.799 45 24C45 12.402 35.598 3 24 3C12.402 3 3 12.402 3 24C3 29.799 5.35051 35.049 9.15076 38.8492'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M24 4V8'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M38.8454 11.1421L35.7368 13.6593'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M42.5225 27.2328L38.6251 26.333'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M5.47749 27.2328L9.37497 26.333'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M9.15463 11.1421L12.2632 13.6593'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+const TimeIcon = ({ size }: { size: number }) => (
+  <svg
+    width='24'
+    height='24'
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <path
+      d='M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z'
+      fill='#2F88FF'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M24.0083 12L24.0071 24.0088L32.4865 32.4882'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+const CalendarIcon = ({ size }: { size: number }) => (
+  <svg
+    width='24'
+    height='24'
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <path
+      d='M5 19H43V40C43 41.1046 42.1046 42 41 42H7C5.89543 42 5 41.1046 5 40V19Z'
+      fill='#2F88FF'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M5 9C5 7.89543 5.89543 7 7 7H41C42.1046 7 43 7.89543 43 9V19H5V9Z'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M16 4V12'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M32 4V12'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M28 34H34'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M14 34H20'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M28 26H34'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M14 26H20'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+
 const Icons: Record<keyof any, React.ElementType> = {
   Search: SearchIcon,
   Bookmark: BookmarkIcon,
@@ -775,4 +927,7 @@ const Icons: Record<keyof any, React.ElementType> = {
   ArrowCircleRight: ArrowCircleRightIcon,
   ArrowLeftC: ArrowLeftCIcon,
   ArrowRightC: ArrowRightCIcon,
+  Speed: SpeedIcon,
+  Time: TimeIcon,
+  Calendar: CalendarIcon,
 };

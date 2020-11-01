@@ -1,6 +1,30 @@
 import { DraggableLocation } from "react-beautiful-dnd";
 import { SearchItem } from "../../interfaces";
 
+export function timeDifference(current: any, previous: any) {
+  var msPerMinute = 60 * 1000;
+  var msPerHour = msPerMinute * 60;
+  var msPerDay = msPerHour * 24;
+  var msPerMonth = msPerDay * 30;
+  var msPerYear = msPerDay * 365;
+
+  var elapsed = current - previous;
+
+  if (elapsed < msPerMinute) {
+    return Math.round(elapsed / 1000) + " seconds ago";
+  } else if (elapsed < msPerHour) {
+    return Math.round(elapsed / msPerMinute) + " minutes ago";
+  } else if (elapsed < msPerDay) {
+    return Math.round(elapsed / msPerHour) + " hours ago";
+  } else if (elapsed < msPerMonth) {
+    return Math.round(elapsed / msPerDay) + " days ago";
+  } else if (elapsed < msPerYear) {
+    return Math.round(elapsed / msPerMonth) + " months ago";
+  } else {
+    return Math.round(elapsed / msPerYear) + " years ago";
+  }
+}
+
 export const kFormatter = (num: number) =>
   Math.abs(num) > 999 ? (Math.abs(num) / 1000).toFixed(1) + "k" : Math.abs(num);
 

@@ -7,7 +7,7 @@ import { ToolbarButton as Button } from "./Styles";
 type Props = {
   name: string;
   icon?: IconType;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClick?: () => void;
   tooltipPlace?: "top" | "bottom" | "left" | "right";
   size?: number;
   children?: ReactNode;

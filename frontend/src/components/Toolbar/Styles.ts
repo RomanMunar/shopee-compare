@@ -19,7 +19,6 @@ export const ToolbarButton = styled.button`
 
 type ToolbarVariants = "right-top" | "default";
 export const Toolbar = styled.div<{
-  isSearchPanelOpen?: boolean;
   place: ToolbarVariants;
   withoutMargin?:boolean
 }>`

@@ -28,13 +28,11 @@ type Tier = {
 };
 
 export interface Shop {
-  data: string;
-  account: string;
-  total_avg_star: string;
-  portrait: string;
+  account: { portrait: string; total_avg_star: number };
   name: string;
-  follower_count: string;
-  response_rate: string;
+  follower_count: number;
+  response_rate: number;
+  response_time: number;
 }
 
 export interface Item {
@@ -85,6 +83,9 @@ export interface Rating {
 }
 
 export type IconType =
+  | "Speed"
+  | "Time"
+  | "Calendar"
   | "ArrowLeftC"
   | "ArrowRightC"
   | "ArrowCircleLeft"

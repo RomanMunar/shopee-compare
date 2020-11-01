@@ -86,21 +86,18 @@ export const mixin = {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   `,
-  customScrollbar: ({
-    width = 8,
-    height = 8,
-    background = color.backgroundLightSuccess,
-  } = {}) => css`
+  customScrollbar: ({ width = 8, height = 8 } = {}) => css`
     &::-webkit-scrollbar {
-      width: ${width}px;
       height: ${height}px;
+      width: ${width}px;
+      background-color: transparent;
     }
     &::-webkit-scrollbar-track {
-      background: none;
+      background-color: transparent;
     }
     &::-webkit-scrollbar-thumb {
       border-radius: 99px;
-      background: ${background};
+      background: rgba(30, 30, 30, 0.3);
     }
   `,
   backgroundImage: (imageURL: string) => css`

@@ -136,11 +136,7 @@ function Results({
         <SelectPanel isSelectPanelOpen={isSelectPanelOpen}>
           <MenuWrapper>
             <Title>Selected Items</Title>
-            <Toolbar
-              withoutMargin
-              isSearchPanelOpen={isSearchPanelOpen}
-              place='right-top'
-            >
+            <Toolbar withoutMargin place='right-top'>
               <ToolbarButton
                 onClick={() => setIsSelectPanelOpen(false)}
                 name='Minimize'

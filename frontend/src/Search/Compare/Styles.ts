@@ -23,6 +23,7 @@ export const Compare = styled.div<{ isDraggingOver: boolean }>`
 `;
 
 export const EmptyContainer = styled.div`
+  padding: 20px;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -33,6 +34,7 @@ export const EmptyContainer = styled.div`
   top: 25vh;
   left: 30vw;
   border: 5px dashed rgba(51, 51, 51, 0.6);
+  border-radius:2px;
 `;
 
 export const CompareItem = styled.div<{
@@ -126,5 +128,5 @@ export const SectionTitle = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 90%;
+  width: 100%;
 `;

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { SelectedItemsContext } from "../../shared/hooks/useSelectedItemsContext";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 import GridStats from "../../components/GridStats";
@@ -33,6 +34,7 @@ interface Props {
 }
 
 const CompareItem = ({ res, index, on }: Props) => {
+  const { selectedItems, setSelectedItems } = useContext(SelectedItemsContext);
   const [isDescriptionHidden, setIsDescriptionHidden] = useState(true);
   const [isRatingsHidden, setIsRatingsHidden] = useState(true);
   const [isRatingsSummaryHidden, setIsRatingsSummaryHidden] = useState(true);
@@ -87,7 +89,8 @@ const CompareItem = ({ res, index, on }: Props) => {
                 icon='Grid'
               />
               <ToolbarButton
-                onClick={onClick}
+                onClick={() =>
+                  setSelectedItems(selectedItems.filter((item) => item.itemid !== res.itemid))}
                 icon='Close'
                 name='Close'
                 tooltipPlace='bottom'

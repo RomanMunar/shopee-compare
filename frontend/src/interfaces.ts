@@ -83,6 +83,9 @@ export interface Rating {
 }
 
 export type IconType =
+  | "MainLayout"
+  | "DoubleLayout"
+  | "Column"
   | "Speed"
   | "Time"
   | "Calendar"

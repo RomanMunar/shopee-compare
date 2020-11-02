@@ -40,9 +40,9 @@ export default () => {
   }, [layout]);
 
   useEffect(() => {
-    console.log(`On ${layout} Layout`);
-    console.log({ mainItem, sideItems });
-  }, [mainItem, sideItems]);
+    setMainItem([selectedItems[0]]);
+    setSideItems(selectedItems.slice(1));
+  }, [selectedItems]);
 
   const onDragEnd = (result: DropResult) => {
     // dropped outside the list

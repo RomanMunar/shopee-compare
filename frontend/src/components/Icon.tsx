@@ -901,6 +901,119 @@ const CalendarIcon = ({ size }: { size: number }) => (
   </svg>
 );
 
+const ColumnIcon = ({ size = 24 }: { size?: number }) => (
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    }}
+  >
+    <div
+      style={{
+        borderRadius: "25%",
+        border: "2px solid #333",
+        backgroundColor: "#2F88FF",
+        width: 7,
+        height: 18,
+        marginRight: 1,
+      }}
+    ></div>
+    <div
+      style={{
+        borderRadius: "25%",
+        border: "2px solid #333",
+        backgroundColor: "#2F88FF",
+        width: 7,
+        height: 18,
+        marginRight: 1,
+      }}
+    ></div>
+    <div
+      style={{
+        borderRadius: "25%",
+        border: "2px solid #333",
+        backgroundColor: "#2F88FF",
+        width: 7,
+        height: 18,
+      }}
+    ></div>
+  </div>
+);
+
+const MainLayoutIcon = ({ size = 24 }: { size?: number }) => (
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    }}
+  >
+    <div
+      style={{
+        borderRadius: "15%",
+        border: "2px solid #333",
+        backgroundColor: "#2F88FF",
+        width: 21,
+        height: 18,
+        marginRight: 1,
+      }}
+    ></div>
+    <div
+      style={{
+        borderRadius: "25%",
+        border: "2px solid #333",
+        backgroundColor: "#2F88FF",
+        width: 7,
+        height: 18,
+      }}
+    ></div>
+  </div>
+);
+const DoubleLayoutIcon = ({ size = 24 }: { size?: number }) => (
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    }}
+  >
+    <div
+      style={{
+        borderRadius: "25%",
+        borderTopRightRadius: 0,
+        borderBottomRightRadius: 0,
+        border: "2px solid #333",
+        backgroundColor: "#2F88FF",
+        borderRight: 0,
+        width: 10.5,
+        height: 18,
+      }}
+    ></div>
+    <div
+      style={{
+        borderRadius: "25%",
+        borderTopLeftRadius: 0,
+        borderBottomLeftRadius: 0,
+        border: "2px solid #333",
+        backgroundColor: "#2F88FF",
+        width: 10.5,
+        height: 18,
+        marginRight: 1.2,
+      }}
+    ></div>
+    <div
+      style={{
+        borderRadius: "25%",
+        border: "2px solid #333",
+        backgroundColor: "#2F88FF",
+        width: 7,
+        height: 18,
+      }}
+    ></div>
+  </div>
+);
+
 const Icons: Record<keyof any, React.ElementType> = {
   Search: SearchIcon,
   Bookmark: BookmarkIcon,
@@ -930,4 +1043,7 @@ const Icons: Record<keyof any, React.ElementType> = {
   Speed: SpeedIcon,
   Time: TimeIcon,
   Calendar: CalendarIcon,
+  Column: ColumnIcon,
+  MainLayout: MainLayoutIcon,
+  DoubleLayout: DoubleLayoutIcon,
 };

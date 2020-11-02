@@ -12,7 +12,7 @@ import { ToolbarButton } from "../../components/Toolbar";
 import { Toolbar } from "../../components/Toolbar/Styles";
 import { SearchItem } from "../../interfaces";
 import { moveBetween, reorder } from "../../shared/utils/utils";
-import { SelectedItemsContext } from "../../useSelectedItemsContext";
+import { SelectedItemsContext } from "../../shared/hooks/useSelectedItemsContext";
 import ResultItemImage from "./ResultItemImage";
 import {
   Item,

@@ -5,7 +5,7 @@ import { Toolbar } from "../components/Toolbar/Styles";
 import { SearchItem } from "../interfaces";
 import { useQueryParams } from "../shared/hooks/useQueryParams";
 import { filterByField } from "../shared/utils/utils";
-import SelectedItemsProvider from "../useSelectedItemsContext";
+import SelectedItemsProvider from "../shared/hooks/useSelectedItemsContext";
 import { mockData } from "./mochResponses";
 import Compare from "./Compare";
 import Results from "./Results";

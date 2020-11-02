@@ -9,17 +9,17 @@ export const Title = styled.span`
 `;
 
 export const Compare = styled.div<{ isDraggingOver: boolean }>`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5%;
+  position: relative;
   padding: 20px;
-  position: absolute;
-  width: 93%;
-  height: 95vh;
-  bottom: 15px;
+  display: flex;
+  height: 100%;
+  gap: 1.5%;
   border-radius: 15px;
   background-color: ${(props) =>
-    props.isDraggingOver ? color.backgroundLight : color.backgroundMedium};
+    props.isDraggingOver
+      ? color.backgroundDarkPrimary
+      : color.backgroundLightest};
+  ${shadows.shadowLg}
 `;
 
 export const EmptyContainer = styled.div`
@@ -36,13 +36,12 @@ export const EmptyContainer = styled.div`
 `;
 
 export const CompareItem = styled.div<{
+  on: "main" | "selection";
   draggingStyle: any;
   isDragging: boolean;
 }>`
-  // ${mixin.scrollableX}
-  position:relative;
-  overflow: overlay;
-  ${mixin.customScrollbar()}
+  ${mixin.scrollableY}
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;

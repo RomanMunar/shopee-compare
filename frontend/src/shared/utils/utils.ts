@@ -1,7 +1,7 @@
 import { DraggableLocation } from "react-beautiful-dnd";
 import { SearchItem } from "../../interfaces";
 
-export function timeDifference(current: any, previous: any) {
+export const getRelativeTimeFormat = (current: any, previous: any) => {
   var msPerMinute = 60 * 1000;
   var msPerHour = msPerMinute * 60;
   var msPerDay = msPerHour * 24;
@@ -23,7 +23,7 @@ export function timeDifference(current: any, previous: any) {
   } else {
     return Math.round(elapsed / msPerYear) + " years ago";
   }
-}
+};
 
 export const kFormatter = (num: number) =>
   Math.abs(num) > 999 ? (Math.abs(num) / 1000).toFixed(1) + "k" : Math.abs(num);

@@ -1,5 +1,33 @@
 import { DraggableLocation } from "react-beautiful-dnd";
-import { SearchItem } from "../../interfaces";
+import { Layout, SearchItem } from "../../interfaces";
+
+export const move = (
+  source: SearchItem[],
+  destination: SearchItem[],
+  droppableSource: DraggableLocation,
+  droppableDestination: DraggableLocation,
+  layout: Layout,
+  mainLength: number
+) => {
+  let sourceClone = Array.from(source);
+  let destClone = Array.from(destination);
+  const [removed] = sourceClone.splice(droppableSource.index, 1);
+
+  if (
+    layout === "main" &&
+    mainLength >= 1 &&
+    droppableSource.droppableId === "SELECTION"
+  ) {
+    sourceClone.push(destClone[0]);
+    destClone = [removed];
+  } else {
+    destClone.splice(droppableDestination.index, 0, removed);
+  }
+  const newSourceItems = sourceClone;
+  const newDestinationItems = destClone;
+
+  return { newSourceItems, newDestinationItems };
+};
 
 export const getRelativeTimeFormat = (current: any, previous: any) => {
   var msPerMinute = 60 * 1000;

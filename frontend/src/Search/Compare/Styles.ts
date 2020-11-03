@@ -18,7 +18,7 @@ export const CompareSelection = styled.div<{
   isDraggingOver: boolean;
 }>`
   ${(props) => props.hidden && "display:none"};
-  min-width: 400px;
+  min-width: 300px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -85,11 +85,10 @@ export const EmptyContainer = styled.div`
 `;
 
 export const CompareItem = styled.div<{
-  on: "main" | "selection";
   draggingStyle: any;
   isDragging: boolean;
 }>`
-min-width: min-content;
+  min-width: min-content;
   ${mixin.scrollableY}
   position: relative;
   display: flex;
@@ -105,7 +104,6 @@ min-width: min-content;
 
 export const CompareItemTitle = styled.div`
   margin-top: 15px;
-  width: 95%;
   padding-right: 0.3rem;
   padding-left: 0.3rem;
 `;
@@ -114,17 +112,18 @@ export const DescriptionTitle = styled.span`
   font-size:20px;
 `;
 
-export const DescriptionParagraph = styled.p`
+export const DescriptionParagraph = styled.p<{ on?: "main" }>`
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   flex-grow: 1;
   font-size: 14px;
   margin: 8px 0;
   padding-right: 0.3rem;
   padding-left: 0.3rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
+  ${(props) =>
+    props.on !== "main" &&
+    "overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 5;-webkit-box-orient: vertical;"}
 `;
 export const AuthorImage = styled.img`
   border-radius: 50%;

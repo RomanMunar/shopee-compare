@@ -1,6 +1,6 @@
 import { memo } from "react";
 import styled from "styled-components";
-import { color, font, mixin, shadows } from "../styles";
+import { color, font, mixin, shadows } from "../shared/styles";
 
 export const MenuWrapper = styled.div`
   width: 86%;

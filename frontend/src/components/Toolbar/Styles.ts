@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { font, color, shadows } from "../../styles";
+import { font, color, shadows } from "../../shared/styles";
 
 export const ToolbarButton = styled.button`
   ${font.bold}

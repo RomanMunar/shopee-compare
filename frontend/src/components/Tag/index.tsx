@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import styled from "styled-components";
-import { color, shadows } from "../../styles";
+import { color, shadows } from "../../shared/styles";
 
 interface Props {
   primary?: boolean;

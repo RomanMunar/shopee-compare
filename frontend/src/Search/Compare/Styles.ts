@@ -1,5 +1,52 @@
 import styled from "styled-components";
-import { color, font, mixin, shadows } from "../../styles";
+import { color, font, mixin, shadows } from "../../shared/styles";
+
+export const CompareContainer = styled.div`
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  width: 93%;
+  height: 100%;
+  position: absolute;
+  background: ${color.backgroundLight};
+  gap: 2.5%;
+`;
+
+export const CompareSelection = styled.div<{
+  hidden: boolean;
+  isDraggingOver: boolean;
+}>`
+  ${(props) => props.hidden && "display:none"};
+  min-width: 400px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1.5%;
+  border-radius: 15px;
+  background-color: ${(props) =>
+    props.isDraggingOver
+      ? color.backgroundDarkPrimary
+      : color.backgroundLightest};
+  ${shadows.shadowLg}
+`;
+export const MenuWrapper = styled.div`
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  z-index: 10;
+  position: absolute;
+  top: 5px;
+  margin: auto;
+`;
+export const MenuTitle = styled.span`
+  font-size: 20px;
+  ${font.medium}
+  line-height: 20px;
+`;
 
 export const Title = styled.span`
   display: block;
@@ -34,7 +81,7 @@ export const EmptyContainer = styled.div`
   top: 25vh;
   left: 30vw;
   border: 5px dashed rgba(51, 51, 51, 0.6);
-  border-radius:2px;
+  border-radius: 2px;
 `;
 
 export const CompareItem = styled.div<{
@@ -42,6 +89,7 @@ export const CompareItem = styled.div<{
   draggingStyle: any;
   isDragging: boolean;
 }>`
+min-width: min-content;
   ${mixin.scrollableY}
   position: relative;
   display: flex;

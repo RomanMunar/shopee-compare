@@ -63,7 +63,11 @@ const CompareItem = ({ res, index, on }: Props) => {
   const onClick = () => console.log("clicked");
 
   return (
-    <Draggable key={res.itemid} draggableId={`res-${res.itemid}`} index={index}>
+    <Draggable
+      key={"compare-item-" + res.itemid}
+      draggableId={`res-${res.itemid}`}
+      index={index}
+    >
       {(provided, snapshot) => (
         <CItem
           on={on}
@@ -90,14 +94,17 @@ const CompareItem = ({ res, index, on }: Props) => {
               />
               <ToolbarButton
                 onClick={() =>
-                  setSelectedItems(selectedItems.filter((item) => item.itemid !== res.itemid))}
+                  setSelectedItems(
+                    selectedItems.filter((item) => item.itemid !== res.itemid)
+                  )
+                }
                 icon='Close'
                 name='Close'
                 tooltipPlace='bottom'
               />
             </Toolbar>
           </div>
-          <MultipleImage srcs={res.images} />
+          <MultipleImage key={"images-of-" + res.itemid} srcs={res.images} />
           <CompareItemTitle>
             {res.name
               .replace(/[^a-zA-Z0-9 ]/g, "")

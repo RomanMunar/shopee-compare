@@ -43,27 +43,27 @@ const SearchIcon = ({ size }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M21 38C30.3888 38 38 30.3888 38 21C38 11.6112 30.3888 4 21 4C11.6112 4 4 11.6112 4 21C4 30.3888 11.6112 38 21 38Z'
       fill='#2F88FF'
       stroke='#333'
       strokeWidth='4'
-      stroke-linejoin='round'
+      strokeLinejoin='round'
     />
     <path
       d='M26.6568 14.3431C25.2091 12.8954 23.2091 12 21 12C18.7909 12 16.7909 12.8954 15.3431 14.3431'
       stroke='#FFF'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M33.2218 33.2218L41.7071 41.7071'
       stroke='#333'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
   </svg>
 );
@@ -75,30 +75,30 @@ const BookmarkIcon = ({ size }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M10 44C8.89543 44 8 43.1046 8 42V6C8 4.89543 8.89543 4 10 4H38C39.1046 4 40 4.89543 40 6V42C40 43.1046 39.1046 44 38 44H10Z'
       fill='#2F88FF'
       stroke='#333'
       strokeWidth='4'
-      stroke-linejoin='round'
+      strokeLinejoin='round'
     />
     <path
-      fill-rule='evenodd'
-      clip-rule='evenodd'
+      fillRule='evenodd'
+      clipRule='evenodd'
       d='M21 22V4H33V22L27 15.7273L21 22Z'
       fill='#43CCF8'
       stroke='#FFF'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M10 4H38'
       stroke='#333'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
   </svg>
 );
@@ -110,24 +110,24 @@ const HelpIcon = ({ size }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M24 44C29.5228 44 34.5228 41.7614 38.1421 38.1421C41.7614 34.5228 44 29.5228 44 24C44 18.4772 41.7614 13.4772 38.1421 9.85786C34.5228 6.23858 29.5228 4 24 4C18.4772 4 13.4772 6.23858 9.85786 9.85786C6.23858 13.4772 4 18.4772 4 24C4 29.5228 6.23858 34.5228 9.85786 38.1421C13.4772 41.7614 18.4772 44 24 44Z'
       fill='#2F88FF'
       stroke='#333'
       strokeWidth='4'
-      stroke-linejoin='round'
+      strokeLinejoin='round'
     />
     <path
       d='M24 28.6249V24.6249C27.3137 24.6249 30 21.9386 30 18.6249C30 15.3112 27.3137 12.6249 24 12.6249C20.6863 12.6249 18 15.3112 18 18.6249'
       stroke='#FFF'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
-      fill-rule='evenodd'
-      clip-rule='evenodd'
+      fillRule='evenodd'
+      clipRule='evenodd'
       d='M24 37.6249C25.3807 37.6249 26.5 36.5056 26.5 35.1249C26.5 33.7442 25.3807 32.6249 24 32.6249C22.6193 32.6249 21.5 33.7442 21.5 35.1249C21.5 36.5056 22.6193 37.6249 24 37.6249Z'
       fill='#FFF'
     />
@@ -141,20 +141,20 @@ const SettingIcon = ({ size }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M36.686 15.171C37.9364 16.9643 38.8163 19.0352 39.2147 21.2727H44V26.7273H39.2147C38.8163 28.9648 37.9364 31.0357 36.686 32.829L40.0706 36.2137L36.2137 40.0706L32.829 36.686C31.0357 37.9364 28.9648 38.8163 26.7273 39.2147V44H21.2727V39.2147C19.0352 38.8163 16.9643 37.9364 15.171 36.686L11.7863 40.0706L7.92939 36.2137L11.314 32.829C10.0636 31.0357 9.18372 28.9648 8.78533 26.7273H4V21.2727H8.78533C9.18372 19.0352 10.0636 16.9643 11.314 15.171L7.92939 11.7863L11.7863 7.92939L15.171 11.314C16.9643 10.0636 19.0352 9.18372 21.2727 8.78533V4H26.7273V8.78533C28.9648 9.18372 31.0357 10.0636 32.829 11.314L36.2137 7.92939L40.0706 11.7863L36.686 15.171Z'
       fill='#2F88FF'
       stroke='#333'
       strokeWidth='4'
-      stroke-linejoin='round'
+      strokeLinejoin='round'
     />
     <path
       d='M24 29C26.7614 29 29 26.7614 29 24C29 21.2386 26.7614 19 24 19C21.2386 19 19 21.2386 19 24C19 26.7614 21.2386 29 24 29Z'
       fill='#43CCF8'
       stroke='#FFF'
       strokeWidth='4'
-      stroke-linejoin='round'
+      strokeLinejoin='round'
     />
   </svg>
 );
@@ -167,9 +167,9 @@ const SearchBarIcon = ({ size }: { size: number }) => (
     height={size}
   >
     <path
-      fill-rule='evenodd'
+      fillRule='evenodd'
       d='M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z'
-      clip-rule='evenodd'
+      clipRule='evenodd'
     />
   </svg>
 );
@@ -181,20 +181,20 @@ const CheckmarkIcon = ({ size }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M24 44C29.5228 44 34.5228 41.7614 38.1421 38.1421C41.7614 34.5228 44 29.5228 44 24C44 18.4772 41.7614 13.4772 38.1421 9.85786C34.5228 6.23858 29.5228 4 24 4C18.4772 4 13.4772 6.23858 9.85786 9.85786C6.23858 13.4772 4 18.4772 4 24C4 29.5228 6.23858 34.5228 9.85786 38.1421C13.4772 41.7614 18.4772 44 24 44Z'
       fill='#FD6132'
       stroke='#333'
       strokeWidth='4'
-      stroke-linejoin='round'
+      strokeLinejoin='round'
     />
     <path
       d='M16 24L22 30L34 18'
       stroke='#FFF'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
   </svg>
 );
@@ -206,14 +206,14 @@ const LikeIcon = ({ size = 24 }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z'
       fill='#2F88FF'
       stroke='#333'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
   </svg>
 );
@@ -225,7 +225,7 @@ const ExpandLeftIcon = ({ size = 24 }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <rect
       x='4'
       y='4'
@@ -235,35 +235,35 @@ const ExpandLeftIcon = ({ size = 24 }: { size: number }) => (
       fill='#2F88FF'
       stroke='#333'
       strokeWidth='4'
-      stroke-linejoin='round'
+      strokeLinejoin='round'
     />
     <path
       d='M16 4V44'
       stroke='#FFF'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M9 4H34'
       stroke='#333'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M9 44H34'
       stroke='#333'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M32 20L28 24L32 28'
       stroke='#FFF'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
   </svg>
 );
@@ -275,7 +275,7 @@ const ExpandRightIcon = ({ size = 24 }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <rect
       x='4'
       y='4'
@@ -285,35 +285,35 @@ const ExpandRightIcon = ({ size = 24 }: { size: number }) => (
       fill='#2F88FF'
       stroke='#333'
       strokeWidth='4'
-      stroke-linejoin='round'
+      strokeLinejoin='round'
     />
     <path
       d='M16 4V44'
       stroke='#FFF'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M9 4H34'
       stroke='#333'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M9 44H34'
       stroke='#333'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M32 20L28 24L32 28'
       stroke='#FFF'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
   </svg>
 );
@@ -325,13 +325,13 @@ const FireIcon = ({ size = 24 }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M24 44C32.2347 44 38.9998 37.4742 38.9998 29.0981C38.9998 27.0418 38.8953 24.8375 37.7555 21.4116C36.6157 17.9858 36.3861 17.5436 35.1809 15.4279C34.666 19.7454 31.911 21.5448 31.2111 22.0826C31.2111 21.5231 29.5445 15.3359 27.0176 11.6339C24.537 8 21.1634 5.61592 19.1853 4C19.1853 7.06977 18.3219 11.6339 17.0854 13.9594C15.8489 16.2849 15.6167 16.3696 14.0722 18.1002C12.5278 19.8308 11.8189 20.3653 10.5274 22.4651C9.23596 24.565 9 27.3618 9 29.4181C9 37.7942 15.7653 44 24 44Z'
       fill='#D0021B'
       stroke='#333'
       strokeWidth='4'
-      stroke-linejoin='round'
+      strokeLinejoin='round'
     />
   </svg>
 );
@@ -343,7 +343,7 @@ const LowPriceIcon = ({ size = 24 }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <circle
       cx='11'
       cy='11'
@@ -351,8 +351,8 @@ const LowPriceIcon = ({ size = 24 }: { size: number }) => (
       fill='#2F88FF'
       stroke='#333'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <circle
       cx='37'
@@ -361,15 +361,15 @@ const LowPriceIcon = ({ size = 24 }: { size: number }) => (
       fill='#2F88FF'
       stroke='#333'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M42 6L6 42'
       stroke='#333'
       strokeWidth='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
   </svg>
 );
@@ -431,14 +431,14 @@ const PriceLowIcon = ({ size = 24 }: { size: number }) => (
         fill='#2F88FF'
         stroke='#333'
         strokeWidth='7'
-        stroke-linejoin='round'
+        strokeLinejoin='round'
         d='M87.2,49H73.9V4.7c0-1.2-1-2.2-2.2-2.2H28.2c-1.2,0-2.2,1-2.2,2.2V49H12.8c-1.8,0-2.8,2.1-1.6,3.5l37.2,44.2    c0.9,1,2.4,1,3.3,0l37.2-44.2C90,51.2,89,49,87.2,49z'
       ></path>
       <path
         // stroke='#fff'
         fill='#fff'
         strokeWidth='4'
-        stroke-linejoin='round'
+        strokeLinejoin='round'
         d='M52.9,60.6v3.7c0,0.8-0.7,1.5-1.5,1.5h-2.9c-0.8,0-1.5-0.7-1.5-1.5v-3.7    c-4.6-0.2-8.5-3.6-9.3-8.1c-0.2-0.9,0.5-1.8,1.5-1.8h2.9c0.7,0,1.3,0.4,1.4,1.1c0.5,1.7,2,3,3.9,3h4.8c2.1,0,4-1.6,4.2-3.7    c0.2-2.4-1.7-4.4-4-4.4h-4.7c-5.5,0-10.1-4.5-10.1-9.9c0-5.3,4.2-9.6,9.4-9.8v-3.7c0-0.8,0.7-1.5,1.5-1.5h2.9    c0.8,0,1.5,0.7,1.5,1.5v3.7c4.6,0.2,8.5,3.6,9.3,8.1c0.2,0.9-0.5,1.8-1.5,1.8h-2.9c-0.7,0-1.3-0.4-1.4-1.1c-0.5-1.7-2-3-3.9-3    h-4.8c-2.1,0-4,1.6-4.2,3.7c-0.2,2.4,1.7,4.4,4,4.4h4.7c5.5,0,10.1,4.5,10.1,9.9C62.3,56,58.2,60.3,52.9,60.6z'
       ></path>
     </g>
@@ -466,22 +466,22 @@ const StarIcon = ({
         <stop offset='100%' stopColor='#fff' />
       </linearGradient>
     </defs>
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M23.9986 5L17.8856 17.4776L4 19.4911L14.0589 29.3251L11.6544 43L23.9986 36.4192L36.3454 43L33.9586 29.3251L44 19.4911L30.1913 17.4776L23.9986 5Z'
       fill='url(#grad2)'
       stroke='#333'
       strokeWidth='4'
-      stroke-linejoin='round'
+      strokeLinejoin='round'
     />
   </svg>
 );
 const CloseIcon = ({ size = 24 }: { size: number }) => (
   <svg viewBox='0 0 20 20' fill='currentColor' width={size} height={size}>
     <path
-      fill-rule='evenodd'
+      fillRule='evenodd'
       d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z'
-      clip-rule='evenodd'
+      clipRule='evenodd'
     />
   </svg>
 );
@@ -494,9 +494,9 @@ const PlusIcon = ({ size = 24 }: { size: number }) => (
     height={size}
   >
     <path
-      fill-rule='evenodd'
+      fillRule='evenodd'
       d='M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z'
-      clip-rule='evenodd'
+      clipRule='evenodd'
     />
   </svg>
 );
@@ -509,9 +509,9 @@ const ChevronDownIcon = ({ size = 24 }: { size: number }) => (
     height={size}
   >
     <path
-      fill-rule='evenodd'
+      fillRule='evenodd'
       d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'
-      clip-rule='evenodd'
+      clipRule='evenodd'
     />
   </svg>
 );
@@ -524,25 +524,25 @@ const PdfIcon = ({ size = 24 }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
-    <path d='M48 0H0V48H48V0Z' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
+    <path d='M48 0H0V48H48V0Z' fill='white' fillOpacity='0.01' />
     <path
       d='M10 4H30L40 14V42C40 43.1046 39.1046 44 38 44H10C8.89543 44 8 43.1046 8 42V6C8 4.89543 8.89543 4 10 4Z'
       fill='#2F88FF'
       stroke='#333'
-      stroke-width='4'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinejoin='round'
     />
     <path
-      fill-rule='evenodd'
-      clip-rule='evenodd'
+      fillRule='evenodd'
+      clipRule='evenodd'
       d='M18 18H30V25.9917L18.0083 26L18 18Z'
       stroke='#FFF'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
-    <path d='M18 18V34' stroke='#FFF' stroke-width='4' stroke-linecap='butt' />
+    <path d='M18 18V34' stroke='#FFF' strokeWidth='4' strokeLinecap='butt' />
   </svg>
 );
 const SortIcon = ({ size }: { size: number }) => (
@@ -553,20 +553,20 @@ const SortIcon = ({ size }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M24 42L15 29H33L24 42Z'
       fill='#2F88FF'
       stroke='#333'
-      stroke-width='4'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinejoin='round'
     />
     <path
       d='M24 6L15 19H33L24 6Z'
       fill='#2F88FF'
       stroke='#333'
-      stroke-width='4'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinejoin='round'
     />
   </svg>
 );
@@ -578,7 +578,7 @@ const GridIcon = ({ size }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <rect
       x='4'
       y='4'
@@ -587,8 +587,8 @@ const GridIcon = ({ size }: { size: number }) => (
       rx='3'
       fill='#2F88FF'
       stroke='#333'
-      stroke-width='4'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinejoin='round'
     />
     <rect
       x='12'
@@ -597,8 +597,8 @@ const GridIcon = ({ size }: { size: number }) => (
       height='8'
       fill='#43CCF8'
       stroke='#FFF'
-      stroke-width='4'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinejoin='round'
     />
     <rect
       x='28'
@@ -607,8 +607,8 @@ const GridIcon = ({ size }: { size: number }) => (
       height='8'
       fill='#43CCF8'
       stroke='#FFF'
-      stroke-width='4'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinejoin='round'
     />
     <rect
       x='12'
@@ -617,8 +617,8 @@ const GridIcon = ({ size }: { size: number }) => (
       height='8'
       fill='#43CCF8'
       stroke='#FFF'
-      stroke-width='4'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinejoin='round'
     />
     <rect
       x='28'
@@ -627,8 +627,8 @@ const GridIcon = ({ size }: { size: number }) => (
       height='8'
       fill='#43CCF8'
       stroke='#FFF'
-      stroke-width='4'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinejoin='round'
     />
   </svg>
 );
@@ -640,27 +640,27 @@ const ArrowCircleLeftIcon = ({ size }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z'
       fill='#2F88FF'
       stroke='#333'
-      stroke-width='4'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinejoin='round'
     />
     <path
       d='M32.4917 24.5H14.4917'
       stroke='#FFF'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M23.4917 15.5L14.4917 24.5L23.4917 33.5'
       stroke='#FFF'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
   </svg>
 );
@@ -672,27 +672,27 @@ const ArrowCircleRightIcon = ({ size }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z'
       fill='#2F88FF'
       stroke='#333'
-      stroke-width='4'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinejoin='round'
     />
     <path
       d='M14.4917 24.5H32.4917'
       stroke='#FFF'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M23.4917 15.5L32.4917 24.5L23.4917 33.5'
       stroke='#FFF'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
   </svg>
 );
@@ -705,20 +705,20 @@ const ArrowLeftCIcon = ({ size }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z'
       fill='#2F88FF'
       stroke='#333'
-      stroke-width='4'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinejoin='round'
     />
     <path
       d='M27 33L18 24L27 15'
       stroke='#FFF'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
   </svg>
 );
@@ -731,20 +731,20 @@ const ArrowRightCIcon = ({ size }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z'
       fill='#2F88FF'
       stroke='#333'
-      stroke-width='4'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinejoin='round'
     />
     <path
       d='M21 33L30 24L21 15'
       stroke='#FFF'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
   </svg>
 );
@@ -757,55 +757,55 @@ const SpeedIcon = ({ size }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M30.2972 18.7786C30.2972 18.7786 27.0679 27.8808 25.5334 29.4699C23.9988 31.0591 21.4665 31.1033 19.8774 29.5687C18.2882 28.0341 18.244 25.5018 19.7786 23.9127C21.3132 22.3236 30.2972 18.7786 30.2972 18.7786Z'
       fill='#2F88FF'
       stroke='#333'
-      stroke-width='4'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinejoin='round'
     />
     <path
       d='M38.8492 38.8492C42.6495 35.049 45 29.799 45 24C45 12.402 35.598 3 24 3C12.402 3 3 12.402 3 24C3 29.799 5.35051 35.049 9.15076 38.8492'
       stroke='#333'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M24 4V8'
       stroke='#333'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M38.8454 11.1421L35.7368 13.6593'
       stroke='#333'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M42.5225 27.2328L38.6251 26.333'
       stroke='#333'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M5.47749 27.2328L9.37497 26.333'
       stroke='#333'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M9.15463 11.1421L12.2632 13.6593'
       stroke='#333'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
   </svg>
 );
@@ -817,20 +817,20 @@ const TimeIcon = ({ size }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z'
       fill='#2F88FF'
       stroke='#333'
-      stroke-width='4'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinejoin='round'
     />
     <path
       d='M24.0083 12L24.0071 24.0088L32.4865 32.4882'
       stroke='#FFF'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
   </svg>
 );
@@ -842,61 +842,61 @@ const CalendarIcon = ({ size }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M5 19H43V40C43 41.1046 42.1046 42 41 42H7C5.89543 42 5 41.1046 5 40V19Z'
       fill='#2F88FF'
       stroke='#333'
-      stroke-width='4'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinejoin='round'
     />
     <path
       d='M5 9C5 7.89543 5.89543 7 7 7H41C42.1046 7 43 7.89543 43 9V19H5V9Z'
       stroke='#333'
-      stroke-width='4'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinejoin='round'
     />
     <path
       d='M16 4V12'
       stroke='#333'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M32 4V12'
       stroke='#333'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M28 34H34'
       stroke='#FFF'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M14 34H20'
       stroke='#FFF'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M28 26H34'
       stroke='#FFF'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M14 26H20'
       stroke='#FFF'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
   </svg>
 );

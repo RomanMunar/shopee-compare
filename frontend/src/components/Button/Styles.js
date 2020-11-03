@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-import { shadows, color, font, mixin } from "../../styles";
+import { shadows, color, font, mixin } from "../../shared/styles";
 import Spinner from "../Spinner";
 
 export const StyledButton = styled.button`

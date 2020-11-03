@@ -1,5 +1,5 @@
 import React from "react";
-import { color as colors } from "../styles";
+import { color as colors } from "../shared/styles";
 
 type defaultProps = {
   className?: string;
@@ -30,7 +30,7 @@ const Spinner = ({ className = "", size = 32, color = colors.textMedium }) => (
               repeatCount='indefinite'
             />
             <animate
-              attributeName='fill-opacity'
+              attributeName='fillOpacity'
               keyTimes='0;1'
               dur='1s'
               repeatCount='indefinite'
@@ -53,7 +53,7 @@ const Spinner = ({ className = "", size = 32, color = colors.textMedium }) => (
               repeatCount='indefinite'
             />
             <animate
-              attributeName='fill-opacity'
+              attributeName='fillOpacity'
               keyTimes='0;1'
               dur='1s'
               repeatCount='indefinite'
@@ -76,7 +76,7 @@ const Spinner = ({ className = "", size = 32, color = colors.textMedium }) => (
               repeatCount='indefinite'
             />
             <animate
-              attributeName='fill-opacity'
+              attributeName='fillOpacity'
               keyTimes='0;1'
               dur='1s'
               repeatCount='indefinite'
@@ -99,7 +99,7 @@ const Spinner = ({ className = "", size = 32, color = colors.textMedium }) => (
               repeatCount='indefinite'
             />
             <animate
-              attributeName='fill-opacity'
+              attributeName='fillOpacity'
               keyTimes='0;1'
               dur='1s'
               repeatCount='indefinite'
@@ -122,7 +122,7 @@ const Spinner = ({ className = "", size = 32, color = colors.textMedium }) => (
               repeatCount='indefinite'
             />
             <animate
-              attributeName='fill-opacity'
+              attributeName='fillOpacity'
               keyTimes='0;1'
               dur='1s'
               repeatCount='indefinite'
@@ -145,7 +145,7 @@ const Spinner = ({ className = "", size = 32, color = colors.textMedium }) => (
               repeatCount='indefinite'
             />
             <animate
-              attributeName='fill-opacity'
+              attributeName='fillOpacity'
               keyTimes='0;1'
               dur='1s'
               repeatCount='indefinite'
@@ -168,7 +168,7 @@ const Spinner = ({ className = "", size = 32, color = colors.textMedium }) => (
               repeatCount='indefinite'
             />
             <animate
-              attributeName='fill-opacity'
+              attributeName='fillOpacity'
               keyTimes='0;1'
               dur='1s'
               repeatCount='indefinite'
@@ -191,7 +191,7 @@ const Spinner = ({ className = "", size = 32, color = colors.textMedium }) => (
               repeatCount='indefinite'
             />
             <animate
-              attributeName='fill-opacity'
+              attributeName='fillOpacity'
               keyTimes='0;1'
               dur='1s'
               repeatCount='indefinite'

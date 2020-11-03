@@ -1,6 +1,6 @@
 import React from "react";
 
-import { color } from "../../styles";
+import { color } from "../../shared/styles";
 
 import { StyledButton, StyledSpinner, Text } from "./Styles";
 

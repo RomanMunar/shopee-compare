@@ -1,8 +1,6 @@
 import React, { ReactElement, useRef, useState } from "react";
-import styled from "styled-components";
 import { Icon } from "../../components/Icon";
 import Select from "../../components/Select";
-import { font } from "../../styles";
 import useOnOutsideClick from "../../shared/hooks/useOnOutsideClick";
 import {Filter,IconWrapper, StyledInput, InputElement } from "./Styles";
 

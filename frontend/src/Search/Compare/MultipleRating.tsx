@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { ToolbarButton } from "../../components/Toolbar";
-import { mixin, shadows } from "../../styles";
+import { mixin, shadows } from "../../shared/styles";
 
 interface Props {
   srcs: string[];

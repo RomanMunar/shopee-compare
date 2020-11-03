@@ -116,7 +116,7 @@ export default class App extends Component {
     return (<div style={{display:"flex"}}>
     	
     	  <DragDropContext onDragEnd={this.onDragEnd}>
-    	    <Droppable droppableId='droppable'>
+    	    <Droppable key={"droppable-123"} droppableId='droppable'>
     	      {(provided, snapshot) => (
     	        <div
     	          ref={provided.innerRef}
@@ -143,7 +143,7 @@ export default class App extends Component {
     	        </div>
     	      )}
     	    </Droppable>
-    	    <Droppable droppableId='droppable2'>
+    	    <Droppable key="droppable123123" droppableId='droppable2'>
     	      {(provided, snapshot) => (
     	        <div
     	          ref={provided.innerRef}

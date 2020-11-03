@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { SearchItem } from "../../interfaces";
-import { color, font } from "../../styles";
+import { color, font } from "../../shared/styles";
 
 interface Props {
   results: SearchItem[];

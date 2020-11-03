@@ -90,6 +90,7 @@ function Results({
   return (
     <DragDropContext onBeforeCapture={onBeforeCapture} onDragEnd={onDragEnd}>
       <Droppable
+        key='droppable-1344'
         droppableId='RESULTS'
         isDropDisabled={true}
         direction='horizontal'
@@ -105,7 +106,7 @@ function Results({
                 isDragDisabled={initialSelectedItems
                   .map((item) => item.itemid)
                   .includes(res.itemid)}
-                key={res.itemid}
+                key={"compare-item-" + res.itemid}
                 draggableId={`${res.itemid}`}
                 index={index}
               >
@@ -153,7 +154,11 @@ function Results({
               />
             </Toolbar>
           </MenuWrapper>
-          <Droppable droppableId='SELECTEDRESULTS' direction='vertical'>
+          <Droppable
+            key='droppable-155'
+            droppableId='SELECTEDRESULTS'
+            direction='vertical'
+          >
             {(provided, snapshot) => (
               <Items
                 isSelectedItemsEmpty={initialSelectedItems.length === 0}

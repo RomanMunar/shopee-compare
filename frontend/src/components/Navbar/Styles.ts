@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { color, font, mixin } from "../../styles";
+import { color, font, mixin } from "../../shared/styles";
 import { Logo } from "../Logo";
 
 export const NavLeft = styled.aside`

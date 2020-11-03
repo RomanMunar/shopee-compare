@@ -1,27 +1,86 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
-import { reorder } from "../../shared/utils/utils";
-import { SelectedItemsContext } from "../../shared/hooks/useSelectedItemsContext";
-import CompareItem from "./CompareItem";
-import { ratings } from "./ratings";
-import { Compare, EmptyContainer, Title } from "./Styles";
-import styled from "styled-components";
-import { color, shadows, font } from "../../styles";
-import { Toolbar } from "../../components/Toolbar/Styles";
+import {
+  DragDropContext,
+  DraggableLocation,
+  Droppable,
+  DropResult,
+} from "react-beautiful-dnd";
 import { ToolbarButton } from "../../components/Toolbar";
+import { Toolbar } from "../../components/Toolbar/Styles";
 import { SearchItem } from "../../interfaces";
-import { Icon } from "../../components/Icon";
+import { SelectedItemsContext } from "../../shared/hooks/useSelectedItemsContext";
+// import { reorder } from "../../shared/utils/utils";
+import CompareItem from "./CompareItem";
+import {
+  Compare,
+  CompareContainer,
+  CompareSelection,
+  EmptyContainer,
+  MenuTitle,
+  MenuWrapper,
+  Title,
+} from "./Styles";
 
 type Layout = "main" | "double" | "none";
 
+const reorder = (list: SearchItem[], startIndex: number, endIndex: number) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
+
 export default () => {
-  const { selectedItems, setSelectedItems } = useContext(SelectedItemsContext);
+  const { selectedItems } = useContext(SelectedItemsContext);
   const [mainItem, setMainItem] = useState([selectedItems[0]]);
   const [sideItems, setSideItems] = useState(selectedItems.slice(1));
-  const [layout, setLayout] = useState<Layout>("main");
-  const { data } = ratings;
+  const [layout, setLayout] = useState<Layout>("double");
+  const lists: list[] = [
+    {
+      set: setMainItem,
+      items: mainItem,
+      id: "MAIN",
+    },
+    {
+      set: setSideItems,
+      items: sideItems,
+      id: "SELECTION",
+    },
+  ];
 
-  // Finally encountered a time to use useLayoutEffect
+  type list = {
+    set: React.Dispatch<React.SetStateAction<SearchItem[]>>;
+    items: SearchItem[];
+    id: string;
+  };
+  const move = (
+    source: SearchItem[],
+    destination: SearchItem[],
+    droppableSource: DraggableLocation,
+    droppableDestination: DraggableLocation
+  ) => {
+    let sourceClone = Array.from(source);
+    let destClone = Array.from(destination);
+    const [removed] = sourceClone.splice(droppableSource.index, 1);
+
+    if (
+      layout === "main" &&
+      mainItem.length >= 1 &&
+      droppableSource.droppableId === "SELECTION"
+    ) {
+      sourceClone.push(destClone[0]);
+      destClone = [removed];
+    } else {
+      destClone.splice(droppableDestination.index, 0, removed);
+    }
+    const newSourceItems = sourceClone;
+    const newDestinationItems = destClone;
+
+    return { newSourceItems, newDestinationItems };
+  };
+
+  // Finally, a chance to use useLayoutEffect
   useLayoutEffect(() => {
     switch (layout) {
       case "main":
@@ -29,7 +88,7 @@ export default () => {
         setSideItems(selectedItems.slice(1));
         break;
       case "double":
-        setMainItem([selectedItems[0], selectedItems[1]]);
+        setMainItem(selectedItems.slice(0, 2));
         setSideItems(selectedItems.slice(2));
         break;
       case "none":
@@ -37,32 +96,45 @@ export default () => {
         setSideItems([]);
         break;
     }
-  }, [layout]);
-
-  useEffect(() => {
-    setMainItem([selectedItems[0]]);
-    setSideItems(selectedItems.slice(1));
-  }, [selectedItems]);
+  }, [layout, selectedItems]);
 
   const onDragEnd = (result: DropResult) => {
+    const { source, destination } = result;
     // dropped outside the list
-    if (!result.destination) {
+    if (!destination) {
       return;
     }
 
-    const newItems = reorder(
-      selectedItems,
-      result.source.index,
-      result.destination.index
-    );
+    const desList = lists.find((dList) => dList.id === destination.droppableId);
+    if (!desList) return;
+    const sourceList = lists.find((sList) => sList.id === source.droppableId);
+    if (!sourceList) return;
 
-    setSelectedItems(newItems);
+    if (source.droppableId === destination.droppableId) {
+      const items = reorder(sourceList.items, source.index, destination.index);
+
+      sourceList.set(items);
+    } else {
+      const { newSourceItems, newDestinationItems } = move(
+        sourceList.items,
+        desList.items,
+        source,
+        destination
+      );
+
+      desList.set(newDestinationItems);
+      sourceList.set(newSourceItems);
+    }
   };
 
   return selectedItems.length !== 0 ? (
     <CompareContainer>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId='droppable' direction='horizontal'>
+        <Droppable
+          key='droppable-1'
+          droppableId={lists[0].id}
+          direction={layout === "main" ? "vertical" : "horizontal"}
+        >
           {(provided, snapshot) => (
             <Compare
               ref={provided.innerRef}
@@ -98,7 +170,11 @@ export default () => {
             </Compare>
           )}
         </Droppable>
-        <Droppable droppableId='droppable2' direction='vertical'>
+        <Droppable
+          key='droppable-2'
+          droppableId={lists[1].id}
+          direction='vertical'
+        >
           {(provided, snapshot) => (
             <CompareSelection
               hidden={layout === "none"}
@@ -123,64 +199,3 @@ export default () => {
     </EmptyContainer>
   );
 };
-
-const CompareContainer = styled.div`
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  width: 93%;
-  height: 100%;
-  position: absolute;
-  background: ${color.backgroundLight};
-  gap: 2.5%;
-`;
-
-const CompareSelection = styled.div<{
-  hidden: boolean;
-  isDraggingOver: boolean;
-}>`
-  ${(props) => props.hidden && "display:none"};
-  min-width: 400px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  gap: 1.5%;
-  border-radius: 15px;
-  background-color: ${(props) =>
-    props.isDraggingOver
-      ? color.backgroundDarkPrimary
-      : color.backgroundLightest};
-  ${shadows.shadowLg}
-`;
-const MenuWrapper = styled.div`
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  width: fit-content;
-  z-index: 10;
-  position: absolute;
-  top: 5px;
-  margin: auto;
-`;
-const MenuTitle = styled.span`
-  font-size: 20px;
-  ${font.medium}
-  line-height: 20px;
-`;
-const ToolbarLayouts = styled.div`
-  ${font.bold}
-  justify-content: center;
-  align-items: center;
-  transition: all 0.2s;
-  margin-top: 4px;
-  margin-right: 15px;
-  &:hover {
-    transform: scale(1.1);
-  }
-  &:active {
-    transform: scale(0.9);
-  }
-`;

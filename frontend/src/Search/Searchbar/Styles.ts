@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { color, font } from "../../styles";
+import { color, font } from "../../shared/styles";
 
 export const StyledInput = styled.div`
   position: relative;

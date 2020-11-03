@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { mixin, shadows, color, font } from "../../styles";
+import { mixin, shadows, color, font } from "../../shared/styles";
 
 export const Price = styled.span<{ on?: "results" | "compare" }>`
   font-size: ${(props) => (props.on === "results" ? "1.1rem" : "1.6rem")};

@@ -204,7 +204,7 @@ export default class App extends Component {
   render() {
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <Droppable droppableId='ITEMS' isDropDisabled={true}>
+        <Droppable key="dropabble12312333" droppableId='ITEMS' isDropDisabled={true}>
           {(provided, snapshot) => (
             <Kiosk
               ref={provided.innerRef}

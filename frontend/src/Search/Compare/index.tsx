@@ -1,42 +1,25 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
-import {
-  DragDropContext,
-  DraggableLocation,
-  Droppable,
-  DropResult,
-} from "react-beautiful-dnd";
-import { ToolbarButton } from "../../components/Toolbar";
-import { Toolbar } from "../../components/Toolbar/Styles";
-import { SearchItem } from "../../interfaces";
+import React, { useContext, useLayoutEffect, useState } from "react";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import { Layout, List } from "../../interfaces";
 import { SelectedItemsContext } from "../../shared/hooks/useSelectedItemsContext";
-// import { reorder } from "../../shared/utils/utils";
+import { move, reorder } from "../../shared/utils/utils";
 import CompareItem from "./CompareItem";
+import LayoutToolbarMenu from "./LayoutToolbarMenu";
 import {
   Compare,
   CompareContainer,
   CompareSelection,
   EmptyContainer,
   MenuTitle,
-  MenuWrapper,
-  Title,
+  Title
 } from "./Styles";
-
-type Layout = "main" | "double" | "none";
-
-const reorder = (list: SearchItem[], startIndex: number, endIndex: number) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
 
 export default () => {
   const { selectedItems } = useContext(SelectedItemsContext);
   const [mainItem, setMainItem] = useState([selectedItems[0]]);
   const [sideItems, setSideItems] = useState(selectedItems.slice(1));
   const [layout, setLayout] = useState<Layout>("double");
-  const lists: list[] = [
+  const lists: List[] = [
     {
       set: setMainItem,
       items: mainItem,
@@ -48,37 +31,6 @@ export default () => {
       id: "SELECTION",
     },
   ];
-
-  type list = {
-    set: React.Dispatch<React.SetStateAction<SearchItem[]>>;
-    items: SearchItem[];
-    id: string;
-  };
-  const move = (
-    source: SearchItem[],
-    destination: SearchItem[],
-    droppableSource: DraggableLocation,
-    droppableDestination: DraggableLocation
-  ) => {
-    let sourceClone = Array.from(source);
-    let destClone = Array.from(destination);
-    const [removed] = sourceClone.splice(droppableSource.index, 1);
-
-    if (
-      layout === "main" &&
-      mainItem.length >= 1 &&
-      droppableSource.droppableId === "SELECTION"
-    ) {
-      sourceClone.push(destClone[0]);
-      destClone = [removed];
-    } else {
-      destClone.splice(droppableDestination.index, 0, removed);
-    }
-    const newSourceItems = sourceClone;
-    const newDestinationItems = destClone;
-
-    return { newSourceItems, newDestinationItems };
-  };
 
   // Finally, a chance to use useLayoutEffect
   useLayoutEffect(() => {
@@ -112,14 +64,15 @@ export default () => {
 
     if (source.droppableId === destination.droppableId) {
       const items = reorder(sourceList.items, source.index, destination.index);
-
       sourceList.set(items);
     } else {
       const { newSourceItems, newDestinationItems } = move(
         sourceList.items,
         desList.items,
         source,
-        destination
+        destination,
+        layout,
+        mainItem.length
       );
 
       desList.set(newDestinationItems);
@@ -141,30 +94,14 @@ export default () => {
               isDraggingOver={snapshot.isDraggingOver}
               {...provided.droppableProps}
             >
-              <MenuWrapper>
-                <Toolbar withoutMargin place='right-top'>
-                  <ToolbarButton
-                    onClick={() => setLayout("main")}
-                    name='Main Layout'
-                    icon='MainLayout'
-                    tooltipPlace='bottom'
-                  />
-                  <ToolbarButton
-                    onClick={() => setLayout("double")}
-                    name='Double Layout'
-                    icon='DoubleLayout'
-                    tooltipPlace='bottom'
-                  />
-                  <ToolbarButton
-                    onClick={() => setLayout("none")}
-                    name='No Layout'
-                    icon='Column'
-                    tooltipPlace='bottom'
-                  />
-                </Toolbar>
-              </MenuWrapper>
+              <LayoutToolbarMenu setLayout={setLayout} />
               {mainItem.map((res, index) => (
-                <CompareItem on='main' res={res} index={index} />
+                <CompareItem
+                  layout={layout}
+                  on='main'
+                  res={res}
+                  index={index}
+                />
               ))}
               {provided.placeholder}
             </Compare>

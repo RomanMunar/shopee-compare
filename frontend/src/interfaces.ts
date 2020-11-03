@@ -82,6 +82,14 @@ export interface Rating {
   tags: [{ description: string }];
 }
 
+export type Layout = "main" | "double" | "none";
+
+export type List = {
+  set: React.Dispatch<React.SetStateAction<SearchItem[]>>;
+  items: SearchItem[];
+  id: string;
+};
+
 export type IconType =
   | "MainLayout"
   | "DoubleLayout"

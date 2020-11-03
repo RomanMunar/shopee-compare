@@ -1,20 +1,24 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { ToolbarButton } from "../../components/Toolbar";
+import { Layout } from "../../interfaces";
 import { mixin, shadows } from "../../shared/styles";
 
 interface Props {
   srcs: string[];
-  on?: "ratings" | "compare";
+  on?: "selection" | "ratings" | "compare" | "main";
+  layout?: Layout;
 }
 
-export const MultipleImage = ({ srcs, on }: Props) => {
+export const MultipleImage = ({ layout, srcs, on }: Props) => {
   const [currentIndex, setcurrentIndex] = useState(0);
 
   return (
     <>
-      <CompareItemFixed>
+      <CompareItemFixed layout={layout}>
         <CompareItemImage
+          layout={layout}
+          on={on}
           active
           src={"https://cf.shopee.ph/file/" + srcs[currentIndex]}
         />
@@ -83,30 +87,31 @@ const Indexes = styled.div`
   align-items: center;
   padding-bottom: 5px;
 `;
-const CompareItemFixed = styled.div`
+const CompareItemFixed = styled.div<{ layout?: Layout }>`
+  background-color: #d2d5dd;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
   padding-right: 100%;
-  padding-bottom: 60%;
+  padding-bottom: ${(props) => (props.layout === "main" ? "45%" : "60%")};
   ${shadows.shadowLg}
   margin-bottom: 0.3rem;
 `;
-const CompareItemImage = styled.img<{ active: boolean }>`
+const CompareItemImage = styled.img<{
+  active: boolean;
+  on?: "selection" | "ratings" | "compare" | "main";
+  layout?: Layout;
+}>`
+  ${(props) =>
+    props.layout === "main" && props.layout === "main"
+      ? "width: 45%;"
+      : "width: 100%;"}
+  height:100%;
   position: absolute;
-  bottom: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  /* What the fuck am i dumb?*/
-  /* TODO animate this  */
-  /* transition: all 0.2s;
-  transition-property: all;
-  visibility: hidden;
-  opacity: 0;
-  transform: ${(props) =>
-    props.active ? "translateX()" : "translateX(-80px)"};
-  visibility: ${(props) => props.active && "visible"};
-  opacity: ${(props) => props.active && 1}; */
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 0;
 `;

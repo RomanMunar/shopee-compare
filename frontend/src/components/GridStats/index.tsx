@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { SearchItem } from "../../interfaces";
+import { Layout, SearchItem } from "../../interfaces";
 import {
   Badges,
   GridContainer,
@@ -12,13 +12,16 @@ import { Icon } from "../Icon";
 
 interface Props {
   on?: "results" | "compare";
+  layout?: Layout;
   item: SearchItem;
 }
 
-const GridStats = ({ on, item }: Props) => {
+const GridStats = ({ on, item, layout }: Props) => {
   return (
     <GridContainer wide={on === "compare"}>
-      <GridItem justify='start'>
+      <GridItem
+        justify={on === "compare" && layout === "main" ? "center" : "start"}
+      >
         ₱
         <Price on={on}>
           {priceCompare({
@@ -40,7 +43,9 @@ const GridStats = ({ on, item }: Props) => {
           }
         />
       </GridItem>
-      <GridItem justify={on === "compare" ? "start" : ""}>
+      <GridItem
+        justify={on === "compare" && layout === "main" ? "center" : "start"}
+      >
         {kFormatter(item.sold)}
         <Small on={on}>sold/mon</Small>
       </GridItem>

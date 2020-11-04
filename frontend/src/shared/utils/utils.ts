@@ -14,12 +14,27 @@ export const move = (
   const [removed] = sourceClone.splice(droppableSource.index, 1);
 
   if (
+    layout === "double" &&
+    mainLength >= 2 &&
+    droppableSource.droppableId === "MAIN" &&
+    droppableDestination.droppableId === "SELECTION"
+  ) {
+    sourceClone.push(destClone[0]);
+    destClone = [...destClone, removed];
+  } else if (
     layout === "main" &&
     mainLength >= 1 &&
     droppableSource.droppableId === "SELECTION"
   ) {
     sourceClone.push(destClone[0]);
     destClone = [removed];
+  } else if (
+    layout === "double" &&
+    mainLength >= 2 &&
+    droppableSource.droppableId === "SELECTION"
+  ) {
+    sourceClone.push(destClone[1]);
+    destClone = [destClone[0], removed];
   } else {
     destClone.splice(droppableDestination.index, 0, removed);
   }

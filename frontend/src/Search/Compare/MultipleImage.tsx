@@ -14,8 +14,8 @@ export const MultipleImage = ({ layout, srcs, on }: Props) => {
   const [currentIndex, setcurrentIndex] = useState(0);
 
   return (
-    <>
-      <CompareItemFixed layout={layout}>
+    <CompareItemFixed layout={layout}>
+      <div>
         <CompareItemImage
           layout={layout}
           on={on}
@@ -44,7 +44,7 @@ export const MultipleImage = ({ layout, srcs, on }: Props) => {
             }
           />
         </ArrowContainer>
-      </CompareItemFixed>
+      </div>
       <Indexes>
         {srcs.map((src, index) => (
           <IndexCircle
@@ -53,7 +53,7 @@ export const MultipleImage = ({ layout, srcs, on }: Props) => {
           />
         ))}
       </Indexes>
-    </>
+    </CompareItemFixed>
   );
 };
 
@@ -78,6 +78,8 @@ const IndexCircle = styled.div<{ active: boolean }>`
 const Indexes = styled.div`
   background: linear-gradient(rgba(255, 255, 255, 0), rgba(37, 37, 38, 0.27));
   width: 100%;
+  position: absolute;
+  bottom: 0;
   height: 15px;
   ${mixin.clickable}
   z-index: 2;
@@ -88,11 +90,11 @@ const Indexes = styled.div`
   padding-bottom: 5px;
 `;
 const CompareItemFixed = styled.div<{ layout?: Layout }>`
+  position: relative;
   background-color: #d2d5dd;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
   padding-right: 100%;
   padding-bottom: ${(props) => (props.layout === "main" ? "45%" : "60%")};
   ${shadows.shadowLg}
@@ -103,11 +105,8 @@ const CompareItemImage = styled.img<{
   on?: "selection" | "ratings" | "compare" | "main";
   layout?: Layout;
 }>`
-  ${(props) =>
-    props.layout === "main" && props.layout === "main"
-      ? "width: 45%;"
-      : "width: 100%;"}
-  height:100%;
+  ${(props) => (props.on === "main" ? "width: 65%;" : "width: 100%;")}
+  height: 100%;
   position: absolute;
   left: 0;
   right: 0;

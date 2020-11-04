@@ -13,6 +13,7 @@ import { MultipleImage } from "./MultipleImage";
 import { SellerSection, SellerTags } from "./SellerTags";
 import {
   CompareItem as CItem,
+  RatingsWrapper,
   CompareItemTitle,
   DescriptionParagraph,
   DescriptionTitle,
@@ -21,7 +22,7 @@ import {
   RatingItem,
   RatingsSummary,
   SectionTitle,
-  SectionWrapper
+  SectionWrapper,
 } from "./Styles";
 import Tags from "./Tags";
 
@@ -29,7 +30,7 @@ interface Props {
   res: SearchItem;
   index: number;
   on: "selection" | "main";
-  layout?: Layout;
+  layout: Layout;
 }
 
 const CompareItem = ({ layout, res, index, on }: Props) => {
@@ -50,6 +51,7 @@ const CompareItem = ({ layout, res, index, on }: Props) => {
     >
       {(provided, snapshot) => (
         <CItem
+          on={on}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -78,7 +80,7 @@ const CompareItem = ({ layout, res, index, on }: Props) => {
                   )
                 }
                 icon='Close'
-                name='Close'
+                name='Remove'
                 tooltipPlace='bottom'
               />
             </Toolbar>
@@ -183,25 +185,65 @@ const CompareItem = ({ layout, res, index, on }: Props) => {
                   />
                 </SectionTitle>
                 {isRatingsHidden && (
-                  <div>
+                  <RatingsWrapper layout={layout}>
                     <div>
-                      <MultipleImage
-                        layout={layout}
-                        on={on}
-                        srcs={[
-                          "663c0665ecd4d9dc80d78e9130f21d47",
-                          "780749423db8f5ce3ccbcf3b8c859702",
-                          "7b7e62d34a4c3ac046737564252a652e",
-                        ]}
-                      />
+                      <div>
+                        <MultipleImage
+                          layout={layout}
+                          on={on}
+                          srcs={[
+                            "663c0665ecd4d9dc80d78e9130f21d47",
+                            "780749423db8f5ce3ccbcf3b8c859702",
+                            "7b7e62d34a4c3ac046737564252a652e",
+                          ]}
+                        />
+                      </div>
+                      <DescriptionParagraph>
+                        {
+                          "• average sounds with good quality microphone\n• long wire for single connector (2m)\n• not zero cancelling but noise reduction \n• well packaged (box, plastic foam, plastic) \n• working properly (tested already)\nPS. CHECK THE VOLUME ON THE LEFT SIDE.\n\nRECOMMENDED! WORTH THE PRICE!"
+                        }
+                      </DescriptionParagraph>
+                      <Author />
                     </div>
-                    <DescriptionParagraph>
-                      {
-                        "• average sounds with good quality microphone\n• long wire for single connector (2m)\n• not zero cancelling but noise reduction \n• well packaged (box, plastic foam, plastic) \n• working properly (tested already)\nPS. CHECK THE VOLUME ON THE LEFT SIDE.\n\nRECOMMENDED! WORTH THE PRICE!"
-                      }
-                    </DescriptionParagraph>
-                    <Author />
-                  </div>
+                    <div>
+                      <div>
+                        <MultipleImage
+                          layout={layout}
+                          on={on}
+                          srcs={[
+                            "663c0665ecd4d9dc80d78e9130f21d47",
+                            "780749423db8f5ce3ccbcf3b8c859702",
+                            "7b7e62d34a4c3ac046737564252a652e",
+                          ]}
+                        />
+                      </div>
+                      <DescriptionParagraph>
+                        {
+                          "• average sounds with good quality microphone\n• long wire for single connector (2m)\n• not zero cancelling but noise reduction \n• well packaged (box, plastic foam, plastic) \n• working properly (tested already)\nPS. CHECK THE VOLUME ON THE LEFT SIDE.\n\nRECOMMENDED! WORTH THE PRICE!"
+                        }
+                      </DescriptionParagraph>
+                      <Author />
+                    </div>
+                    <div>
+                      <div>
+                        <MultipleImage
+                          layout={layout}
+                          on={on}
+                          srcs={[
+                            "663c0665ecd4d9dc80d78e9130f21d47",
+                            "780749423db8f5ce3ccbcf3b8c859702",
+                            "7b7e62d34a4c3ac046737564252a652e",
+                          ]}
+                        />
+                      </div>
+                      <DescriptionParagraph>
+                        {
+                          "• average sounds with good quality microphone\n• long wire for single connector (2m)\n• not zero cancelling but noise reduction \n• well packaged (box, plastic foam, plastic) \n• working properly (tested already)\nPS. CHECK THE VOLUME ON THE LEFT SIDE.\n\nRECOMMENDED! WORTH THE PRICE!"
+                        }
+                      </DescriptionParagraph>
+                      <Author />
+                    </div>
+                  </RatingsWrapper>
                 )}
               </SectionWrapper>
             </>

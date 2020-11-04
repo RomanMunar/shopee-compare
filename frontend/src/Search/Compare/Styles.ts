@@ -1,15 +1,14 @@
 import styled from "styled-components";
+import { Layout } from "../../interfaces";
 import { color, font, mixin, shadows } from "../../shared/styles";
 
 export const CompareContainer = styled.div`
   overflow: hidden;
   display: flex;
   align-items: center;
-  padding: 20px;
-  width: 93%;
+  width: 100%;
   height: 100%;
-  position: absolute;
-  background: ${color.backgroundLight};
+  position: relative;
   gap: 2.5%;
 `;
 
@@ -17,30 +16,17 @@ export const CompareSelection = styled.div<{
   hidden: boolean;
   isDraggingOver: boolean;
 }>`
+  border-left: 2px solid #ececec;
   ${(props) => props.hidden && "display:none"};
-  min-width: 300px;
+  position: absolute;
+  right: 0;
+  max-width: 290px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   height: 100%;
   gap: 1.5%;
-  border-radius: 15px;
-  background-color: ${(props) =>
-    props.isDraggingOver
-      ? color.backgroundDarkPrimary
-      : color.backgroundLightest};
-  ${shadows.shadowLg}
-`;
-export const MenuWrapper = styled.div`
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  width: fit-content;
-  z-index: 10;
-  position: absolute;
-  top: 5px;
-  margin: auto;
+  background-color: ${color.backgroundLightest};
 `;
 export const MenuTitle = styled.span`
   font-size: 20px;
@@ -55,18 +41,18 @@ export const Title = styled.span`
   margin-bottom: 10px;
 `;
 
-export const Compare = styled.div<{ isDraggingOver: boolean }>`
+export const Compare = styled.div<{ isDraggingOver: boolean; layout: Layout }>`
+  border-right: 2px solid #ececec;
+  border-left: 2px solid #ececec;
   position: relative;
-  padding: 20px;
   display: flex;
+  flex-direction: column;
+  background-color: #f4f5f7;
+  margin-right: 40px;
+  padding: 20px 35px;
   height: 100%;
   gap: 1.5%;
-  border-radius: 15px;
-  background-color: ${(props) =>
-    props.isDraggingOver
-      ? color.backgroundDarkPrimary
-      : color.backgroundLightest};
-  ${shadows.shadowLg}
+  width: ${(props) => (props.layout !== "none" ? "75%;" : "100%;")};
 `;
 
 export const EmptyContainer = styled.div`
@@ -87,9 +73,12 @@ export const EmptyContainer = styled.div`
 export const CompareItem = styled.div<{
   draggingStyle: any;
   isDragging: boolean;
+  on?: "selection" | "main";
 }>`
+  border-radius: 15px;
+  ${shadows.shadowLg}
   min-width: min-content;
-  ${mixin.scrollableY}
+  overflow-y: scroll;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -98,8 +87,7 @@ export const CompareItem = styled.div<{
   cursor: pointer;
   ${(props) => (props.isDragging ? shadows.shadow2Xl : shadows.shadowMd)};
   ${(props) => props.draggingStyle}
-  background-color: ${(props) =>
-    props.isDragging ? "#fef3ab" : color.backgroundLight};
+  background-color: ${(props) => (props.isDragging ? "#fef3ab" : "#fff")};
 `;
 
 export const CompareItemTitle = styled.div`
@@ -176,4 +164,11 @@ export const SectionTitle = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+`;
+export const RatingsWrapper = styled.div<{ layout: Layout }>`
+  display: grid;
+  width: 100%;
+  grid-template-columns: ${(props) =>
+    props.layout === "main" ? "1fr 1fr" : "1fr"};
+  gap: 4%;
 `;

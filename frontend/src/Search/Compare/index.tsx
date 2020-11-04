@@ -90,19 +90,47 @@ export default () => {
         >
           {(provided, snapshot) => (
             <Compare
+              layout={layout}
               ref={provided.innerRef}
               isDraggingOver={snapshot.isDraggingOver}
               {...provided.droppableProps}
             >
-              <LayoutToolbarMenu setLayout={setLayout} />
-              {mainItem.map((res, index) => (
-                <CompareItem
-                  layout={layout}
-                  on='main'
-                  res={res}
-                  index={index}
-                />
-              ))}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-end",
+                  justifyContent: "space-between",
+                }}
+              >
+                <MenuTitle>Compare</MenuTitle>
+                <LayoutToolbarMenu setLayout={setLayout} />
+                {/* @ts-ignore */}
+                <button
+                  style={{
+                    color: " #172B4D",
+                    borderBottom: " 2px solid rgb(47, 136, 255)",
+                    padding: " 5px",
+                  }}
+                >
+                  Show Summary
+                </button>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  overflow: "hidden",
+                  gap: "3%",
+                }}
+              >
+                {mainItem.map((res, index) => (
+                  <CompareItem
+                    layout={layout}
+                    on='main'
+                    res={res}
+                    index={index + 1}
+                  />
+                ))}
+              </div>
               {provided.placeholder}
             </Compare>
           )}
@@ -119,9 +147,29 @@ export default () => {
               isDraggingOver={snapshot.isDraggingOver}
               {...provided.droppableProps}
             >
-              <MenuTitle>Selected Items</MenuTitle>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <MenuTitle>Selected Items</MenuTitle>
+                <button
+                  style={{
+                    color: " #172B4D",
+                  }}
+                >
+                  Add more +
+                </button>
+              </div>
               {sideItems.map((res, index) => (
-                <CompareItem on='selection' res={res} index={index} />
+                <CompareItem
+                  layout={layout}
+                  on='selection'
+                  res={res}
+                  index={index}
+                />
               ))}
               {provided.placeholder}
             </CompareSelection>

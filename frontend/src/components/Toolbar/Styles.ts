@@ -25,14 +25,14 @@ export const Toolbar = styled.div<{
   display: flex;
   ${(props) =>
     props.place === "right-top" &&  "align-self:flex-end;"}
-  ${(props) => !props.withoutMargin && "margin:15px 15px 0 0;"}
+  ${(props) => !props.withoutMargin && "margin:10px 10px 0 0;"}
   align-items: center;
   justify-items: flex-start;
   height: 30px;
   width: auto;
   border-radius: 15px;
   padding: 0 10px;
-  background-color: ${color.backgroundLight};
+  background-color: #f1f1f1;
   ${shadows.shadowMd}
   transition: background 0.1s;
   &:hover {

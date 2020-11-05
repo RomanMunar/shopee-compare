@@ -6,7 +6,7 @@ import { Icon } from "../../components/Icon";
 import Select from "../../components/Select";
 import { ToolbarButton } from "../../components/Toolbar";
 import { Toolbar } from "../../components/Toolbar/Styles";
-import { Layout, SearchItem } from "../../interfaces";
+import { Layout, ListItem, SearchItem } from "../../interfaces";
 import { SelectedItemsContext } from "../../shared/hooks/useSelectedItemsContext";
 import Author from "./Author";
 import { MultipleImage } from "./MultipleImage";
@@ -27,7 +27,7 @@ import {
 import Tags from "./Tags";
 
 interface Props {
-  res: SearchItem;
+  res: ListItem<SearchItem>;
   index: number;
   on: "selection" | "main";
   layout: Layout;
@@ -48,6 +48,7 @@ const CompareItem = ({ layout, res, index, on }: Props) => {
       key={"compare-item-" + res.itemid}
       draggableId={`res-${res.itemid}`}
       index={index}
+      isDragDisabled={on === "main" && layout !== "none"}
     >
       {(provided, snapshot) => (
         <CItem
@@ -89,163 +90,171 @@ const CompareItem = ({ layout, res, index, on }: Props) => {
             layout={layout}
             on={on}
             key={"images-of-" + res.itemid}
-            srcs={res.images}
+            srcs={res.item.images}
           />
-          <CompareItemTitle>
-            {res.name
+          <CompareItemTitle on={on} layout={layout}>
+            {res.item.name
               .replace(/[^a-zA-Z0-9 ]/g, "")
               .split(" ")
               .map((word) => (word.length > 10 ? "" : word + " "))}
           </CompareItemTitle>
           {on === "main" && (
             <>
-              <GridStats item={res} on='compare' />
-              <Tags item={res} />
+              <GridStats layout={layout} item={res.item} on='compare' />
+              <Tags item={res.item} />
               <SellerSection>
                 <Author />
                 <SellerTags />
               </SellerSection>
-              <SectionWrapper>
-                <SectionTitle>
-                  <DescriptionTitle>Description</DescriptionTitle>
-                  {/*//@ts-ignore */}
-                  <Button
-                    variant='secondary'
-                    onClick={() => setIsDescriptionHidden(!isDescriptionHidden)}
-                  >
-                    {isDescriptionHidden ? (
-                      <span>Hide</span>
-                    ) : (
-                      <span>Show</span>
-                    )}
-                  </Button>
-                </SectionTitle>
-                {isDescriptionHidden && (
-                  <DescriptionParagraph on='main'>{str}</DescriptionParagraph>
-                )}
-              </SectionWrapper>
-              <SectionWrapper>
-                <SectionTitle>
-                  <DescriptionTitle>Ratings Summary</DescriptionTitle>
-                  {/*//@ts-ignore */}
-                  <Button
-                    variant='secondary'
-                    onClick={() =>
-                      setIsRatingsSummaryHidden(!isRatingsSummaryHidden)
-                    }
-                  >
-                    {isRatingsSummaryHidden ? (
-                      <span>Hide</span>
-                    ) : (
-                      <span>Show</span>
-                    )}
-                  </Button>
-                </SectionTitle>
+              <div
+                style={{
+                  padding: layout === "main" ? "20px 55px" : "10px 20px",
+                }}
+              >
+                <SectionWrapper>
+                  <SectionTitle>
+                    <DescriptionTitle>Description</DescriptionTitle>
+                    {/*//@ts-ignore */}
+                    <Button
+                      variant='secondary'
+                      onClick={() =>
+                        setIsDescriptionHidden(!isDescriptionHidden)
+                      }
+                    >
+                      {isDescriptionHidden ? (
+                        <span>Hide</span>
+                      ) : (
+                        <span>Show</span>
+                      )}
+                    </Button>
+                  </SectionTitle>
+                  {isDescriptionHidden && (
+                    <DescriptionParagraph on='main'>{str}</DescriptionParagraph>
+                  )}
+                </SectionWrapper>
+                <SectionWrapper>
+                  <SectionTitle>
+                    <DescriptionTitle>Ratings Summary</DescriptionTitle>
+                    {/*//@ts-ignore */}
+                    <Button
+                      variant='secondary'
+                      onClick={() =>
+                        setIsRatingsSummaryHidden(!isRatingsSummaryHidden)
+                      }
+                    >
+                      {isRatingsSummaryHidden ? (
+                        <span>Hide</span>
+                      ) : (
+                        <span>Show</span>
+                      )}
+                    </Button>
+                  </SectionTitle>
 
-                {isRatingsSummaryHidden && (
-                  <RatingsSummary>
-                    {res.item_rating.rating_count
-                      .slice(1)
-                      .map((rating, index) => (
-                        <RatingItem style={{ display: "flex" }}>
-                          <RatingCount>
-                            {5 - index}
-                            <Icon type='Star' size={16} />
-                          </RatingCount>
-                          <RatingBar
-                            percent={
-                              (res.item_rating.rating_count[index] /
-                                res.item_rating.rating_count[0]) *
-                              100
-                            }
-                          ></RatingBar>
-                        </RatingItem>
-                      ))}
-                  </RatingsSummary>
-                )}
-              </SectionWrapper>
-              <SectionWrapper>
-                <SectionTitle>
-                  <DescriptionTitle>Ratings</DescriptionTitle>
-                  {/*//@ts-ignore */}
-                  <Button
-                    variant='secondary'
-                    onClick={() => setIsRatingsHidden(!isRatingsHidden)}
-                  >
-                    <span>{isRatingsHidden ? "Hide" : "Show"}</span>
-                  </Button>
-                </SectionTitle>
-                <SectionTitle>
-                  <span>Ratings 1-10</span>
-                  <Select
-                    DropdownOpen={ratingsDropdownOpen}
-                    setDropdownOpen={setRatingsDropdownOpen}
-                    title='Sort By'
-                    options={["Lowest", "Highest", "Recent"]}
-                  />
-                </SectionTitle>
-                {isRatingsHidden && (
-                  <RatingsWrapper layout={layout}>
-                    <div>
+                  {isRatingsSummaryHidden && (
+                    <RatingsSummary>
+                      {res.item.item_rating.rating_count
+                        .slice(1)
+                        .map((rating, index) => (
+                          <RatingItem style={{ display: "flex" }}>
+                            <RatingCount>
+                              {5 - index}
+                              <Icon type='Star' size={16} />
+                            </RatingCount>
+                            <RatingBar
+                              percent={
+                                (res.item.item_rating.rating_count[index] /
+                                  res.item.item_rating.rating_count[0]) *
+                                100
+                              }
+                            ></RatingBar>
+                          </RatingItem>
+                        ))}
+                    </RatingsSummary>
+                  )}
+                </SectionWrapper>
+                <SectionWrapper>
+                  <SectionTitle>
+                    <DescriptionTitle>Ratings</DescriptionTitle>
+                    {/*//@ts-ignore */}
+                    <Button
+                      variant='secondary'
+                      onClick={() => setIsRatingsHidden(!isRatingsHidden)}
+                    >
+                      <span>{isRatingsHidden ? "Hide" : "Show"}</span>
+                    </Button>
+                  </SectionTitle>
+                  <SectionTitle>
+                    <span>Ratings 1-10</span>
+                    <Select
+                      DropdownOpen={ratingsDropdownOpen}
+                      setDropdownOpen={setRatingsDropdownOpen}
+                      title='Sort By'
+                      options={["Lowest", "Highest", "Recent"]}
+                    />
+                  </SectionTitle>
+                  {isRatingsHidden && (
+                    <RatingsWrapper layout={layout}>
                       <div>
-                        <MultipleImage
-                          layout={layout}
-                          on={on}
-                          srcs={[
-                            "663c0665ecd4d9dc80d78e9130f21d47",
-                            "780749423db8f5ce3ccbcf3b8c859702",
-                            "7b7e62d34a4c3ac046737564252a652e",
-                          ]}
-                        />
+                        <div>
+                          <MultipleImage
+                            layout={layout}
+                            on={on}
+                            srcs={[
+                              "663c0665ecd4d9dc80d78e9130f21d47",
+                              "780749423db8f5ce3ccbcf3b8c859702",
+                              "7b7e62d34a4c3ac046737564252a652e",
+                            ]}
+                          />
+                        </div>
+                        <DescriptionParagraph>
+                          {
+                            "• average sounds with good quality microphone\n• long wire for single connector (2m)\n• not zero cancelling but noise reduction \n• well packaged (box, plastic foam, plastic) \n• working properly (tested already)\nPS. CHECK THE VOLUME ON THE LEFT SIDE.\n\nRECOMMENDED! WORTH THE PRICE!"
+                          }
+                        </DescriptionParagraph>
+                        <Author />
                       </div>
-                      <DescriptionParagraph>
-                        {
-                          "• average sounds with good quality microphone\n• long wire for single connector (2m)\n• not zero cancelling but noise reduction \n• well packaged (box, plastic foam, plastic) \n• working properly (tested already)\nPS. CHECK THE VOLUME ON THE LEFT SIDE.\n\nRECOMMENDED! WORTH THE PRICE!"
-                        }
-                      </DescriptionParagraph>
-                      <Author />
-                    </div>
-                    <div>
                       <div>
-                        <MultipleImage
-                          layout={layout}
-                          on={on}
-                          srcs={[
-                            "663c0665ecd4d9dc80d78e9130f21d47",
-                            "780749423db8f5ce3ccbcf3b8c859702",
-                            "7b7e62d34a4c3ac046737564252a652e",
-                          ]}
-                        />
+                        <div>
+                          <MultipleImage
+                            layout={layout}
+                            on={on}
+                            srcs={[
+                              "663c0665ecd4d9dc80d78e9130f21d47",
+                              "780749423db8f5ce3ccbcf3b8c859702",
+                              "7b7e62d34a4c3ac046737564252a652e",
+                            ]}
+                          />
+                        </div>
+                        <DescriptionParagraph>
+                          {
+                            "• average sounds with good quality microphone\n• long wire for single connector (2m)\n• not zero cancelling but noise reduction \n• well packaged (box, plastic foam, plastic) \n• working properly (tested already)\nPS. CHECK THE VOLUME ON THE LEFT SIDE.\n\nRECOMMENDED! WORTH THE PRICE!"
+                          }
+                        </DescriptionParagraph>
+                        <Author />
                       </div>
-                      <DescriptionParagraph>
-                        {
-                          "• average sounds with good quality microphone\n• long wire for single connector (2m)\n• not zero cancelling but noise reduction \n• well packaged (box, plastic foam, plastic) \n• working properly (tested already)\nPS. CHECK THE VOLUME ON THE LEFT SIDE.\n\nRECOMMENDED! WORTH THE PRICE!"
-                        }
-                      </DescriptionParagraph>
-                      <Author />
-                    </div>
-                    <div>
                       <div>
-                        <MultipleImage
-                          layout={layout}
-                          on={on}
-                          srcs={[
-                            "663c0665ecd4d9dc80d78e9130f21d47",
-                            "780749423db8f5ce3ccbcf3b8c859702",
-                            "7b7e62d34a4c3ac046737564252a652e",
-                          ]}
-                        />
+                        <div>
+                          <MultipleImage
+                            layout={layout}
+                            on={on}
+                            srcs={[
+                              "663c0665ecd4d9dc80d78e9130f21d47",
+                              "780749423db8f5ce3ccbcf3b8c859702",
+                              "7b7e62d34a4c3ac046737564252a652e",
+                            ]}
+                          />
+                        </div>
+                        <DescriptionParagraph>
+                          {
+                            "• average sounds with good quality microphone\n• long wire for single connector (2m)\n• not zero cancelling but noise reduction \n• well packaged (box, plastic foam, plastic) \n• working properly (tested already)\nPS. CHECK THE VOLUME ON THE LEFT SIDE.\n\nRECOMMENDED! WORTH THE PRICE!"
+                          }
+                        </DescriptionParagraph>
+                        <Author />
                       </div>
-                      <DescriptionParagraph>
-                        {
-                          "• average sounds with good quality microphone\n• long wire for single connector (2m)\n• not zero cancelling but noise reduction \n• well packaged (box, plastic foam, plastic) \n• working properly (tested already)\nPS. CHECK THE VOLUME ON THE LEFT SIDE.\n\nRECOMMENDED! WORTH THE PRICE!"
-                        }
-                      </DescriptionParagraph>
-                      <Author />
-                    </div>
-                  </RatingsWrapper>
-                )}
-              </SectionWrapper>
+                    </RatingsWrapper>
+                  )}
+                </SectionWrapper>
+              </div>
             </>
           )}
         </CItem>

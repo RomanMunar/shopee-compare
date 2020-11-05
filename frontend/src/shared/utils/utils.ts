@@ -1,9 +1,9 @@
 import { DraggableLocation } from "react-beautiful-dnd";
-import { Layout, SearchItem } from "../../interfaces";
+import { Layout, ListItem, SearchItem } from "../../interfaces";
 
 export const move = (
-  source: SearchItem[],
-  destination: SearchItem[],
+  source: ListItem<SearchItem>[],
+  destination: ListItem<SearchItem>[],
   droppableSource: DraggableLocation,
   droppableDestination: DraggableLocation,
   layout: Layout,
@@ -14,14 +14,6 @@ export const move = (
   const [removed] = sourceClone.splice(droppableSource.index, 1);
 
   if (
-    layout === "double" &&
-    mainLength >= 2 &&
-    droppableSource.droppableId === "MAIN" &&
-    droppableDestination.droppableId === "SELECTION"
-  ) {
-    sourceClone.push(destClone[0]);
-    destClone = [...destClone, removed];
-  } else if (
     layout === "main" &&
     mainLength >= 1 &&
     droppableSource.droppableId === "SELECTION"
@@ -33,8 +25,17 @@ export const move = (
     mainLength >= 2 &&
     droppableSource.droppableId === "SELECTION"
   ) {
-    sourceClone.push(destClone[1]);
-    destClone = [destClone[0], removed];
+    console.log(droppableDestination.index);
+    if (droppableDestination.index === 0) {
+      console.log("if");
+      sourceClone.push(destClone[0]);
+      destClone = [removed, destClone[1]];
+    } else {
+      console.log("else");
+
+      sourceClone.push(destClone[1]);
+      destClone = [destClone[0], removed];
+    }
   } else {
     destClone.splice(droppableDestination.index, 0, removed);
   }
@@ -104,7 +105,7 @@ export const filterByField = (array: any[], field: string) => {
 };
 
 export const reorder = (
-  list: SearchItem[],
+  list: ListItem<SearchItem>[],
   startIndex: number,
   endIndex: number
 ) => {

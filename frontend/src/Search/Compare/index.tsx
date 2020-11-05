@@ -1,6 +1,6 @@
-import React, { useContext, useLayoutEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
-import { Layout, List } from "../../interfaces";
+import { Layout, List, ListItem, SearchItem } from "../../interfaces";
 import { SelectedItemsContext } from "../../shared/hooks/useSelectedItemsContext";
 import { move, reorder } from "../../shared/utils/utils";
 import CompareItem from "./CompareItem";
@@ -16,8 +16,13 @@ import {
 
 export default () => {
   const { selectedItems } = useContext(SelectedItemsContext);
-  const [mainItem, setMainItem] = useState([selectedItems[0]]);
-  const [sideItems, setSideItems] = useState(selectedItems.slice(1));
+  const selectedItemsList: ListItem<SearchItem>[] = selectedItems.map(
+    (item, itemid) => {
+      return { itemid, item };
+    }
+  );
+  const [mainItem, setMainItem] = useState(selectedItemsList.slice(0, 2));
+  const [sideItems, setSideItems] = useState(selectedItemsList.slice(2));
   const [layout, setLayout] = useState<Layout>("double");
   const lists: List[] = [
     {
@@ -32,19 +37,18 @@ export default () => {
     },
   ];
 
-  // Finally, a chance to use useLayoutEffect
-  useLayoutEffect(() => {
+  useEffect(() => {
     switch (layout) {
       case "main":
-        setMainItem([selectedItems[0]]);
-        setSideItems(selectedItems.slice(1));
+        setMainItem([selectedItemsList[0]]);
+        setSideItems(selectedItemsList.slice(1));
         break;
       case "double":
-        setMainItem(selectedItems.slice(0, 2));
-        setSideItems(selectedItems.slice(2));
+        setMainItem(selectedItemsList.slice(0, 2));
+        setSideItems(selectedItemsList.slice(2));
         break;
       case "none":
-        setMainItem(selectedItems);
+        setMainItem(selectedItemsList);
         setSideItems([]);
         break;
     }
@@ -59,7 +63,9 @@ export default () => {
 
     const desList = lists.find((dList) => dList.id === destination.droppableId);
     if (!desList) return;
-    const sourceList = lists.find((sList) => sList.id === source.droppableId);
+    const sourceList = lists.find(
+      (sList) => sList.id === source.droppableId
+    );
     if (!sourceList) return;
 
     if (source.droppableId === destination.droppableId) {
@@ -89,12 +95,7 @@ export default () => {
           direction={layout === "main" ? "vertical" : "horizontal"}
         >
           {(provided, snapshot) => (
-            <Compare
-              layout={layout}
-              ref={provided.innerRef}
-              isDraggingOver={snapshot.isDraggingOver}
-              {...provided.droppableProps}
-            >
+            <Compare layout={layout} isDraggingOver={snapshot.isDraggingOver}>
               <div
                 style={{
                   display: "flex",
@@ -121,6 +122,8 @@ export default () => {
                   overflow: "hidden",
                   gap: "3%",
                 }}
+                ref={provided.innerRef}
+                {...provided.droppableProps}
               >
                 {mainItem.map((res, index) => (
                   <CompareItem
@@ -130,8 +133,8 @@ export default () => {
                     index={index + 1}
                   />
                 ))}
+                {provided.placeholder}
               </div>
-              {provided.placeholder}
             </Compare>
           )}
         </Droppable>

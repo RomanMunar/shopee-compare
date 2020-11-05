@@ -17,7 +17,9 @@ export default function SelectedItemsProvider({
 }: {
   children: ReactNode;
 }) {
-  const [selectedItems, setSelectedItems] = useState<SearchItem[]>(filterByField(mockData,"itemid"));
+  const [selectedItems, setSelectedItems] = useState<SearchItem[]>(
+    filterByField(mockData, "itemid")
+  );
 
   return (
     <SelectedItemsContext.Provider value={{ selectedItems, setSelectedItems }}>

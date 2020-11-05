@@ -34,12 +34,7 @@ export const StyledLogo = styled(Logo)`
 export const Bottom = styled.div`
   position: absolute;
   bottom: 20px;
-  display: flex;
-  align-items: center;
   width: 100%;
-  height: 42px;
-  line-height: 42px;
-  ${mixin.clickable}
   &:hover {
     background: rgba(0, 0, 0, 0.1);
   }

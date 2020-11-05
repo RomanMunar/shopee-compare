@@ -12,6 +12,7 @@ import Results from "./Results";
 import Searchbar from "./Searchbar";
 import { Label, MenuWrapper, SearchPanel } from "./Styles";
 import { ToolbarButton } from "../components/Toolbar";
+import { MenuTitle } from "./Compare/Styles";
 
 export default (): ReactElement => {
   let query = useQueryParams().get("keyword");
@@ -49,6 +50,9 @@ export default (): ReactElement => {
               tooltipPlace='bottom'
             />
           </Toolbar>
+          <MenuTitle style={{ alignSelf: "flex-start", width: "86%" }}>
+            Search
+          </MenuTitle>
           <Searchbar />
           <MenuWrapper>
             <Label>Search results for "{query}"</Label>

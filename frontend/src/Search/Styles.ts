@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { color, font, mixin, shadows } from "../shared/styles";
 
 export const MenuWrapper = styled.div`
-  width: 86%;
+  width: 100%;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
@@ -19,7 +19,7 @@ export const Tags = styled.div`
   width: 100%;
 `;
 export const Label = styled.span`
-  width: 86%;
+  white-space: nowrap;
   ${font.bold}
 `;
 
@@ -27,6 +27,7 @@ export const SearchPanel = memo(styled.div<{
   isSearchPanelOpen: boolean;
   isSearchPanelMaximized: boolean;
 }>`
+  padding: ${(props) => (props.isSearchPanelMaximized ? "0 50px" : "0 20px")};
   display: flex;
   flex-direction: column;
   border-radius: 15px;

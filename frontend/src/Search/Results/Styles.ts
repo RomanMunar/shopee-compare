@@ -16,6 +16,7 @@ export const Badges = styled.div<{ wide?: boolean }>`
 `;
 
 export const GridContainer = styled.div<{ wide?: boolean }>`
+  padding: 10px 40px;
   width: ${(props) => props.wide && "100%"};
   font-size: ${(props) => (props.wide ? "20px" : "13px")};
   justify-items: ${(props) => (props.wide ? "center" : "start")};
@@ -27,7 +28,6 @@ export const GridContainer = styled.div<{ wide?: boolean }>`
     ". ."
     "test test";
   ${font.bold}
-  padding:${(props) => (props.wide ? "5px 15px 15px 15px" : "5px")};
   white-space: nowrap;
   align-items: center;
 `;
@@ -73,7 +73,7 @@ export const ResultSection = styled.div<{ isDraggingOver: boolean }>`
   align-items: center;
   justify-content: flex-start;
   flex-wrap: wrap;
-  width: 86%;
+  width: 100%;
   border: ${(props) => props.isDraggingOver && "1px solid #000"};
   ${mixin.scrollableY}
   ${mixin.customScrollbar()}
@@ -133,6 +133,7 @@ export const Items = styled.div<{
   overflow: auto;
   ${mixin.scrollableX};
   ${mixin.customScrollbar()};
+  width: 100%;
   flex-grow: 1;
   padding: 5px 10px;
   margin-top: 15px;

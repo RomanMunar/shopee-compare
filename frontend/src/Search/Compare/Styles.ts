@@ -29,7 +29,7 @@ export const CompareSelection = styled.div<{
   background-color: ${color.backgroundLightest};
 `;
 export const MenuTitle = styled.span`
-  font-size: 20px;
+  font-size: 28px;
   ${font.medium}
   line-height: 20px;
 `;
@@ -90,10 +90,15 @@ export const CompareItem = styled.div<{
   background-color: ${(props) => (props.isDragging ? "#fef3ab" : "#fff")};
 `;
 
-export const CompareItemTitle = styled.div`
-  margin-top: 15px;
-  padding-right: 0.3rem;
-  padding-left: 0.3rem;
+export const CompareItemTitle = styled.div<{
+  layout: Layout;
+  on: "selection" | "main";
+}>`
+  ${(props) =>
+    props.layout === "main" && props.on === "main"
+      ? "padding: 20px 40px"
+      : "padding: 10px 20px"};
+  ${(props) => props.on === "main" && font.bold}
 `;
 export const DescriptionTitle = styled.span`
   ${font.bold}
@@ -123,7 +128,7 @@ export const RatingsSummary = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 90%;
+  width: 60%;
   margin: 10px 0;
 `;
 
@@ -148,9 +153,7 @@ export const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 90%;
   align-items: center;
-  margin-top: 15px;
 `;
 export const AuthorWrapper = styled.div`
   display: flex;

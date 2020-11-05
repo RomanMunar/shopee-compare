@@ -5,8 +5,8 @@ export const StyledInput = styled.div`
   position: relative;
   display: inline-block;
   height: 32px;
-  width: 86%;
-  margin-top: 2rem;
+  width: 100%;
+  margin-top: 0.8rem;
   margin-bottom: 1.1rem;
 `;
 

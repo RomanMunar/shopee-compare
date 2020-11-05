@@ -1,11 +1,13 @@
 import React from "react";
+import styled from "styled-components";
 import Container from "../components/Container";
-import Spinner from "../components/Spinner";
+import Flex from "../components/Flex";
 import { color } from "../shared/styles";
+
 export const Main = () => {
   return (
     <Container>
-      <div style={{ display: "flex", flexFlow: "row wrap", margin: "10px" }}>
+      <Flex align='flex-start' justify='flex-start' dir='row' wrap='wrap'>
         {Object.entries(color).map(([k, v]) => (
           <div style={{ margin: "10px" }}>
             <div>{k} color</div>
@@ -14,7 +16,7 @@ export const Main = () => {
             ></div>
           </div>
         ))}
-      </div>
+      </Flex>
     </Container>
   );
 };

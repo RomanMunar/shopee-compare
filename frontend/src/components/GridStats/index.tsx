@@ -19,9 +19,7 @@ interface Props {
 const GridStats = ({ on, item, layout }: Props) => {
   return (
     <GridContainer wide={on === "compare"}>
-      <GridItem
-        justify={on === "compare" && layout === "main" ? "center" : "start"}
-      >
+      <GridItem justify='start'>
         ₱
         <Price on={on}>
           {priceCompare({
@@ -31,7 +29,7 @@ const GridStats = ({ on, item, layout }: Props) => {
           })}
         </Price>
       </GridItem>
-      <GridItem justify={on === "compare" ? "" : "end"}>
+      <GridItem justify='center'>
         {item.item_rating.rating_star.toFixed(1)}{" "}
         <Icon
           type='Star'
@@ -43,13 +41,11 @@ const GridStats = ({ on, item, layout }: Props) => {
           }
         />
       </GridItem>
-      <GridItem
-        justify={on === "compare" && layout === "main" ? "center" : "start"}
-      >
+      <GridItem justify='start'>
         {kFormatter(item.sold)}
         <Small on={on}>sold/mon</Small>
       </GridItem>
-      <GridItem justify={on === "results" ? "end" : ""}>
+      <GridItem justify='center'>
         {kFormatter(item.liked_count)}
         <Icon size={16} type='Like' />
       </GridItem>

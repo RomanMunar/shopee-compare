@@ -2,6 +2,7 @@ import React, { ReactElement, useContext, useState } from "react";
 import {
   DragDropContext,
   Draggable,
+  DraggableLocation,
   Droppable,
   DropResult,
 } from "react-beautiful-dnd";
@@ -10,8 +11,8 @@ import Button from "../../components/Button/index.jsx";
 import GridStats from "../../components/GridStats";
 import { ToolbarButton } from "../../components/Toolbar";
 import { Toolbar } from "../../components/Toolbar/Styles";
-import { SearchItem } from "../../interfaces";
-import { moveBetween, reorder } from "../../shared/utils/utils";
+import { List, ListItem, SearchItem } from "../../interfaces";
+import { reorder } from "../../shared/utils/utils";
 import { SelectedItemsContext } from "../../shared/hooks/useSelectedItemsContext";
 import ResultItemImage from "./ResultItemImage";
 import {
@@ -44,54 +45,85 @@ function Results({
   isSearchPanelMaximized,
   setIsSearchPanelMaximized,
 }: Props): ReactElement {
-  const [items, setItems] = useState(results);
+  const resultsList: ListItem<SearchItem>[] = results.map((item, itemid) => {
+    return { itemid, item };
+  });
+  const [items, setItems] = useState(resultsList);
   const { setSelectedItems } = useContext(SelectedItemsContext);
   const [initialSelectedItems, setInitialSelectedItems] = useState<
-    SearchItem[]
+    ListItem<SearchItem>[]
   >([]);
 
+  const move = (
+    source: ListItem<SearchItem>[],
+    destination: ListItem<SearchItem>[],
+    droppableSource: DraggableLocation,
+    droppableDestination: DraggableLocation
+  ) => {
+    let sourceClone = Array.from(source);
+    let destClone = Array.from(destination);
+    const [removed] = sourceClone.splice(droppableSource.index, 1);
+
+    destClone.splice(droppableDestination.index, 0, removed);
+    const newSourceItems = sourceClone;
+    const newDestinationItems = destClone;
+
+    return { newSourceItems, newDestinationItems };
+  };
+
   const onSelectItemsSubmit = () => {
-    setSelectedItems(initialSelectedItems);
+    setSelectedItems(initialSelectedItems.map((isi) => isi.item));
     setIsSearchPanelOpen(false);
   };
-  const onDragEnd = function onDragEnd(result: DropResult) {
-    const { destination, source } = result;
-
+  const lists: List[] = [
+    {
+      set: setItems,
+      items: items,
+      id: "RESULTS",
+    },
+    {
+      set: setInitialSelectedItems,
+      items: initialSelectedItems,
+      id: "SELECTRESULTS",
+    },
+  ];
+  const onDragEnd = (result: DropResult) => {
+    const { source, destination } = result;
+    // dropped outside the list
     if (!destination) {
       return;
     }
 
+    const desList = lists.find((dList) => dList.id === destination.droppableId);
+    if (!desList) return;
+    const sourceList = lists.find((sList) => sList.id === source.droppableId);
+    if (!sourceList) return;
+
     if (source.droppableId === destination.droppableId) {
-      if (source.droppableId === "SELECTEDRESULTS") {
-        setItems(reorder(items, source.index, destination.index));
-      }
-      // In our current UI it won't be possible to reorder trash
-      return;
+      const items = reorder(sourceList.items, source.index, destination.index);
+      sourceList.set(items);
+    } else {
+      const { newSourceItems, newDestinationItems } = move(
+        sourceList.items,
+        desList.items,
+        source,
+        destination
+      );
+      console.log(newSourceItems, newDestinationItems);
+      console.log(desList, sourceList);
+
+      desList.set(newDestinationItems);
+      // sourceList.set(newSourceItems);
     }
-
-    const { list1, list2 } = moveBetween<SearchItem>({
-      list1: {
-        id: "RESULTS",
-        values: items,
-      },
-      list2: {
-        id: "SELECTEDRESULTS",
-        values: initialSelectedItems,
-      },
-      source,
-      destination,
-    });
-
-    setItems(list1.values);
-    setInitialSelectedItems(list2.values);
   };
+
   const onBeforeCapture = () => setIsSelectPanelOpen(true);
 
   return (
     <DragDropContext onBeforeCapture={onBeforeCapture} onDragEnd={onDragEnd}>
       <Droppable
         key='droppable-1344'
-        droppableId='RESULTS'
+        droppableId={lists[0].id}
         isDropDisabled={true}
         direction='horizontal'
       >
@@ -101,31 +133,31 @@ function Results({
             isDraggingOver={snapshot.isDraggingOver}
             {...provided.droppableProps}
           >
-            {results.map((res, index) => (
+            {resultsList.map(({ item, itemid }, index) => (
               <Draggable
                 isDragDisabled={initialSelectedItems
-                  .map((item) => item.itemid)
-                  .includes(res.itemid)}
-                key={"compare-item-" + res.itemid}
-                draggableId={`${res.itemid}`}
+                  .map((i) => i.itemid)
+                  .includes(itemid)}
+                key={"compare-item-" + item.itemid}
+                draggableId={`res-${itemid}`}
                 index={index}
               >
                 {(provided, snapshot) => (
                   <ResultItem
                     selected={initialSelectedItems
-                      .map((item) => item.itemid)
-                      .includes(res.itemid)}
+                      .map((i) => i.itemid)
+                      .includes(itemid)}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     isDragging={snapshot.isDragging}
                     draggingStyle={provided.draggableProps.style}
                   >
-                    <ResultItemImage src={res.image} />
+                    <ResultItemImage src={item.image} />
                     <ResultItemTitle>
-                      {res.name.replace(/[^a-zA-Z0-9 ]/g, "")}
+                      {item.name.replace(/[^a-zA-Z0-9 ]/g, "")}
                     </ResultItemTitle>
-                    <GridStats item={res} on='results' />
+                    <GridStats item={item} on='results' />
                   </ResultItem>
                 )}
               </Draggable>
@@ -156,7 +188,7 @@ function Results({
           </MenuWrapper>
           <Droppable
             key='droppable-155'
-            droppableId='SELECTEDRESULTS'
+            droppableId={lists[1].id}
             direction='vertical'
           >
             {(provided, snapshot) => (
@@ -166,11 +198,11 @@ function Results({
                 isDraggingOver={snapshot.isDraggingOver}
                 {...provided.droppableProps}
               >
-                {initialSelectedItems.map((res, index) => (
+                {lists[1].items.map(({ item }, index) => (
                   <Item>
-                    <ResultItemImage src={res.image} direction='left' />
+                    <ResultItemImage src={item.image} direction='left' />
                     <ItemText>
-                      {res.name
+                      {item.name
                         .replace(/[^a-zA-Z0-9 ]/g, "")
                         .split("")
                         .slice(0, 50)}

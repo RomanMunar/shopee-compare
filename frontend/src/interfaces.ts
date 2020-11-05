@@ -85,9 +85,14 @@ export interface Rating {
 export type Layout = "main" | "double" | "none";
 
 export type List = {
-  set: React.Dispatch<React.SetStateAction<SearchItem[]>>;
-  items: SearchItem[];
+  set: React.Dispatch<React.SetStateAction<ListItem<SearchItem>[]>>;
+  items: ListItem<SearchItem>[];
   id: string;
+};
+
+export type ListItem<T> = {
+  item: T;
+  itemid: number;
 };
 
 export type IconType =

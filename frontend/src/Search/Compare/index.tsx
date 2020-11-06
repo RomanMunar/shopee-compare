@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import Flex from "../../components/Flex";
 import { Layout, List, ListItem, SearchItem } from "../../interfaces";
 import { SelectedItemsContext } from "../../shared/hooks/useSelectedItemsContext";
 import { move, reorder } from "../../shared/utils/utils";
@@ -10,12 +11,22 @@ import {
   CompareContainer,
   CompareSelection,
   EmptyContainer,
+  MenuButton,
   MenuTitle,
-  Title
+  Title,
 } from "./Styles";
 
-export default () => {
-  const { selectedItems } = useContext(SelectedItemsContext);
+export default ({
+  selectedItems,
+  setSelectedItems,
+  setShowSummary,
+  setIsSearchPanelOpen,
+}: {
+  setSelectedItems: React.Dispatch<React.SetStateAction<SearchItem[]>>;
+  selectedItems: SearchItem[];
+  setShowSummary: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSearchPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const selectedItemsList: ListItem<SearchItem>[] = selectedItems.map(
     (item, itemid) => {
       return { itemid, item };
@@ -63,9 +74,7 @@ export default () => {
 
     const desList = lists.find((dList) => dList.id === destination.droppableId);
     if (!desList) return;
-    const sourceList = lists.find(
-      (sList) => sList.id === source.droppableId
-    );
+    const sourceList = lists.find((sList) => sList.id === source.droppableId);
     if (!sourceList) return;
 
     if (source.droppableId === destination.droppableId) {
@@ -111,22 +120,25 @@ export default () => {
                     color: " #172B4D",
                     borderBottom: " 2px solid rgb(47, 136, 255)",
                     padding: " 5px",
+                    cursor: "pointer",
+                    userSelect: "none",
                   }}
+                  onClick={() => setShowSummary(true)}
                 >
                   Show Summary
                 </button>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  overflow: "hidden",
-                  gap: "3%",
-                }}
+              <Flex
+                overflow='hidden'
+                gap={1.3}
+                dir='row'
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
                 {mainItem.map((res, index) => (
                   <CompareItem
+                    selectedItems={selectedItems}
+                    setSelectedItems={setSelectedItems}
                     layout={layout}
                     on='main'
                     res={res}
@@ -134,7 +146,7 @@ export default () => {
                   />
                 ))}
                 {provided.placeholder}
-              </div>
+              </Flex>
             </Compare>
           )}
         </Droppable>
@@ -150,24 +162,16 @@ export default () => {
               isDraggingOver={snapshot.isDraggingOver}
               {...provided.droppableProps}
             >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
+              <Flex dir='row' align='flex-end' justify='space-between'>
                 <MenuTitle>Selected Items</MenuTitle>
-                <button
-                  style={{
-                    color: " #172B4D",
-                  }}
-                >
+                <MenuButton onClick={() => setIsSearchPanelOpen(true)}>
                   Add more +
-                </button>
-              </div>
+                </MenuButton>
+              </Flex>
               {sideItems.map((res, index) => (
                 <CompareItem
+                  selectedItems={selectedItems}
+                  setSelectedItems={setSelectedItems}
                   layout={layout}
                   on='selection'
                   res={res}

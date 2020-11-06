@@ -12,6 +12,14 @@ export const CompareContainer = styled.div`
   gap: 2.5%;
 `;
 
+export const MenuButton = styled.button`
+  color: #172b4d;
+  whitespace: nowrap;
+  align-self: center;
+  cursor: pointer;
+  userselect: none;
+`;
+
 export const CompareSelection = styled.div<{
   hidden: boolean;
   isDraggingOver: boolean;
@@ -29,9 +37,10 @@ export const CompareSelection = styled.div<{
   background-color: ${color.backgroundLightest};
 `;
 export const MenuTitle = styled.span`
-  font-size: 28px;
+  font-size: 22px;
+  white-space: nowrap;
   ${font.medium}
-  line-height: 20px;
+  line-height: 30px;
 `;
 
 export const Title = styled.span`

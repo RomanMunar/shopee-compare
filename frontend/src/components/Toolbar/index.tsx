@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import ReactTooltip from "react-tooltip";
 import { IconType } from "../../interfaces";
 import { Icon } from "../Icon";
-import { ToolbarButton as Button } from "./Styles";
+import { TButton as Button } from "./Styles";
 
 type Props = {
   name: string;

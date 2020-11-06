@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { font, color, shadows } from "../../shared/styles";
 
-export const ToolbarButton = styled.button`
+export const TButton = styled.button`
   ${font.bold}
   color:#2F88FF;
   display: flex;

@@ -14,10 +14,10 @@ export const CompareContainer = styled.div`
 
 export const MenuButton = styled.button`
   color: #172b4d;
-  whitespace: nowrap;
+  white-space: nowrap;
   align-self: center;
   cursor: pointer;
-  userselect: none;
+  user-select: none;
 `;
 
 export const CompareSelection = styled.div<{

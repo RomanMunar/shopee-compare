@@ -4,10 +4,13 @@ import { color, font, mixin, shadows } from "../shared/styles";
 
 export const MenuWrapper = styled.div`
   width: 100%;
+  max-width: 600px;
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 0.5rem;
+  margin-right: auto;
 `;
 
 export const Tags = styled.div`
@@ -34,7 +37,7 @@ export const SearchPanel = memo(styled.div<{
   position: absolute;
   bottom: 20px;
   height: 95vh;
-  width: ${(props) => (props.isSearchPanelMaximized ? "86%" : "35%")};
+  width: ${(props) => (props.isSearchPanelMaximized ? "86%" : "40%")};
   background-color: ${color.backgroundLight};
   align-items: center;
   transition: all 0.2s;

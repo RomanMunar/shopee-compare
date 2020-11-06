@@ -1,20 +1,30 @@
 # Shop Compare
 
 ### Base
-- Base Components
-  - [ ] theme file
-  - [ ] Button
-  - [ ] Search Bar
-  - [ ] Card
-  - [ ] Modal
+- Base Components  
+  - ~~[ ] theme file~~ (noop, hard to do with vanilla styled-components) 
+  - [x] Button
+  - [x] Search Bar
+  - [x] Search Panel
+  - [x] Search Results
+  - [x] Select Panel
+  - [x] Card
+  - [x] Summary Modal
 - Search Panel
-- Splits/Tabs
+  - [x] Title
+  - [/] Sort
+    - [x] Relevance
+    - [ ] Sales
+    - [ ] Price
+    - [ ] Alphabetical
+  - [x]
+- ~~Splits/Tabs~~ (makes no sense, lol)
 
 ### Tech Used
 
 - Zustand
 - Styled Components
-- React Spring
+- ~~React Spring~~ (transitions will do for now.)
 - React Query
 - React Router
 
@@ -23,11 +33,10 @@
 ### Shop Compare Roadmap
 
 - [ ] Filter API
-- [ ] Sidebar
-  - History
-  - Saved Items
-- [ ] Search Panel Toggle
-- [ ] Items Splits/Tabs
+- [x] Sidebar
+  - [/] History (Does this make sense to implement? let me know.)
+  - [/] Bookmarks
+- [x] Search Panel Toggle
 - [ ] Summary Table [Reviews, Price, Sold] 1st,2nd... place
 - [ ] user system?
 - [ ] refactor

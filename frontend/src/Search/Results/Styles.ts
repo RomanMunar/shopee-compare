@@ -1,6 +1,13 @@
 import styled from "styled-components";
 import { mixin, shadows, color, font } from "../../shared/styles";
 
+export const MenuWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`;
+
 export const Price = styled.span<{ on?: "results" | "compare" }>`
   font-size: ${(props) => (props.on === "results" ? "1.1rem" : "1.6rem")};
   ${font.regular}
@@ -16,7 +23,7 @@ export const Badges = styled.div<{ wide?: boolean }>`
 `;
 
 export const GridContainer = styled.div<{ wide?: boolean }>`
-  padding: 10px 40px;
+  ${(props) => props.wide && "padding: 10px 40px"};
   width: ${(props) => props.wide && "100%"};
   font-size: ${(props) => (props.wide ? "20px" : "13px")};
   justify-items: ${(props) => (props.wide ? "center" : "start")};
@@ -37,10 +44,9 @@ export const Small = styled.span<{ on?: "results" | "compare" }>`
   ${font.regular}
 `;
 export const ResultItemTitle = styled.a`
+  text-align: start;
   font-size: 0.75rem;
-  width: 95%;
-  padding-right: 0.3rem;
-  padding-left: 0.3rem;
+  width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -91,7 +97,6 @@ export const ResultItem = styled.div<{
   border-radius: 0.5rem;
   overflow: hidden;
   width: 8.3125rem;
-  height: 12rem;
   margin-bottom: 0.5rem;
   margin-right: 4px;
   &:last-of-type {
@@ -104,6 +109,7 @@ export const SelectPanel = styled.div<{ isSelectPanelOpen: boolean }>`
   ${shadows.shadowMd}
   ${(props) =>
     !props.isSelectPanelOpen && "transform: translateX(-100%);opacity:0;"}
+  max-width: 350px;
   padding: 20px;
   border-radius: 15px;
   background-color: ${color.backgroundLight};
@@ -112,10 +118,11 @@ export const SelectPanel = styled.div<{ isSelectPanelOpen: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 70%;
+  width: 40%;
   height: 55%;
   top: 80px;
-  left: 500px;
+  left: 47%;
+  z-index: 100;
 `;
 
 export const Title = styled.span`
@@ -142,6 +149,7 @@ export const Items = styled.div<{
 `;
 
 export const Item = styled.div`
+  position: relative;
   margin-top: 15px;
   margin-bottom: 15px;
   width: 100%;

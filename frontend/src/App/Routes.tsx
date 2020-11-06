@@ -5,7 +5,7 @@ import { PageError } from "../components/PageError.tsx";
 import { Main } from "../Main";
 import { Navbar } from "../components/Navbar";
 import Search from "../Search";
-import Bookmarks from "../Bookmarks";
+import Bookmarks from "../Bookmarks/index";
 import Settings from "../Settings";
 
 const Router = () => (

@@ -4,6 +4,22 @@ export interface ShopeeResponse<T> {
   error_msg: string | null;
 }
 
+export interface ShopeeRatingResponse<T> {
+  data: {
+    item: any;
+    ratings: T;
+  };
+  error: number;
+  error_msg: string | null;
+}
+
+export interface ShopeeItemResponse<T> {
+  data: any;
+  error: number;
+  error_msg: string | null;
+  item: T;
+}
+
 export interface SearchResponse {
   error: number | string | null;
   error_msg: string | null;
@@ -33,16 +49,17 @@ export interface Shop {
   follower_count: number;
   response_rate: number;
   response_time: number;
+  last_active_time: number;
 }
 
 export interface Item {
   has_lowest_price_guarantee: boolean;
+  raw_discount: number;
   is_adult: boolean;
   image: string;
   images: string[];
   item_rating: ItemRating;
   itemid: number;
-  raw_discount: number;
   name: string;
   price_max: number;
   price_min: number;
@@ -72,11 +89,11 @@ export interface ItemDetailed extends Item {
 }
 
 export interface Rating {
-  anonymous: string;
+  anonymous: boolean;
   author_portrait: string;
   author_username: string;
   comment: string;
-  images: string;
+  images: string[];
   rating_star: number;
   product_items: { modelname: string };
   tags: [{ description: string }];
@@ -96,6 +113,10 @@ export type ListItem<T> = {
 };
 
 export type IconType =
+  | "Delete"
+  | "Product"
+  | "Price"
+  | "Sales"
   | "MainLayout"
   | "DoubleLayout"
   | "Column"

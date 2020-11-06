@@ -31,10 +31,18 @@ interface Props {
   index: number;
   on: "selection" | "main";
   layout: Layout;
+  setSelectedItems: React.Dispatch<React.SetStateAction<SearchItem[]>>;
+  selectedItems: SearchItem[];
 }
 
-const CompareItem = ({ layout, res, index, on }: Props) => {
-  const { selectedItems, setSelectedItems } = useContext(SelectedItemsContext);
+const CompareItem = ({
+  selectedItems,
+  setSelectedItems,
+  layout,
+  res,
+  index,
+  on,
+}: Props) => {
   const [isDescriptionHidden, setIsDescriptionHidden] = useState(true);
   const [isRatingsHidden, setIsRatingsHidden] = useState(true);
   const [isRatingsSummaryHidden, setIsRatingsSummaryHidden] = useState(true);

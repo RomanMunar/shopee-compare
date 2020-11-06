@@ -127,14 +127,17 @@ app.get("/shop/:shopid", async (req, res) => {
     ).then((res) => res.json());
     const { data, error, error_msg } = response;
     const newData = {
-      data: data.data,
-      account: data.account,
-      total_avg_star: data.total_avg_star,
-      portrait: data.portrait,
+      account:{
+        portrait: data.account.portrait,
+        total_avg_star: data.account.total_avg_star,
+      },
       name: data.name,
       follower_count: data.follower_count,
       response_rate: data.response_rate,
+      response_time: data.response_time,
+      last_active_time: data.last_active_time,
     };
+
     res.status(200).json({ data: newData, error, error_msg });
   } catch (e) {
     console.error("Engk! " + e.message);
@@ -142,7 +145,7 @@ app.get("/shop/:shopid", async (req, res) => {
   }
 });
 
-app.get("/ratings/:itemid/shop/:shopid", async (req, res) => {
+app.get("/ratings/item/:itemid/shop/:shopid", async (req, res) => {
   const { itemid, shopid } = req.params;
   try {
     const response: ShopeeRatingResponse<Rating[]> = await fetch(

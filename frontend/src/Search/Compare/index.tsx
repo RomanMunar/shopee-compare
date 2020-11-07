@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import Flex from "../../components/Flex";
 import { Layout, List, ListItem, SearchItem } from "../../interfaces";
-import { SelectedItemsContext } from "../../shared/hooks/useSelectedItemsContext";
 import { move, reorder } from "../../shared/utils/utils";
 import CompareItem from "./CompareItem";
 import LayoutToolbarMenu from "./LayoutToolbarMenu";
@@ -17,15 +16,25 @@ import {
 } from "./Styles";
 
 export default ({
+  setIsOverlayHidden,
   selectedItems,
   setSelectedItems,
-  setShowSummary,
+  setShowCompareSummary,
   setIsSearchPanelOpen,
+  initialSelectedItems,
+  setInitialSelectedItems,
+  setIsSelectPanelOpen,
 }: {
+  setIsOverlayHidden: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedItems: React.Dispatch<React.SetStateAction<SearchItem[]>>;
   selectedItems: SearchItem[];
-  setShowSummary: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowCompareSummary: React.Dispatch<React.SetStateAction<boolean>>;
   setIsSearchPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setInitialSelectedItems: React.Dispatch<
+    React.SetStateAction<ListItem<SearchItem>[]>
+  >;
+  setIsSelectPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  initialSelectedItems: ListItem<SearchItem>[];
 }) => {
   const selectedItemsList: ListItem<SearchItem>[] = selectedItems.map(
     (item, itemid) => {
@@ -123,7 +132,7 @@ export default ({
                     cursor: "pointer",
                     userSelect: "none",
                   }}
-                  onClick={() => setShowSummary(true)}
+                  onClick={() => setShowCompareSummary(true)}
                 >
                   Show Summary
                 </button>
@@ -137,12 +146,14 @@ export default ({
               >
                 {mainItem.map((res, index) => (
                   <CompareItem
+                    initialSelectedItems={initialSelectedItems}
+                    setInitialSelectedItems={setInitialSelectedItems}
                     selectedItems={selectedItems}
                     setSelectedItems={setSelectedItems}
                     layout={layout}
                     on='main'
                     res={res}
-                    index={index + 1}
+                    index={index}
                   />
                 ))}
                 {provided.placeholder}
@@ -164,12 +175,20 @@ export default ({
             >
               <Flex dir='row' align='flex-end' justify='space-between'>
                 <MenuTitle>Selected Items</MenuTitle>
-                <MenuButton onClick={() => setIsSearchPanelOpen(true)}>
+                <MenuButton
+                  onClick={() => {
+                    setIsSearchPanelOpen(true);
+                    setIsOverlayHidden(false);
+                    setIsSelectPanelOpen(true);
+                  }}
+                >
                   Add more +
                 </MenuButton>
               </Flex>
               {sideItems.map((res, index) => (
                 <CompareItem
+                  initialSelectedItems={initialSelectedItems}
+                  setInitialSelectedItems={setInitialSelectedItems}
                   selectedItems={selectedItems}
                   setSelectedItems={setSelectedItems}
                   layout={layout}

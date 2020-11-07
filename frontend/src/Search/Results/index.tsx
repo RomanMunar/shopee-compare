@@ -1,8 +1,7 @@
-import React, { ReactElement, useContext } from "react";
+import React, { ReactElement } from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import GridStats from "../../components/GridStats";
 import { ListItem, SearchItem } from "../../interfaces";
-import { ListsContext } from "../../shared/hooks/useListContext";
 import ResultItemImage from "./ResultItemImage";
 import { ResultItem, ResultItemTitle, ResultSection } from "./Styles";
 
@@ -36,6 +35,7 @@ function Results({ results, initialSelectedItems }: Props): ReactElement {
             >
               {(provided, snapshot) => (
                 <ResultItem
+                  key={`initialItem-${item.itemid}`}
                   selected={initialSelectedItems
                     .map((i) => i.itemid)
                     .includes(itemid)}
@@ -56,6 +56,7 @@ function Results({ results, initialSelectedItems }: Props): ReactElement {
               )}
             </Draggable>
           ))}
+          {provided.placeholder}
         </ResultSection>
       )}
     </Droppable>

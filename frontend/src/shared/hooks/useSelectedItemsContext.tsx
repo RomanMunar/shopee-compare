@@ -1,7 +1,5 @@
 import React, { createContext, ReactNode, useState } from "react";
 import { SearchItem } from "../../interfaces";
-import { mockData } from "../../Search/mochResponses";
-import { filterByField } from "../utils/utils";
 
 const initialState: {
   selectedItems: SearchItem[];

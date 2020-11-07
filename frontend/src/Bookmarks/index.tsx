@@ -1,15 +1,15 @@
 import React from "react";
 import Container from "../components/Container";
 import Flex from "../components/Flex";
-import { mockData } from "../Search/mochResponses";
-import { SearchItem } from "../interfaces";
-import { filterByField, priceCompare } from "../shared/utils/utils";
-import { Item, ItemText, Small } from "../Search/Results/Styles";
-import { color } from "../shared/styles";
-import ResultItemImage from "../Search/Results/ResultItemImage";
 import { Icon, TrophyIcon } from "../components/Icon";
 import { ToolbarButton } from "../components/Toolbar";
 import { Toolbar } from "../components/Toolbar/Styles";
+import { SearchItem } from "../interfaces";
+import { mockData } from "../Search/mochResponses";
+import ResultItemImage from "../Search/Results/ResultItemImage";
+import { Item, Small } from "../Search/Results/Styles";
+import { color } from "../shared/styles";
+import { filterByField, priceCompare } from "../shared/utils/utils";
 
 const Bookmarks = () => {
   const reponses: SearchItem[] = filterByField(mockData, "itemid");
@@ -25,7 +25,10 @@ const Bookmarks = () => {
       >
         <div
           style={{
+            position: "absolute",
+            top: "-40px",
             width: "50%",
+            right: 0,
             margin: "auto",
             display: "flex",
             flexDirection: "column",
@@ -33,7 +36,11 @@ const Bookmarks = () => {
         >
           <Toolbar place='right-top'>
             Export to PDF
-            <ToolbarButton name='Export to PDF' icon='Pdf' />
+            <ToolbarButton
+              tooltipPlace='bottom'
+              name='Export to PDF'
+              icon='Pdf'
+            />
           </Toolbar>
           <table
             width='100%'

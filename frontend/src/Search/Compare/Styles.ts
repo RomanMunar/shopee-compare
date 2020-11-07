@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Layout } from "../../interfaces";
-import { color, font, mixin, shadows } from "../../shared/styles";
+import { color, font, shadows } from "../../shared/styles";
 
 export const CompareContainer = styled.div`
   overflow: hidden;
@@ -95,7 +95,7 @@ export const CompareItem = styled.div<{
   justify-content: flex-start;
   cursor: pointer;
   ${(props) => (props.isDragging ? shadows.shadow2Xl : shadows.shadowMd)};
-  ${(props) => props.draggingStyle}
+  // ${(props) => props.draggingStyle}
   background-color: ${(props) => (props.isDragging ? "#fef3ab" : "#fff")};
 `;
 
@@ -106,8 +106,10 @@ export const CompareItemTitle = styled.div<{
   ${(props) =>
     props.layout === "main" && props.on === "main"
       ? "padding: 20px 40px"
-      : "padding: 10px 20px"};
-  ${(props) => props.on === "main" && font.bold}
+      : "padding: 10px"};
+  ${(props) => props.on === "main" && font.medium}
+  text-align: start;
+  width: 100%;
 `;
 export const DescriptionTitle = styled.span`
   ${font.bold}

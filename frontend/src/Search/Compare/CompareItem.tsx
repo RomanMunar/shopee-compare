@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import Button from "../../components/Button";
 import GridStats from "../../components/GridStats";
@@ -7,13 +7,11 @@ import Select from "../../components/Select";
 import { ToolbarButton } from "../../components/Toolbar";
 import { Toolbar } from "../../components/Toolbar/Styles";
 import { Layout, ListItem, SearchItem } from "../../interfaces";
-import { SelectedItemsContext } from "../../shared/hooks/useSelectedItemsContext";
 import Author from "./Author";
 import { MultipleImage } from "./MultipleImage";
 import { SellerSection, SellerTags } from "./SellerTags";
 import {
   CompareItem as CItem,
-  RatingsWrapper,
   CompareItemTitle,
   DescriptionParagraph,
   DescriptionTitle,
@@ -21,6 +19,7 @@ import {
   RatingCount,
   RatingItem,
   RatingsSummary,
+  RatingsWrapper,
   SectionTitle,
   SectionWrapper,
 } from "./Styles";
@@ -33,6 +32,10 @@ interface Props {
   layout: Layout;
   setSelectedItems: React.Dispatch<React.SetStateAction<SearchItem[]>>;
   selectedItems: SearchItem[];
+  initialSelectedItems: ListItem<SearchItem>[];
+  setInitialSelectedItems: React.Dispatch<
+    React.SetStateAction<ListItem<SearchItem>[]>
+  >;
 }
 
 const CompareItem = ({
@@ -42,6 +45,8 @@ const CompareItem = ({
   res,
   index,
   on,
+  initialSelectedItems,
+  setInitialSelectedItems,
 }: Props) => {
   const [isDescriptionHidden, setIsDescriptionHidden] = useState(true);
   const [isRatingsHidden, setIsRatingsHidden] = useState(true);
@@ -49,17 +54,17 @@ const CompareItem = ({
   const [ratingsDropdownOpen, setRatingsDropdownOpen] = useState(false);
   const str =
     "\u3010Noise Cancelling Microphone&Headphone\u3011New Upgrade online class headset noise cancellation mic with Dual \n  3.5mm port and built-in noise reduction headphones\n                                  ************ Focus on online class use\uff0ckeep to upgrade*********\n    \n   -----------------------------------------------------\n  New Upgrade(Noise Reduction Mic):\n  -----------------------------------------------------\n  \u2605\u2605\u2605 Noise Cancellation Mic \u2605\u2605\u2605\n   -----------------------------------------------------\n  \u2605\u2605\u2605 Mic And Voice Volume Wire Control \u2605\u2605\u2605\n\nTips:\n\u2606Noise Reduction Mic \u2606----------Noise Cancellation Mic+Mic And Voice Volume Wire Control+Free splitter cable\n\u2606Grey\uff08Dual 3.5MM\uff09\u2606-----------Use for Computer. No have Mic and Voice Volume Control on the Headset Wire\n\u2606Gold(Dual 3.5mm\uff09\u2606-----------Use for Computer. No have Mic and Voice Volume Control on the Headset Wire\n\u2606White(Dual 3.5mm\uff09\u2606-----------Use for Computer. No have Mic and Voice Volume Control on the Headset Wire\n\n\u2606Grey\uff08Single 3.5MM\uff09\u2606-----------Use for Laptop and Mobile Phone. No have Mic and Voice Volume Control on the Headset Wire\n\u2606Gold\uff08Single 3.5MM\uff09\u2606-----------Use for Laptop and Mobile Phone. No have Mic and Voice Volume Control on the Headset Wire\n\n\n      Please buy from Us. Because:\n   1>We are only one Official Authorized dealer in Shopee. \n   2>Only us have the After-sale service.\n   3>Only us have stock\n\n\n   \u3010Ready Stock\u3011\n     \ud83d\udc4d100% brand new and high quality\n\n   1>Type\uff1a3.5MM Jack Port\n   2>Length\uff1a1.8M      weight: 270g\n   3>Color:Grey/Gold/White\n   4>Line quilt Material: Nylon Braided\n\n    Design\uff1aComfortable to wear\n    \ud83d\udc4dFast Shipment: Send out within 2 days!!\n\n     Package\uff1a\n    \ud83d\udc4dHave retail package\n\n\n   \ud83d\udc96If you like our store ,please follow our store to get more discount in the future!!\ud83d\udc96\n   \ud83c\udf81To be our follower,get surprise now!!!\ud83c\udf81\n\n\n#headphone #headphones #headset #online classes #online class #business #business headset #Business headset";
-  const onClick = () => console.log("clicked");
 
   return (
     <Draggable
-      key={"compare-item-" + res.itemid}
+      key={"draggable-ci-" + res.itemid}
       draggableId={`res-${res.itemid}`}
       index={index}
-      isDragDisabled={on === "main" && layout !== "none"}
+      // isDragDisabled={on === "main" && layout !== "none"}
     >
       {(provided, snapshot) => (
         <CItem
+          key={"compare-item-" + res.itemid}
           on={on}
           ref={provided.innerRef}
           {...provided.draggableProps}
@@ -69,37 +74,34 @@ const CompareItem = ({
         >
           <div
             style={{
-              zIndex: 10,
+              zIndex: 1,
               position: "absolute",
               right: "20px",
               top: "20px",
             }}
           >
             <Toolbar withoutMargin place='right-top'>
+              <ToolbarButton tooltipPlace='bottom' name='Test' icon='Grid' />
               <ToolbarButton
-                tooltipPlace='bottom'
-                onClick={onClick}
-                name='Test'
-                icon='Grid'
-              />
-              <ToolbarButton
-                onClick={() =>
+                onClick={() => {
                   setSelectedItems(
-                    selectedItems.filter((item) => item.itemid !== res.itemid)
-                  )
-                }
+                    selectedItems.filter(
+                      (item) => item.itemid !== res.item.itemid
+                    )
+                  );
+                  setInitialSelectedItems(
+                    initialSelectedItems.filter(
+                      (item) => item.item.itemid !== res.item.itemid
+                    )
+                  );
+                }}
                 icon='Close'
                 name='Remove'
                 tooltipPlace='bottom'
               />
             </Toolbar>
           </div>
-          <MultipleImage
-            layout={layout}
-            on={on}
-            key={"images-of-" + res.itemid}
-            srcs={res.item.images}
-          />
+          <MultipleImage layout={layout} on={on} srcs={res.item.images} />
           <CompareItemTitle on={on} layout={layout}>
             {res.item.name
               .replace(/[^a-zA-Z0-9 ]/g, "")
@@ -163,7 +165,10 @@ const CompareItem = ({
                       {res.item.item_rating.rating_count
                         .slice(1)
                         .map((rating, index) => (
-                          <RatingItem style={{ display: "flex" }}>
+                          <RatingItem
+                            key={`${5 - index}-rating of${res.item.itemid}`}
+                            style={{ display: "flex" }}
+                          >
                             <RatingCount>
                               {5 - index}
                               <Icon type='Star' size={16} />

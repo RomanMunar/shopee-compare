@@ -36,7 +36,7 @@ export const SearchPanel = memo(styled.div<{
   border-radius: 15px;
   position: absolute;
   bottom: 20px;
-  height: 95vh;
+  height: 95%;
   width: ${(props) => (props.isSearchPanelMaximized ? "86%" : "40%")};
   background-color: ${color.backgroundLight};
   align-items: center;
@@ -44,8 +44,7 @@ export const SearchPanel = memo(styled.div<{
   transition-property: all;
   visibility: hidden;
   opacity: 0;
-  transform: ${(props) =>
-    props.isSearchPanelOpen ? "translateX()" : "translateX(-80px)"};
+  transform: ${(props) => !props.isSearchPanelOpen && "translateX(-80px)"};
   visibility: ${(props) => props.isSearchPanelOpen && "visible"};
   opacity: ${(props) => props.isSearchPanelOpen && 1};
   ${shadows.shadowMd}

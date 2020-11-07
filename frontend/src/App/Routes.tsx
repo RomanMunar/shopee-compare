@@ -5,7 +5,7 @@ import { PageError } from "../components/PageError.tsx";
 import { Main } from "../Main";
 import { Navbar } from "../components/Navbar";
 import Search from "../Search";
-import Bookmarks from "../Bookmarks/index";
+import Bookmarks from "../Bookmarks";
 import Settings from "../Settings";
 
 const Router = () => (
@@ -17,7 +17,7 @@ const Router = () => (
       <Route path='/bookmarks' element={<Bookmarks />} />
       <Route path='/settings' element={<Settings />} />
       <Route path='/authenticate' element={<Auth />} />
-      <Route element={<PageError />} />
+      <Route path='*' element={<PageError />} />
     </Routes>
   </BrowserRouter>
 );

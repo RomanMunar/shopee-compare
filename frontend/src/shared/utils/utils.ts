@@ -25,14 +25,10 @@ export const move = (
     mainLength >= 2 &&
     droppableSource.droppableId === "SELECTION"
   ) {
-    console.log(droppableDestination.index);
-    if (droppableDestination.index === 0) {
-      console.log("if");
+    if (droppableDestination.index === 1) {
       sourceClone.push(destClone[0]);
       destClone = [removed, destClone[1]];
     } else {
-      console.log("else");
-
       sourceClone.push(destClone[1]);
       destClone = [destClone[0], removed];
     }
@@ -112,7 +108,6 @@ export const reorder = (
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
-
   return result;
 };
 

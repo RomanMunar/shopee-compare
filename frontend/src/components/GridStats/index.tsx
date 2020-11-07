@@ -18,7 +18,7 @@ interface Props {
 
 const GridStats = ({ on, item, layout }: Props) => {
   return (
-    <GridContainer wide={on === "compare"}>
+    <GridContainer layout={layout} wide={on === "compare"}>
       <GridItem justify='start'>
         ₱
         <Price on={on}>

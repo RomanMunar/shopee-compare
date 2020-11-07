@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Layout } from "../../interfaces";
 import { mixin, shadows, color, font } from "../../shared/styles";
 
 export const MenuWrapper = styled.div`
@@ -22,8 +23,11 @@ export const Badges = styled.div<{ wide?: boolean }>`
   grid-area: test;
 `;
 
-export const GridContainer = styled.div<{ wide?: boolean }>`
-  ${(props) => props.wide && "padding: 10px 40px"};
+export const GridContainer = styled.div<{ wide?: boolean; layout?: Layout }>`
+  ${(props) =>
+    props.wide && props.layout !== "main"
+      ? "padding: 10px 20px"
+      : "padding: 10px 40px"};
   width: ${(props) => props.wide && "100%"};
   font-size: ${(props) => (props.wide ? "20px" : "13px")};
   justify-items: ${(props) => (props.wide ? "center" : "start")};
@@ -107,8 +111,7 @@ export const ResultItem = styled.div<{
 //******************************** Select Panel ********************************//
 export const SelectPanel = styled.div<{ isSelectPanelOpen: boolean }>`
   ${shadows.shadowMd}
-  ${(props) =>
-    !props.isSelectPanelOpen && "transform: translateX(-100%);opacity:0;"}
+  overflow: hidden;
   max-width: 350px;
   padding: 20px;
   border-radius: 15px;
@@ -118,10 +121,17 @@ export const SelectPanel = styled.div<{ isSelectPanelOpen: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 40%;
+  width: 80%;
   height: 55%;
   top: 80px;
-  left: 47%;
+  left: 105%;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.2s;
+  visibility: ${(props) => props.isSelectPanelOpen && "visible"};
+  transform: ${(props) => !props.isSelectPanelOpen && "translateX(-80px)"};
+  transition-property: all;
+  opacity: ${(props) => props.isSelectPanelOpen && 1};
   z-index: 100;
 `;
 

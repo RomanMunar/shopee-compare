@@ -24,6 +24,7 @@ export const MultipleImage = ({ layout, srcs, on }: Props) => {
         />
         <ArrowContainer>
           <ToolbarButton
+            tooltipPlace='bottom'
             icon='ArrowLeftC'
             name='Prev'
             size={28}
@@ -34,6 +35,7 @@ export const MultipleImage = ({ layout, srcs, on }: Props) => {
             }
           />
           <ToolbarButton
+            tooltipPlace='bottom'
             name='Next'
             icon='ArrowRightC'
             size={28}
@@ -48,6 +50,7 @@ export const MultipleImage = ({ layout, srcs, on }: Props) => {
       <Indexes>
         {srcs.map((src, index) => (
           <IndexCircle
+            key={`index-circle-${index}-of-${src}`}
             onClick={() => setcurrentIndex(index)}
             active={currentIndex === index}
           />

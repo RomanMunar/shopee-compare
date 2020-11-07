@@ -1,15 +1,10 @@
-import React from "react";
 import styled from "styled-components";
 
 type Props = {
   as?: HTMLElement;
 };
 
-// const Flex = ({ as: Component }: Props) => {
-//   return <Component></Component>;
-// };
-
-const FlexStyle = styled.div<{
+const Flex = styled.div<{
   gap?: number;
   overflow?: "hidden" | "scroll";
   align?: "center" | "flex-start" | "flex-end";
@@ -18,9 +13,11 @@ const FlexStyle = styled.div<{
   shrink?: number;
   dir?: "column" | "row" | "column-reverse" | "row-reverse";
   wrap?: "wrap" | "nowrap";
+  margin?: number | string;
 }>`
   display: flex;
   align-items: ${(props) => props.align && props.align};
+  margin: ${(props) => props.margin && props.margin};
   overflow: ${(props) => props.overflow && props.overflow};
   gap: ${(props) => props.gap && `${props.gap}%`};
   justify-content: ${(props) => props.justify && props.justify};
@@ -30,4 +27,4 @@ const FlexStyle = styled.div<{
   flex-wrap: ${(props) => props.wrap && props.wrap};
 `;
 
-export default FlexStyle;
+export default Flex;

@@ -1016,7 +1016,7 @@ const DoubleLayoutIcon = ({ size = 24 }: { size?: number }) => (
 
 const ProductIcon = ({ size }: { size: number }) => (
   <svg width={size} height={size} viewBox='0 0 48 48' fill='#2F88FF'>
-    <rect width={size} height={size} fill='#2F88FF' fill-opacity='0.01' />
+    <rect width={size} height={size} fill='#2F88FF' fillOpacity='0.01' />
     <path
       d='M4 14L3.10557 12.2111C2.428 12.5499 2 13.2425 2 14H4ZM24 4L24.8944 2.21115C24.3314 1.92962 23.6686 1.92962 23.1056 2.21115L24 4ZM44 14H46C46 13.2425 45.572 12.5499 44.8944 12.2111L44 14ZM44 34L44.8944 35.7889C45.572 35.4501 46 34.7575 46 34H44ZM24 44L23.1056 45.7889C23.6686 46.0704 24.3314 46.0704 24.8944 45.7889L24 44ZM4 34H2C2 34.7575 2.428 35.4501 3.10557 35.7889L4 34ZM4.89443 15.7889L24.8944 5.78885L23.1056 2.21115L3.10557 12.2111L4.89443 15.7889ZM42 14V34H46V14H42ZM43.1056 32.2111L23.1056 42.2111L24.8944 45.7889L44.8944 35.7889L43.1056 32.2111ZM24.8944 42.2111L4.89443 32.2111L3.10557 35.7889L23.1056 45.7889L24.8944 42.2111ZM6 34V14H2V34H6ZM44.8944 12.2111L24.8944 2.21115L23.1056 5.78885L43.1056 15.7889L44.8944 12.2111Z'
       fill='#333'
@@ -1025,13 +1025,13 @@ const ProductIcon = ({ size }: { size: number }) => (
       d='M4 14L24 24'
       stroke='#333'
       fill='#2F88FF'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
-      fill-rule='evenodd'
-      clip-rule='evenodd'
+      fillRule='evenodd'
+      clipRule='evenodd'
       d='M24 24V44V24Z'
       fill='#2f88ff'
     />
@@ -1039,17 +1039,17 @@ const ProductIcon = ({ size }: { size: number }) => (
       d='M24 44V24'
       fill='#2F88FF'
       stroke='#333'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M44 14L24 24'
       fill='#2F88FF'
       stroke='#333'
-      stroke-width='4'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
     <path
       d='M34.8944 10.7889C35.8824 10.2949 36.2828 9.09353 35.7889 8.10557C35.2949 7.11762 34.0935 6.71717 33.1056 7.21115L34.8944 10.7889ZM13.1056 17.2111C12.1176 17.7051 11.7172 18.9065 12.2111 19.8944C12.7051 20.8824 13.9065 21.2828 14.8944 20.7889L13.1056 17.2111ZM33.1056 7.21115L13.1056 17.2111L14.8944 20.7889L34.8944 10.7889L33.1056 7.21115Z'
@@ -1066,17 +1066,17 @@ const PriceIcon = ({ size }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width={size} height={size} fill='white' fill-opacity='0.01' />
+    <rect width={size} height={size} fill='white' fillOpacity='0.01' />
     <path
       d='M42.1691 29.2451L29.2631 42.1511C28.5879 42.8271 27.6716 43.2069 26.7161 43.2069C25.7606 43.2069 24.8444 42.8271 24.1691 42.1511L8 26V8H26L42.1691 24.1691C43.5649 25.5732 43.5649 27.841 42.1691 29.2451Z'
       fill='#2f88ff'
       stroke='#333'
-      stroke-width='4'
-      stroke-linejoin='round'
+      strokeWidth='4'
+      strokeLinejoin='round'
     />
     <path
-      fill-rule='evenodd'
-      clip-rule='evenodd'
+      fillRule='evenodd'
+      clipRule='evenodd'
       d='M18.5 21C19.8807 21 21 19.8807 21 18.5C21 17.1193 19.8807 16 18.5 16C17.1193 16 16 17.1193 16 18.5C16 19.8807 17.1193 21 18.5 21Z'
       fill='#FFF'
     />
@@ -1093,22 +1093,22 @@ const SalesIcon = ({ size }: { size: number }) => (
     <g>
       <g>
         <rect
-          fill-opacity='0.01'
+          fillOpacity='0.01'
           fill='#FFFFFF'
           x='0'
           y='0'
           width={size}
           height={size}
-          stroke-width='4'
+          strokeWidth='4'
           stroke='none'
-          fill-rule='evenodd'
+          fillRule='evenodd'
         />
         <rect
           stroke='#333'
-          stroke-width='4'
+          strokeWidth='4'
           fill='#2f88ff'
-          fill-rule='nonzero'
-          stroke-linejoin='round'
+          fillRule='nonzero'
+          strokeLinejoin='round'
           x='6'
           y='6'
           width='36'
@@ -1119,21 +1119,21 @@ const SalesIcon = ({ size }: { size: number }) => (
           <polyline
             transform='translate(10.729923, 10.927306) rotate(-135.000000) translate(-10.729923, -10.927306) '
             points='13.8290808 -0.525973264 13.8290808 7.47402674 7.63076535 7.48132266 7.6591204 22.3805856'
-            stroke-linecap='butt'
-            stroke-linejoin='round'
-            stroke-width='4'
+            strokeLinecap='butt'
+            strokeLinejoin='round'
+            strokeWidth='4'
             stroke='#FFF'
             fill='none'
-            fill-rule='evenodd'
+            fillRule='evenodd'
           />
           <polyline
             points='13 5 21 5 21 13'
-            stroke-linecap='butt'
-            stroke-linejoin='round'
-            stroke-width='4'
+            strokeLinecap='butt'
+            strokeLinejoin='round'
+            strokeWidth='4'
             stroke='#FFF'
             fill='none'
-            fill-rule='evenodd'
+            fillRule='evenodd'
           />
         </g>
       </g>
@@ -1165,54 +1165,54 @@ export const TrophyIcon = ({
           width={size}
           height={size}
           fill='white'
-          fill-opacity='0.01'
-          stroke-linejoin='round'
-          stroke-width='4'
+          fillOpacity='0.01'
+          strokeLinejoin='round'
+          strokeWidth='4'
           stroke='none'
-          fill-rule='evenodd'
+          fillRule='evenodd'
         />
         <g transform='translate(4.000000, 4.000000)'>
           <path
             d='M20,26 C26.627417,26 32,20.4693999 32,13.6470588 L32,0 L8,0 L8,13.6470588 C8,20.4693999 13.372583,26 20,26 Z'
             fill={types[type]}
-            fill-rule='nonzero'
-            stroke-linejoin='round'
-            stroke-width='4'
+            fillRule='nonzero'
+            strokeLinejoin='round'
+            strokeWidth='4'
             stroke='#333'
           />
           <path
             d='M8,17 L8,7 L0,7 C0,13.6666667 4,17 8,17 Z'
-            stroke-linecap='butt'
-            stroke-linejoin='round'
-            stroke-width='4'
+            strokeLinecap='butt'
+            strokeLinejoin='round'
+            strokeWidth='4'
             stroke='#333'
             fill='none'
-            fill-rule='evenodd'
+            fillRule='evenodd'
           />
           <path
             d='M32,17 L32,7 L40,7 C40,13.6666667 36,17 32,17 Z'
-            stroke-linecap='butt'
-            stroke-linejoin='round'
-            stroke-width='4'
+            strokeLinecap='butt'
+            strokeLinejoin='round'
+            strokeWidth='4'
             stroke='#333'
             fill='none'
-            fill-rule='evenodd'
+            fillRule='evenodd'
           />
           <path
             d='M20,28 L20,32'
-            stroke-linecap='butt'
-            stroke-linejoin='round'
-            stroke-width='4'
+            strokeLinecap='butt'
+            strokeLinejoin='round'
+            strokeWidth='4'
             stroke='#333'
             fill='none'
-            fill-rule='evenodd'
+            fillRule='evenodd'
           />
           <polygon
             fill={types[type]}
-            fill-rule='nonzero'
+            fillRule='nonzero'
             points='11 38 14.690036 32 25.0425158 32 29 38'
-            stroke-linejoin='round'
-            stroke-width='4'
+            strokeLinejoin='round'
+            strokeWidth='4'
             stroke='#333'
           />
         </g>
@@ -1229,25 +1229,25 @@ const DeleteIcon = ({ size }: { size: number }) => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width={size} height={size} fill='white' fill-opacity='0.01' />
+    <rect width={size} height={size} fill='white' fillOpacity='0.01' />
     <path
       d='M15 12L16.2 5H31.8L33 12'
       stroke='#333'
-      stroke-width='2'
-      stroke-linejoin='round'
+      strokeWidth='2'
+      strokeLinejoin='round'
     />
-    <path d='M6 12H42' stroke='#333' stroke-width='2' stroke-linecap='butt' />
+    <path d='M6 12H42' stroke='#333' strokeWidth='2' strokeLinecap='butt' />
     <path
-      fill-rule='evenodd'
-      clip-rule='evenodd'
+      fillRule='evenodd'
+      clipRule='evenodd'
       d='M37 12L35 43H13L11 12H37Z'
       fill='#EC1E26'
       stroke='#333'
-      stroke-width='2'
-      stroke-linecap='butt'
-      stroke-linejoin='round'
+      strokeWidth='2'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
     />
-    <path d='M19 35H29' stroke='#FFF' stroke-width='2' stroke-linecap='butt' />
+    <path d='M19 35H29' stroke='#FFF' strokeWidth='2' strokeLinecap='butt' />
   </svg>
 );
 

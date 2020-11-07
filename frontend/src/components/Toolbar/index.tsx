@@ -8,13 +8,13 @@ type Props = {
   name: string;
   icon?: IconType;
   onClick?: () => void;
-  tooltipPlace?: "top" | "bottom" | "left" | "right";
+  tooltipPlace: "top" | "bottom" | "left" | "right";
   size?: number;
   children?: ReactNode;
 };
 
 export const ToolbarButton = ({
-  tooltipPlace = "top",
+  tooltipPlace,
   name,
   icon,
   onClick,

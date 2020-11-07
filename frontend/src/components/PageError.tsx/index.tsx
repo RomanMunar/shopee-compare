@@ -1,2 +1,3 @@
 import React from "react";
-export const PageError = () => <div>Page Error</div>;
+import Container from "../Container";
+export const PageError = () => <Container>Page Error :(</Container>;

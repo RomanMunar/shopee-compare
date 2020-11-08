@@ -2,8 +2,8 @@ import React, { ReactElement } from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import GridStats from "../../components/GridStats";
 import { ListItem, SearchItem } from "../../interfaces";
-import ResultItemImage from "./ResultItemImage";
-import { ResultItem, ResultItemTitle, ResultSection } from "./Styles";
+import { ResultItemImage } from "./ResultItemImage";
+import { ResultItem, ResultItemTitle, ResultSection } from "./Results.styles";
 
 type Props = {
   results: ListItem<SearchItem>[];

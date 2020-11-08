@@ -3,8 +3,7 @@ import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import Flex from "../../components/Flex";
 import { Layout, List, ListItem, SearchItem } from "../../interfaces";
 import { move, reorder } from "../../shared/utils/utils";
-import CompareItem from "./CompareItem";
-import LayoutToolbarMenu from "./LayoutToolbarMenu";
+import CompareItem from "./CompareItem/CompareItem";
 import {
   Compare,
   CompareContainer,
@@ -13,7 +12,10 @@ import {
   MenuButton,
   MenuTitle,
   Title,
-} from "./Styles";
+  LinkButton,
+} from "./Compare.styles";
+import { ToolbarButton } from "../../components/Toolbar";
+import { Toolbar } from "../../components/Toolbar/Styles";
 
 export default ({
   setIsOverlayHidden,
@@ -114,29 +116,33 @@ export default ({
         >
           {(provided, snapshot) => (
             <Compare layout={layout} isDraggingOver={snapshot.isDraggingOver}>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "flex-end",
-                  justifyContent: "space-between",
-                }}
-              >
+              <Flex align='flex-end' justify='space-between'>
                 <MenuTitle>Compare</MenuTitle>
-                <LayoutToolbarMenu setLayout={setLayout} />
+                <Toolbar withoutMargin place='right-top'>
+                  <ToolbarButton
+                    onClick={() => setLayout("main")}
+                    name='Main Layout'
+                    icon='MainLayout'
+                    tooltipPlace='bottom'
+                  />
+                  <ToolbarButton
+                    onClick={() => setLayout("double")}
+                    name='Double Layout'
+                    icon='DoubleLayout'
+                    tooltipPlace='bottom'
+                  />
+                  <ToolbarButton
+                    onClick={() => setLayout("none")}
+                    name='No Layout'
+                    icon='Column'
+                    tooltipPlace='bottom'
+                  />
+                </Toolbar>
                 {/* @ts-ignore */}
-                <button
-                  style={{
-                    color: " #172B4D",
-                    borderBottom: " 2px solid rgb(47, 136, 255)",
-                    padding: " 5px",
-                    cursor: "pointer",
-                    userSelect: "none",
-                  }}
-                  onClick={() => setShowCompareSummary(true)}
-                >
+                <LinkButton onClick={() => setShowCompareSummary(true)}>
                   Show Summary
-                </button>
-              </div>
+                </LinkButton>
+              </Flex>
               <Flex
                 overflow='hidden'
                 gap={1.3}

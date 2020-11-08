@@ -13,11 +13,13 @@ const Flex = styled.div<{
   shrink?: number;
   dir?: "column" | "row" | "column-reverse" | "row-reverse";
   wrap?: "wrap" | "nowrap";
-  margin?: number | string;
+  margin?: string;
+  padding?: string;
 }>`
   display: flex;
   align-items: ${(props) => props.align && props.align};
   margin: ${(props) => props.margin && props.margin};
+  padding: ${(props) => props.padding && props.padding};
   overflow: ${(props) => props.overflow && props.overflow};
   gap: ${(props) => props.gap && `${props.gap}%`};
   justify-content: ${(props) => props.justify && props.justify};

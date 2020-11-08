@@ -6,7 +6,7 @@ import {
   GridContainer,
   Price,
   Small,
-} from "../../Search/Results/Styles";
+} from "../../Search/Results/Results.styles";
 import { kFormatter, priceCompare } from "../../shared/utils/utils";
 import { Icon } from "../Icon";
 

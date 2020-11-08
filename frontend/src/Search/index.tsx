@@ -1,4 +1,4 @@
-import React, { ReactElement,useRef, useState } from "react";
+import React, { ReactElement, useRef, useState } from "react";
 import {
   DragDropContext,
   DraggableLocation,
@@ -14,12 +14,12 @@ import { useQueryParams } from "../shared/hooks/useQueryParams";
 import SelectedItemsProvider from "../shared/hooks/useSelectedItemsContext";
 import { filterByField, reorder } from "../shared/utils/utils";
 import Compare from "./Compare";
-import ShowCompareSummary from "./Compare/CompareSummary";
-import { MenuTitle } from "./Compare/Styles";
+import { CompareSummary } from "./Compare/CompareSummary/";
+import { MenuTitle } from "./Compare/Compare.styles";
 import { mockData } from "./mochResponses";
-import Results from "./Results";
-import SelectPanel from "./Results/SelectPanel";
-import Searchbar from "./Searchbar";
+import { Results } from "./Results";
+import { SelectPanel } from "./SelectPanel";
+import { SearchBar } from "./SearchBar";
 import { Label, MenuWrapper, SearchPanel } from "./Styles";
 
 export default (): ReactElement => {
@@ -131,7 +131,7 @@ export default (): ReactElement => {
   return (
     <>
       {showCompareSummary && (
-        <ShowCompareSummary setShowCompareSummary={setShowCompareSummary} />
+        <CompareSummary setShowCompareSummary={setShowCompareSummary} />
       )}
       {!isOverlayHidden && (
         <div
@@ -182,7 +182,7 @@ export default (): ReactElement => {
                 />
               </Toolbar>
               <MenuTitle style={{ marginRight: "auto" }}>Search</MenuTitle>
-              <Searchbar />
+              <SearchBar />
               <MenuWrapper>
                 <Label>Search results for "{query}"</Label>
                 <Toolbar withoutMargin place='default'>

@@ -13,14 +13,14 @@ import useOnOutsideClick from "../shared/hooks/useOnOutsideClick";
 import { useQueryParams } from "../shared/hooks/useQueryParams";
 import SelectedItemsProvider from "../shared/hooks/useSelectedItemsContext";
 import { filterByField, reorder } from "../shared/utils/utils";
-import Compare from "./Compare";
-import { CompareSummary } from "./Compare/CompareSummary/";
+import { Compare } from "./Compare";
+import { CompareSummary } from "./Compare/CompareSummary";
 import { MenuTitle } from "./Compare/Compare.styles";
 import { mockData } from "./mochResponses";
 import { Results } from "./Results";
 import { SelectPanel } from "./SelectPanel";
 import { SearchBar } from "./SearchBar";
-import { Label, MenuWrapper, SearchPanel } from "./Styles";
+import { Label, MenuWrapper, SearchPanel } from "./Search.styles";
 
 export default (): ReactElement => {
   let query = useQueryParams().get("keyword");

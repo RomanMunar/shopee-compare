@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
-import Button from "../../../components/Button";
-import { Icon } from "../../../components/Icon";
-import { ToolbarButton } from "../../../components/Toolbar/index";
-import { Toolbar } from "../../../components/Toolbar/Styles";
-import { ListItem, SearchItem } from "../../../interfaces";
-import ResultItemImage from "../ResultItemImage";
+import Button from "../../components/Button";
+import { Icon } from "../../components/Icon";
+import { ToolbarButton } from "../../components/Toolbar/index";
+import { Toolbar } from "../../components/Toolbar/Styles";
+import { ListItem, SearchItem } from "../../interfaces";
+import {ResultItemImage} from "../Results/ResultItemImage";
 import {
   Item,
   Items,
@@ -13,7 +13,7 @@ import {
   MenuWrapper,
   SelectPanel as SPanel,
   Title,
-} from "../Styles";
+} from "./SelectPanel.styles";
 
 type Props = {
   isSelectPanelOpen: boolean;

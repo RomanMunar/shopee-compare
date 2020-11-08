@@ -1,67 +1,58 @@
 import React from "react";
-import styled from "styled-components";
+import Flex from "../../components/Flex";
 import { Icon } from "../../components/Icon";
 import { Tag } from "../../components/Tag";
-import { SearchItem } from "../../interfaces";
+import { IconType, SearchItem } from "../../interfaces";
+import { get1and2starAverage } from "../../shared/utils/utils";
 
 interface Props {
   item: SearchItem;
 }
 
 const Tags = ({ item }: Props) => {
+  const tags: {
+    name: string;
+    field: keyof SearchItem;
+    type: IconType;
+    percent?: number;
+  }[] = [
+    { name: "Verified", field: "shopee_verified", type: "Checkmark" },
+    { name: "Hot", field: "is_adult", type: "Fire" },
+    {
+      name: "Lowest Price",
+      field: "has_lowest_price_guarantee",
+      type: "PriceLow",
+    },
+    {
+      name: "Discount",
+      field: "raw_discount",
+      type: "Discount",
+      percent: item.raw_discount,
+    },
+    {
+      name: "Negative Reviews",
+      field: "item_rating",
+      type: "LowStarsCount",
+      percent: get1and2starAverage(item.item_rating),
+    },
+  ];
   return (
-    <TagsWrapper>
-      {item.shopee_verified && (
-        <Tag>
-          <Icon size={16} type='Checkmark' />
-          <span>Verified</span>
-        </Tag>
+    <Flex wrap='wrap' padding='0 15px'>
+      {tags.map(
+        ({ field, type, name, percent }) =>
+          field && (
+            <Tag>
+              {percent ? (
+                <Icon size={16} type={type} percent={percent} />
+              ) : (
+                <Icon size={16} type={type} />
+              )}
+              <span>{name}</span>
+            </Tag>
+          )
       )}
-      {item.is_adult && (
-        <Tag>
-          <Icon size={16} type='Fire' />
-          <span>Hot</span>
-        </Tag>
-      )}
-      {item.has_lowest_price_guarantee && (
-        <Tag>
-          <Icon size={16} type='PriceLow' />
-          <span>Lowest Price</span>
-        </Tag>
-      )}
-      {item.raw_discount && (
-        <Tag>
-          <Icon size={16} type='Discount' percent={item.raw_discount} />
-          <span>Discount</span>
-        </Tag>
-      )}
-      {item.item_rating.rating_count[0] !== 0 && (
-        <Tag>
-          <Icon
-            size={16}
-            percent={
-              item.item_rating.rating_star === 0
-                ? 0
-                : Math.abs(
-                    ((item.item_rating.rating_count[1] +
-                      item.item_rating.rating_count[2]) /
-                      item.item_rating.rating_count[0]) *
-                      100
-                  ).toFixed(1)
-            }
-            type='LowStarsCount'
-          />
-          <span>Negative Reviews</span>
-        </Tag>
-      )}
-    </TagsWrapper>
+    </Flex>
   );
 };
-
-const TagsWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 15px;
-`;
 
 export default Tags;

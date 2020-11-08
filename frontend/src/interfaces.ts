@@ -30,7 +30,7 @@ export interface SearchItem extends Item {
   adsid: number | null;
 }
 
-type ItemRating = {
+export type ItemRating = {
   rating_star: number;
   rating_count: number[];
   rcount_with_context: number;

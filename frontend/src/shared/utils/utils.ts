@@ -1,5 +1,14 @@
 import { DraggableLocation } from "react-beautiful-dnd";
-import { Layout, ListItem, SearchItem } from "../../interfaces";
+import { ItemRating, Layout, ListItem, SearchItem } from "../../interfaces";
+
+export const get1and2starAverage = (item_rating: ItemRating) =>
+  parseInt(
+    Math.abs(
+      ((item_rating.rating_count[1] + item_rating.rating_count[2]) /
+        item_rating.rating_count[0]) *
+        100
+    ).toFixed(1)
+  );
 
 export const move = (
   source: ListItem<SearchItem>[],

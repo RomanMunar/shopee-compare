@@ -2,17 +2,19 @@ import React, { ReactElement, useRef, useState } from "react";
 import { Icon } from "../../components/Icon";
 import Select from "../../components/Select";
 import useOnOutsideClick from "../../shared/hooks/useOnOutsideClick";
-import {Filter,IconWrapper, StyledInput, InputElement } from "./Styles";
+import {
+  Filter,
+  IconWrapper,
+  StyledInput,
+  InputElement,
+} from "./SearchBar.styles";
 
-export default (): ReactElement => {
+const SearchBar = (): ReactElement => {
   const [PriceDropdownOpen, setPriceDropdownOpen] = useState(false);
-  const [testDropdownOpen, setTestDropdownOpen] = useState(false);
-  const $priceRef = useRef<HTMLDivElement>(null);
   const [SortDropdownOpen, setSortDropdownOpen] = useState(false);
+  const $priceRef = useRef<HTMLDivElement>(null);
   const $sortRef = useRef<HTMLDivElement>(null);
-  useOnOutsideClick($sortRef, () => setSortDropdownOpen(!SortDropdownOpen));
-  useOnOutsideClick($priceRef, () => setPriceDropdownOpen(!PriceDropdownOpen));
-  
+
   return (
     <StyledInput>
       <IconWrapper>
@@ -21,8 +23,8 @@ export default (): ReactElement => {
       <InputElement />
       <Filter>
         <Select
-          DropdownOpen={testDropdownOpen}
-          setDropdownOpen={setTestDropdownOpen}
+          DropdownOpen={PriceDropdownOpen}
+          setDropdownOpen={setPriceDropdownOpen}
           title='Price'
           options={["₱0-200", "₱200-500", "₱500-1000", "₱1000-2000"]}
         />
@@ -36,3 +38,5 @@ export default (): ReactElement => {
     </StyledInput>
   );
 };
+
+export default SearchBar;

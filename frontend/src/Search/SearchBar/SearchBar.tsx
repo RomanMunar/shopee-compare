@@ -1,19 +1,16 @@
-import React, { ReactElement, useRef, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { Icon } from "../../components/Icon";
 import Select from "../../components/Select";
-import useOnOutsideClick from "../../shared/hooks/useOnOutsideClick";
 import {
   Filter,
   IconWrapper,
-  StyledInput,
   InputElement,
+  StyledInput,
 } from "./SearchBar.styles";
 
 const SearchBar = (): ReactElement => {
   const [PriceDropdownOpen, setPriceDropdownOpen] = useState(false);
   const [SortDropdownOpen, setSortDropdownOpen] = useState(false);
-  const $priceRef = useRef<HTMLDivElement>(null);
-  const $sortRef = useRef<HTMLDivElement>(null);
 
   return (
     <StyledInput>

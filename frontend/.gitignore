@@ -5,7 +5,6 @@
 /.pnp
 .pnp.js
 /apireponses/
-*mock*
 # testing
 /coverage
 

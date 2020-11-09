@@ -2,25 +2,21 @@ import React, { FC, useMemo } from "react";
 
 /*
   setSelectedItems
-  setIsSearchPanelOpen
   setIsSearchPanelMaximized
-  setIsSelectPanelOpen
-  setShowCompareSummary
-  setIsOverlayHidden
   setInitialSelectedItems
  */
-export interface State {
+interface State {
   displaySearchPanel: boolean;
-  maximizeSearchPanel: boolean;
+  displayMaxSearchPanel: boolean;
   displaySelectPanel: boolean;
   displayOverlay: boolean;
   displayCompareSummary: boolean;
 }
 
 const initialState = {
-  displaySearchPanel: true,
-  maximizeSearchPanel: false,
-  displaySelectPanel: true,
+  displaySearchPanel: false,
+  displayMaxSearchPanel: false,
+  displaySelectPanel: false,
   displayOverlay: false,
   displayCompareSummary: false,
 };
@@ -78,13 +74,13 @@ function uiReducer(state: State, action: Action) {
     case "MAXIMIZE_SEARCHPANEL": {
       return {
         ...state,
-        maximizeSearchPanel: true,
+        displayMaxSearchPanel: true,
       };
     }
     case "MINIMIZE_SEARCHPANEL": {
       return {
         ...state,
-        maximizeSearchPanel: false,
+        displayMaxSearchPanel: false,
       };
     }
     case "OPEN_SELECT_PANEL": {
@@ -128,22 +124,14 @@ function uiReducer(state: State, action: Action) {
 
 export const UIProvider: FC = (props) => {
   const [state, dispatch] = React.useReducer(uiReducer, initialState);
-  ("OPEN_SEARCH_PANEL");
-  ("CLOSE_SEARCH_PANEL");
-  ("MAXIMIZE_SEARCHPANEL");
-  ("MINIMIZE_SEARCHPANEL");
-  ("OPEN_SELECT_PANEL");
-  ("CLOSE_SELECT_PANEL");
-  ("OPEN_OVERLAY");
-  ("CLOSE_OVERLAY");
-  ("OPEN_COMPARE_SUMMARY");
-  ("CLOSE_COMPARE_SUMMARY");
   const openSearchPanel = () => dispatch({ type: "OPEN_SEARCH_PANEL" });
   const closeSearchPanel = () => dispatch({ type: "CLOSE_SEARCH_PANEL" });
+  const maximizeSearchPanel = () => dispatch({ type: "MAXIMIZE_SEARCHPANEL" });
+  const minimizeSearchPanel = () => dispatch({ type: "MINIMIZE_SEARCHPANEL" });
   const toggleMaxSearchPanel = () =>
-    state.maximizeSearchPanel
-      ? dispatch({ type: "MAXIMIZE_SEARCHPANEL" })
-      : dispatch({ type: "MINIMIZE_SEARCHPANEL" });
+    state.displayMaxSearchPanel
+      ? dispatch({ type: "MINIMIZE_SEARCHPANEL" })
+      : dispatch({ type: "MAXIMIZE_SEARCHPANEL" });
   const closeSearchPanelIfPresent = () =>
     state.displaySearchPanel && dispatch({ type: "CLOSE_SEARCH_PANEL" });
 
@@ -163,6 +151,8 @@ export const UIProvider: FC = (props) => {
       ...state,
       openSearchPanel,
       closeSearchPanel,
+      maximizeSearchPanel,
+      minimizeSearchPanel,
       toggleMaxSearchPanel,
       closeSearchPanelIfPresent,
       openSelectPanel,

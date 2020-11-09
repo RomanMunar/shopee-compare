@@ -1,7 +1,7 @@
 import React, { createContext, ReactNode, useState } from "react";
 import { ListItem, SearchItem } from "../../interfaces";
-import { mockData } from "../../Search/mochResponses";
-import { filterByField } from "../utils/utils";
+import { mockData } from "../../App/apireponses/mochResponses";
+import { filterByUniqueField } from "../utils/utils";
 
 const initialState: {
   initialSelectedItems: ListItem<SearchItem>[];
@@ -24,7 +24,7 @@ export const ListsContext = createContext(initialState);
   typescript dunno how to deal with that shit wth ??? ima sleep now
  */
 export default function ListsProvider({ children }: { children: ReactNode }) {
-  const mainResults = filterByField(mockData, "itemid");
+  const mainResults = filterByUniqueField(mockData, "itemid");
   const mainResultsList = mainResults.map((item, itemid) => {
     return {
       itemid,

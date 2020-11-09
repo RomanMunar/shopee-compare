@@ -19,7 +19,12 @@ export const Badges = styled.div<{ wide?: boolean }>`
 `;
 
 export const GridContainer = styled.div<{ wide?: boolean; layout?: Layout }>`
-  ${(props) => props.wide && props.layout !== "main" && "padding: 10px 40px"};
+  ${(props) =>
+    props.wide === true
+      ? props.layout !== "none"
+        ? "padding: 10px 40px"
+        : "padding: 10px 20px"
+      : ""};
   width: ${(props) => props.wide && "100%"};
   font-size: ${(props) => (props.wide ? "20px" : "13px")};
   justify-items: ${(props) => (props.wide ? "center" : "start")};
@@ -54,27 +59,28 @@ export const ResultSection = styled.div<{ isDraggingOver: boolean }>`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   width: 100%;
   border: ${(props) => props.isDraggingOver && "1px solid #000"};
   ${mixin.scrollableY}
-  ${mixin.customScrollbar()}
 `;
 
 export const ResultItem = styled.div<{
   isDragging: boolean;
-  draggingStyle: any;
   selected: boolean;
+  big: boolean;
 }>`
-  background-color: ${color.backgroundLightest};
+  overflow: hidden;
+  background-color: ${(props) =>
+    props.isDragging ? color.backgroundLightPrimary : color.backgroundLightest};
   ${shadows.shadowSm}
   border:  ${(props) => props.selected && `2px solid rgba(11, 135, 91, 0.5)`};
   text-align: center;
   border-radius: 0.5rem;
   overflow: hidden;
-  width: 8.3125rem;
-  margin-bottom: 0.5rem;
-  margin-right: 4px;
+  width: ${(props) => (props.big ? "10.3125rem" : "8.3125rem")};
+  margin-bottom: ${(props) => (props.big ? "1.2rem" : "0.7rem")};
+  margin-right: ${(props) => (props.big ? "10px" : "6px")};
   &:last-of-type {
     margin-right: 0;
   }

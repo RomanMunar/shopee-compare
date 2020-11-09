@@ -1,41 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
-import Flex from "../../components/Flex";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { Layout, List, ListItem, SearchItem } from "../../interfaces";
 import { move, reorder } from "../../shared/utils/utils";
-import CompareItem from "./CompareItem/CompareItem";
-import {
-  Compare,
-  CompareContainer,
-  CompareSelection,
-  EmptyContainer,
-  MenuButton,
-  MenuTitle,
-  Title,
-  LinkButton,
-} from "./Compare.styles";
-import { ToolbarButton } from "../../components/Toolbar";
-import { Toolbar } from "../../components/Toolbar/Styles";
+import { CompareContainer, EmptyContainer, Title } from "./Compare.styles";
+import { MainPanel } from "./MainPanel";
+import { SelectionPanel } from "./SelectionPanel";
 
 export default ({
-  setIsOverlayHidden,
   selectedItems,
   setSelectedItems,
-  setShowCompareSummary,
-  setIsSearchPanelOpen,
   initialSelectedItems,
   setInitialSelectedItems,
-  setIsSelectPanelOpen,
 }: {
-  setIsOverlayHidden: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedItems: React.Dispatch<React.SetStateAction<SearchItem[]>>;
   selectedItems: SearchItem[];
-  setShowCompareSummary: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsSearchPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setInitialSelectedItems: React.Dispatch<
     React.SetStateAction<ListItem<SearchItem>[]>
   >;
-  setIsSelectPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
   initialSelectedItems: ListItem<SearchItem>[];
 }) => {
   const selectedItemsList: ListItem<SearchItem>[] = selectedItems.map(
@@ -48,12 +29,12 @@ export default ({
   const [layout, setLayout] = useState<Layout>("double");
   const lists: List[] = [
     {
-      set: setMainItem,
+      setItems: setMainItem,
       items: mainItem,
       id: "MAIN",
     },
     {
-      set: setSideItems,
+      setItems: setSideItems,
       items: sideItems,
       id: "SELECTION",
     },
@@ -74,6 +55,10 @@ export default ({
         setSideItems([]);
         break;
     }
+    // We do not want for selectedItemsList to update here,
+    // we are mutating with splice, it'll infinitely recurse
+    // For more info: https://doesitmutate.xyz/splice/
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layout, selectedItems]);
 
   const onDragEnd = (result: DropResult) => {
@@ -90,7 +75,7 @@ export default ({
 
     if (source.droppableId === destination.droppableId) {
       const items = reorder(sourceList.items, source.index, destination.index);
-      sourceList.set(items);
+      sourceList.setItems(items);
     } else {
       const { newSourceItems, newDestinationItems } = move(
         sourceList.items,
@@ -101,118 +86,42 @@ export default ({
         mainItem.length
       );
 
-      desList.set(newDestinationItems);
-      sourceList.set(newSourceItems);
+      desList.setItems(newDestinationItems);
+      sourceList.setItems(newSourceItems);
     }
   };
 
-  return selectedItems.length !== 0 ? (
+  if (selectedItems.length <= 0) {
+    return (
+      <EmptyContainer>
+        <Title>Hey Search</Title> Search Some items then drag them in this area
+        so I can render them
+      </EmptyContainer>
+    );
+  }
+
+  return (
     <CompareContainer>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable
-          key='droppable-1'
-          droppableId={lists[0].id}
-          direction={layout === "main" ? "vertical" : "horizontal"}
-        >
-          {(provided, snapshot) => (
-            <Compare layout={layout} isDraggingOver={snapshot.isDraggingOver}>
-              <Flex align='flex-end' justify='space-between'>
-                <MenuTitle>Compare</MenuTitle>
-                <Toolbar withoutMargin place='right-top'>
-                  <ToolbarButton
-                    onClick={() => setLayout("main")}
-                    name='Main Layout'
-                    icon='MainLayout'
-                    tooltipPlace='bottom'
-                  />
-                  <ToolbarButton
-                    onClick={() => setLayout("double")}
-                    name='Double Layout'
-                    icon='DoubleLayout'
-                    tooltipPlace='bottom'
-                  />
-                  <ToolbarButton
-                    onClick={() => setLayout("none")}
-                    name='No Layout'
-                    icon='Column'
-                    tooltipPlace='bottom'
-                  />
-                </Toolbar>
-                {/* @ts-ignore */}
-                <LinkButton onClick={() => setShowCompareSummary(true)}>
-                  Show Summary
-                </LinkButton>
-              </Flex>
-              <Flex
-                overflow='hidden'
-                gap={1.3}
-                dir='row'
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-              >
-                {mainItem.map((res, index) => (
-                  <CompareItem
-                    initialSelectedItems={initialSelectedItems}
-                    setInitialSelectedItems={setInitialSelectedItems}
-                    selectedItems={selectedItems}
-                    setSelectedItems={setSelectedItems}
-                    layout={layout}
-                    on='main'
-                    res={res}
-                    index={index}
-                  />
-                ))}
-                {provided.placeholder}
-              </Flex>
-            </Compare>
-          )}
-        </Droppable>
-        <Droppable
-          key='droppable-2'
-          droppableId={lists[1].id}
-          direction='vertical'
-        >
-          {(provided, snapshot) => (
-            <CompareSelection
-              hidden={layout === "none"}
-              ref={provided.innerRef}
-              isDraggingOver={snapshot.isDraggingOver}
-              {...provided.droppableProps}
-            >
-              <Flex dir='row' align='flex-end' justify='space-between'>
-                <MenuTitle>Selected Items</MenuTitle>
-                <MenuButton
-                  onClick={() => {
-                    setIsSearchPanelOpen(true);
-                    setIsOverlayHidden(false);
-                    setIsSelectPanelOpen(true);
-                  }}
-                >
-                  Add more +
-                </MenuButton>
-              </Flex>
-              {sideItems.map((res, index) => (
-                <CompareItem
-                  initialSelectedItems={initialSelectedItems}
-                  setInitialSelectedItems={setInitialSelectedItems}
-                  selectedItems={selectedItems}
-                  setSelectedItems={setSelectedItems}
-                  layout={layout}
-                  on='selection'
-                  res={res}
-                  index={index}
-                />
-              ))}
-              {provided.placeholder}
-            </CompareSelection>
-          )}
-        </Droppable>
+        <MainPanel
+          list={lists[0]}
+          setLayout={setLayout}
+          layout={layout}
+          setSelectedItems={setSelectedItems}
+          selectedItems={selectedItems}
+          setInitialSelectedItems={setInitialSelectedItems}
+          initialSelectedItems={initialSelectedItems}
+        />
+        <SelectionPanel
+          list={lists[1]}
+          setLayout={setLayout}
+          layout={layout}
+          setSelectedItems={setSelectedItems}
+          selectedItems={selectedItems}
+          setInitialSelectedItems={setInitialSelectedItems}
+          initialSelectedItems={initialSelectedItems}
+        />
       </DragDropContext>
     </CompareContainer>
-  ) : (
-    <EmptyContainer>
-      <Title>Hey Search</Title> Search Some items then drag them in this area so
-      I can render them
-    </EmptyContainer>
   );
 };

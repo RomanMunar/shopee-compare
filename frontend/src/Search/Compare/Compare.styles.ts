@@ -2,31 +2,7 @@ import styled from "styled-components";
 import { Layout } from "../../interfaces";
 import { color, font } from "../../shared/styles";
 
-export {
-  Compare,
-  CompareContainer,
-  CompareSelection,
-  EmptyContainer,
-  LinkButton,
-  MenuButton,
-  MenuTitle,
-  Title,
-};
-
-const MenuButton = styled.button`
-  color: #172b4d;
-  white-space: nowrap;
-  align-self: center;
-  cursor: pointer;
-  user-select: none;
-`;
-
-const MenuTitle = styled.span`
-  font-size: 22px;
-  white-space: nowrap;
-  ${font.medium}
-  line-height: 30px;
-`;
+export { Compare, CompareContainer, EmptyContainer, LinkButton, Title };
 
 const CompareContainer = styled.div`
   overflow: hidden;
@@ -54,6 +30,7 @@ const EmptyContainer = styled.div`
 `;
 
 const Compare = styled.div<{ isDraggingOver: boolean; layout: Layout }>`
+  overflow-x: auto;
   border-right: 2px solid #ececec;
   border-left: 2px solid #ececec;
   position: relative;
@@ -72,23 +49,6 @@ const Title = styled.span`
   font-size: 24px;
   ${font.bold}
   margin-bottom: 10px;
-`;
-
-const CompareSelection = styled.div<{
-  hidden: boolean;
-  isDraggingOver: boolean;
-}>`
-  border-left: 2px solid #ececec;
-  ${(props) => props.hidden && "display:none"};
-  position: absolute;
-  right: 0;
-  max-width: 290px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  gap: 1.5%;
-  background-color: ${color.backgroundLightest};
 `;
 
 const LinkButton = styled.button`

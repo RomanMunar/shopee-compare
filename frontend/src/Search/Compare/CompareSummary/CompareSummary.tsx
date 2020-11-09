@@ -1,38 +1,38 @@
-import React, { useRef } from "react";
-import { Icon, TrophyIcon } from "../../../components/Icon";
+import React, { useEffect, useRef } from "react";
+import { mockData } from "../../../App/apireponses/mochResponses";
 import Flex from "../../../components/Flex";
-import { filterByField, priceCompare } from "../../../shared/utils/utils";
-import { Toolbar } from "../../../components/Toolbar/Styles";
+import { Icon, Trophy } from "../../../components/Icon";
 import { ToolbarButton } from "../../../components/Toolbar";
+import { Toolbar } from "../../../components/Toolbar/Styles";
 import { IconType, SearchItem } from "../../../interfaces";
-import { mockData } from "../../mochResponses";
+import { useUI } from "../../../shared/contexts/useUIContext";
+import useOnOutsideClick from "../../../shared/hooks/useOnOutsideClick";
+import { filterByUniqueField, priceCompare } from "../../../shared/utils/utils";
+import { ResultItemImage } from "../../Results/ResultItemImage";
 import { Small } from "../../Results/Results.styles";
 import { Item } from "../../SelectPanel/SelectPanel.styles";
-import { ResultItemImage } from "../../Results/ResultItemImage";
-import useOnOutsideClick from "../../../shared/hooks/useOnOutsideClick";
 import {
-  Overlay,
+  HeadingWrapper,
   ProductTitle,
+  Table,
+  TableBody,
+  TableData,
+  TableHead,
+  TableHeader,
+  TableRow,
   TableWrapper,
   ToolbarWrapper,
-  HeadingWrapper,
-  Table,
-  TableHeader,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableData,
 } from "./CompareSummary.styles";
 
-interface Props {
-  setShowCompareSummary: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const CompareSummary = ({ setShowCompareSummary }: Props) => {
-  const reponses: SearchItem[] = filterByField(mockData, "itemid");
+const CompareSummary = () => {
+  const { closeCompareSummary, openOverlay, closeOverlay } = useUI();
+  const reponses: SearchItem[] = filterByUniqueField(mockData, "itemid");
   const $summaryRef = useRef<HTMLDivElement>(null);
-  useOnOutsideClick($summaryRef, () => setShowCompareSummary(false));
-  // Note: I named them type instead of icon for consistency
+  useOnOutsideClick($summaryRef, () => {
+    closeOverlay();
+    closeCompareSummary();
+  });
+  // Note: For consistency, I named them type instead of icon
   const headings: { name: string; type: IconType }[] = [
     { name: "Product", type: "Product" },
     { name: "Price", type: "Price" },
@@ -40,84 +40,87 @@ const CompareSummary = ({ setShowCompareSummary }: Props) => {
     { name: "Sales", type: "Sales" },
     { name: "Stars", type: "Like" },
   ];
-  const randomNum = () => parseInt(((Math.random() * 10) / 4).toFixed());
+  const randomNum = () => parseInt(((Math.random() * 10) / 4).toFixed()); // random from 0-2
+
+  useEffect(() => {
+    openOverlay();
+  }, []);
 
   return (
-    <Overlay>
-      <TableWrapper ref={$summaryRef}>
-        <ToolbarWrapper>
-          <Toolbar place='right-top'>
-            Export to PDF
-            <ToolbarButton
-              tooltipPlace='bottom'
-              name='Export to PDF'
-              icon='Pdf'
-            />
-          </Toolbar>
-        </ToolbarWrapper>
-        <Table>
-          <TableHeader style={{ lineHeight: "40px" }}>
-            <TableRow>
-              {headings.map(({ type, name }) => (
-                <TableHead>
-                  <HeadingWrapper>
-                    <Icon type={type} size={18} />
-                    <span>{name}</span>
-                  </HeadingWrapper>
-                </TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {reponses.map((r, index) => {
-              const types: ["gold", "silver", "bronze"] = [
-                "gold",
-                "silver",
-                "bronze",
-              ];
-              const { price, price_max, price_min } = r;
-              return (
-                <tr style={{ background: index ? "none" : "#dadada" }}>
-                  <TableData>
-                    <Item>
-                      <ResultItemImage src={r.image} direction='left' />
-                      <ProductTitle>
-                        {r.name.replace(/[^a-zA-Z0-9 ]/g, "")}
-                      </ProductTitle>
-                    </Item>
-                  </TableData>
-                  <TableData>
-                    <TrophyIcon type={types[randomNum()]} size={13} />
-                    {priceCompare({ price, price_max, price_min })}
-                  </TableData>
-                  <TableData>
-                    <Flex align='center' justify='center' wrap='nowrap'>
-                      <TrophyIcon type={types[randomNum()]} size={13} />
-                      <span>{r.item_rating.rating_star.toFixed(1)}</span>
-                    </Flex>
-                  </TableData>
-                  <TableData>
-                    <Flex align='center' justify='center' wrap='nowrap'>
-                      <TrophyIcon type={types[randomNum()]} size={13} />
-                      <div>
-                        {r.sold}
-                        <Small on='compare'> sold/mon </Small>
-                      </div>
-                    </Flex>
-                  </TableData>
-                  <TableData>
-                    <Flex align='center' justify='center' wrap='nowrap'>
-                      <TrophyIcon type={types[randomNum()]} size={13} />
-                      <span>{r.liked_count}</span>
-                    </Flex>
-                  </TableData>
-                </tr>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableWrapper>
-    </Overlay>
+    <TableWrapper ref={$summaryRef}>
+      <ToolbarWrapper>
+        <Toolbar place='right-top'>
+          Export to PDF
+          <ToolbarButton
+            tooltipPlace='bottom'
+            name='Export to PDF'
+            icon='Pdf'
+          />
+        </Toolbar>
+      </ToolbarWrapper>
+      <Table>
+        <TableHeader style={{ lineHeight: "40px" }}>
+          <TableRow>
+            {headings.map(({ type, name }) => (
+              <TableHead>
+                <HeadingWrapper>
+                  <Icon type={type} size={18} />
+                  <span>{name}</span>
+                </HeadingWrapper>
+              </TableHead>
+            ))}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {reponses.map((r, index) => {
+            const types: ["gold", "silver", "bronze"] = [
+              "gold",
+              "silver",
+              "bronze",
+            ];
+            const { price, price_max, price_min } = r;
+            return (
+              <tr style={{ background: index ? "none" : "#dadada" }}>
+                <TableData>
+                  <Item>
+                    <ResultItemImage src={r.image} direction='left' />
+                    <ProductTitle>
+                      {r.name.replace(/[^a-zA-Z0-9 ]/g, "")}
+                    </ProductTitle>
+                  </Item>
+                </TableData>
+                <TableData>
+                  <Trophy type={types[randomNum()]} size={13} />
+                  {priceCompare({ price, price_max, price_min })}
+                </TableData>
+                <TableData>
+                  <Flex align='center' justify='center' wrap='nowrap'>
+                    <Trophy type={types[randomNum()]} size={13} />
+                    <span>{r.item_rating.rating_star.toFixed(1)}</span>
+                  </Flex>
+                </TableData>
+                <TableData>
+                  <Flex align='center' justify='center' wrap='nowrap'>
+                    <Trophy type={types[randomNum()]} size={13} />
+                    <div>
+                      {r.sold}
+                      <Small on='compare'> sold/mon </Small>
+                    </div>
+                  </Flex>
+                </TableData>
+                <TableData>
+                  <Flex align='center' justify='center' wrap='nowrap'>
+                    <Trophy type={types[randomNum()]} size={13} />
+                    <span>{r.liked_count}</span>
+                  </Flex>{" "}
+                  // random from 0-2
+                </TableData>
+              </tr>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </TableWrapper>
   );
 };
 

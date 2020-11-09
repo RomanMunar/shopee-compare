@@ -16,7 +16,7 @@ export {
 };
 
 const Overlay = styled.div`
-  z-index: 3000;
+  z-index: 200;
   position: absolute;
   background: rgba(0, 0, 0, 0.3);
   width: 100%;
@@ -39,8 +39,10 @@ const ProductTitle = styled.span`
 
 const TableWrapper = styled.div`
   width: 50%;
-  position: relative;
-  top: -30px;
+  position: absolute;
+  top: 20%;
+  left: 22%;
+  z-index: 400;
   margin: auto;
   display: flex;
   flex-direction: column;

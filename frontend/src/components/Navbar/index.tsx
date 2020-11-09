@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { useUI } from "../../shared/contexts/useUIContext";
 import { NavIcon } from "../Icon";
 import {
   NavLeft,
@@ -10,18 +11,15 @@ import {
   ItemText,
 } from "./Styles";
 
-interface Props {
-  text?: string;
-}
-
-export const Navbar = (props: Props) => {
+export const Navbar = () => {
   const [activeRoute, setActiveRoute] = useState("/");
   const { pathname: url } = useLocation();
+  const { displayOverlay } = useUI();
   useEffect(() => {
     setActiveRoute(url);
   }, [url]);
   return (
-    <NavLeft>
+    <NavLeft isOverlayOn={displayOverlay}>
       <LogoLink to='/'>
         <StyledLogo />
       </LogoLink>

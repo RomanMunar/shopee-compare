@@ -1,9 +1,9 @@
 import React from "react";
-import Flex from "../../components/Flex";
-import { Icon } from "../../components/Icon";
-import { Tag } from "../../components/Tag";
-import { IconType, SearchItem } from "../../interfaces";
-import { get1and2starAverage } from "../../shared/utils/utils";
+import Flex from "../../../components/Flex";
+import { Icon } from "../../../components/Icon";
+import { Tag } from "../../../components/Tag";
+import { IconType, SearchItem } from "../../../interfaces";
+import { get1and2starAverage } from "../../../shared/utils/utils";
 
 interface Props {
   item: SearchItem;

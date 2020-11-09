@@ -4,21 +4,24 @@ import Auth from "../Auth/Auth";
 import { PageError } from "../components/PageError.tsx";
 import { Main } from "../Main";
 import { Navbar } from "../components/Navbar";
-import Search from "../Search";
+import { Search } from "../Search";
 import Bookmarks from "../Bookmarks";
 import Settings from "../Settings";
+import { UIProvider } from "../shared/contexts/useUIContext";
 
 const Router = () => (
   <BrowserRouter>
-    <Navbar />
-    <Routes>
-      <Route path='/' element={<Main />} />
-      <Route path='/search/*' element={<Search />} />
-      <Route path='/bookmarks' element={<Bookmarks />} />
-      <Route path='/settings' element={<Settings />} />
-      <Route path='/authenticate' element={<Auth />} />
-      <Route path='*' element={<PageError />} />
-    </Routes>
+    <UIProvider>
+      <Navbar />
+      <Routes>
+        <Route path='/' element={<Main />} />
+        <Route path='/search/*' element={<Search />} />
+        <Route path='/bookmarks' element={<Bookmarks />} />
+        <Route path='/settings' element={<Settings />} />
+        <Route path='/authenticate' element={<Auth />} />
+        <Route path='*' element={<PageError />} />
+      </Routes>
+    </UIProvider>
   </BrowserRouter>
 );
 

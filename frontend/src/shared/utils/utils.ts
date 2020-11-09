@@ -1,7 +1,63 @@
 import { DraggableLocation } from "react-beautiful-dnd";
 import { ItemRating, Layout, ListItem, SearchItem } from "../../interfaces";
 
-export const get1and2starAverage = (item_rating: ItemRating) =>
+export {
+  resultsMove,
+  makeListItems,
+  get1and2starAverage,
+  move,
+  getRelativeTimeFormat,
+  kFormatter,
+  priceCompare,
+  filterByUniqueField,
+  reorder,
+  orderBy,
+};
+
+const orderBy = <T>(arr: T[], props: Array<keyof T>, orders: "desc" | "asc") =>
+  [...arr].sort((a, b) =>
+    props.reduce((acc, prop, i) => {
+      if (acc === 0) {
+        const [p1, p2] =
+          orders && orders[i] === "desc"
+            ? [b[prop], a[prop]]
+            : [a[prop], b[prop]];
+        acc = p1 > p2 ? 1 : p1 < p2 ? -1 : 0;
+      }
+      return acc;
+    }, 0)
+  );
+
+const resultsMove = (
+  source: ListItem<SearchItem>[],
+  destination: ListItem<SearchItem>[],
+  droppableSource: DraggableLocation,
+  droppableDestination: DraggableLocation
+) => {
+  let sourceClone = Array.from(source);
+  let destClone = Array.from(destination);
+  const [removed] = sourceClone.splice(droppableSource.index, 1);
+  destClone.splice(droppableDestination.index, 0, removed);
+  /* 
+      uncomment nextline if we want to be able to drag 
+      initialselecteditems back to resultsitems  */
+  // const newSourceItems = sourceClone;
+  // return { newSourceItems, newDestinationItems };
+  const newDestinationItems = destClone;
+
+  return { newDestinationItems };
+};
+
+const makeListItems = <T>(mainResults: T[]) =>
+  mainResults.map((item, itemid) => {
+    const listItem: ListItem<T> = {
+      itemid,
+      item,
+    };
+    return listItem;
+  });
+
+const get1and2starAverage = (item_rating: ItemRating) =>
   parseInt(
     Math.abs(
       ((item_rating.rating_count[1] + item_rating.rating_count[2]) /
@@ -10,7 +66,7 @@ export const get1and2starAverage = (item_rating: ItemRating) =>
     ).toFixed(1)
   );
 
-export const move = (
+const move = (
   source: ListItem<SearchItem>[],
   destination: ListItem<SearchItem>[],
   droppableSource: DraggableLocation,
@@ -50,14 +106,16 @@ export const move = (
   return { newSourceItems, newDestinationItems };
 };
 
-export const getRelativeTimeFormat = (current: any, previous: any) => {
-  var msPerMinute = 60 * 1000;
-  var msPerHour = msPerMinute * 60;
-  var msPerDay = msPerHour * 24;
-  var msPerMonth = msPerDay * 30;
-  var msPerYear = msPerDay * 365;
+const getRelativeTimeFormat = (current: Date, previous: Date) => {
+  const msPerMinute = 60 * 1000;
+  const msPerHour = msPerMinute * 60;
+  const msPerDay = msPerHour * 24;
+  const msPerMonth = msPerDay * 30;
+  const msPerYear = msPerDay * 365;
 
-  var elapsed = current - previous;
+  // @ts-ignore this type mismatch, does not cause errors,
+  // dates coerce to numbers if used in a math expressiion. weird,ik
+  const elapsed = current - previous;
 
   if (elapsed < msPerMinute) {
     return Math.round(elapsed / 1000) + " seconds ago";
@@ -74,10 +132,10 @@ export const getRelativeTimeFormat = (current: any, previous: any) => {
   }
 };
 
-export const kFormatter = (num: number) =>
+const kFormatter = (num: number) =>
   Math.abs(num) > 999 ? (Math.abs(num) / 1000).toFixed(1) + "k" : Math.abs(num);
 
-export const priceCompare = ({
+const priceCompare = ({
   price,
   price_max,
   price_min,
@@ -98,18 +156,17 @@ export const priceCompare = ({
         )
       )}`;
 
-export const filterByField = (array: any[], field: string) => {
-  const displayedResults: SearchItem[] = [];
+const filterByUniqueField = <T>(array: T[], field: keyof T) => {
+  const displayedResults: T[] = [];
   array.filter(function (item) {
-    return displayedResults.findIndex((x: any) => x[field] === item[field]) ===
-      -1
+    return displayedResults.findIndex((x) => x[field] === item[field]) === -1
       ? displayedResults.push(item)
       : null;
   });
   return displayedResults;
 };
 
-export const reorder = (
+const reorder = (
   list: ListItem<SearchItem>[],
   startIndex: number,
   endIndex: number
@@ -118,46 +175,4 @@ export const reorder = (
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
   return result;
-};
-
-export function moveBetween<T>({
-  list1,
-  list2,
-  source,
-  destination,
-}: MoveBetweenArgs<T>): MoveBetweenResult<T> {
-  const newFirst = Array.from(list1.values);
-  const newSecond = Array.from(list2.values);
-
-  const moveFrom = source.droppableId === list1.id ? newFirst : newSecond;
-  const moveTo = moveFrom === newFirst ? newSecond : newFirst;
-
-  const [moved] = moveFrom.splice(source.index, 1);
-  moveTo.splice(destination.index, 0, moved);
-
-  return {
-    list1: {
-      ...list1,
-      values: newFirst,
-    },
-    list2: {
-      ...list2,
-      values: newSecond,
-    },
-  };
-}
-
-type List<T> = {
-  id: string;
-  values: T[];
-};
-type MoveBetweenArgs<T> = {
-  list1: List<T>;
-  list2: List<T>;
-  source: DraggableLocation;
-  destination: DraggableLocation;
-};
-type MoveBetweenResult<T> = {
-  list1: List<T>;
-  list2: List<T>;
 };

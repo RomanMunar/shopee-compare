@@ -20,12 +20,12 @@ const Author = (props: Props) => {
   return (
     <AuthorWrapper>
       <AuthorImage src={"https://cf.shopee.ph/file/" + shop.account.portrait} />
-      <div>
+      <div style={{ fontSize: "14px" }}>
+        <span>{shop.name}</span>
         <div>
           {shop.account.total_avg_star.toFixed(1)}{" "}
           <Icon type='Star' size={12} />
         </div>
-        <span>-{shop.name}</span>
       </div>
     </AuthorWrapper>
   );

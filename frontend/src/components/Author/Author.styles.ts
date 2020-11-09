@@ -13,5 +13,4 @@ const AuthorWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: max-content;
-  margin: auto;
 `;

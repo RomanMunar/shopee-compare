@@ -5,18 +5,20 @@ type Props = {
 };
 
 const Flex = styled.div<{
-  gap?: number;
-  overflow?: "hidden" | "scroll";
   align?: "center" | "flex-start" | "flex-end";
-  justify?: "center" | "flex-start" | "flex-end" | "space-between" | "around";
-  grow?: number;
-  shrink?: number;
+  border?: string;
   dir?: "column" | "row" | "column-reverse" | "row-reverse";
-  wrap?: "wrap" | "nowrap";
+  gap?: number;
+  grow?: number;
+  justify?: "center" | "flex-start" | "flex-end" | "space-between" | "around";
   margin?: string;
+  overflow?: "auto" | "hidden" | "scroll";
   padding?: string;
+  shrink?: number;
+  wrap?: "wrap" | "nowrap";
 }>`
   display: flex;
+  border: ${(props) => props.border && props.border};
   align-items: ${(props) => props.align && props.align};
   margin: ${(props) => props.margin && props.margin};
   padding: ${(props) => props.padding && props.padding};

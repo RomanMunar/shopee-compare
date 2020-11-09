@@ -6,7 +6,7 @@ export {
   SectionWrapper,
   SectionTitle,
   RatingsWrapper,
-  CompareItem,
+  CItem,
   CompareItemTitle,
   DescriptionTitle,
   DescriptionParagraph,
@@ -15,8 +15,20 @@ export {
   RatingBar,
   RatingCount,
   SellerSection,
+  Title,
   ToolbarWrapper,
 };
+
+const Title = styled.span`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  width: 100%;
+  -webkit-box-orient: vertical;
+  font-size: 14px;
+  font-family: Roboto-medium;
+`;
 
 const SellerSection = styled.div`
   background-color: rgba(193, 199, 208, 0.6);
@@ -58,15 +70,16 @@ const RatingsWrapper = styled.div<{ layout: Layout }>`
   gap: 4%;
 `;
 
-const CompareItem = styled.div<{
-  draggingStyle: any;
+const CItem = styled.div<{
+  layout: Layout;
   isDragging: boolean;
   on?: "selection" | "main";
 }>`
+  ${(props) => props.layout === "double" && "flex-basis: 50%"};
   border-radius: 15px;
   ${shadows.shadowLg}
   min-width: min-content;
-  overflow-y: scroll;
+  overflow-y: auto;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -74,7 +87,6 @@ const CompareItem = styled.div<{
   justify-content: flex-start;
   cursor: pointer;
   ${(props) => (props.isDragging ? shadows.shadow2Xl : shadows.shadowMd)};
-  // ${(props) => props.draggingStyle}
   background-color: ${(props) => (props.isDragging ? "#fef3ab" : "#fff")};
 `;
 
@@ -88,7 +100,8 @@ const CompareItemTitle = styled.div<{
       : "padding: 10px"};
   ${(props) => props.on === "main" && font.medium}
   text-align: start;
-  width: 100%;
+  display: flex;
+  align-items: flex-end;
 `;
 const DescriptionTitle = styled.span`
   ${font.bold}
@@ -100,7 +113,7 @@ const DescriptionParagraph = styled.p<{ on?: "main" }>`
   overflow: hidden;
   text-overflow: ellipsis;
   flex-grow: 1;
-  font-size: 14px;
+  font-size: 13px;
   margin: 8px 0;
   padding-right: 0.3rem;
   padding-left: 0.3rem;
@@ -110,7 +123,7 @@ const DescriptionParagraph = styled.p<{ on?: "main" }>`
 `;
 const RatingsSummary = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   justify-content: flex-start;
   align-items: flex-start;
   width: 60%;

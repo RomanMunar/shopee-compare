@@ -49,7 +49,7 @@ const CompareItemFixed = styled.div<{ layout?: Layout }>`
   align-items: center;
   justify-content: space-between;
   padding-right: 100%;
-  padding-bottom: ${(props) => (props.layout === "main" ? "45%" : "60%")};
+  padding-bottom: ${(props) => (props.layout === "main" ? "45%" : "40%")};
   ${shadows.shadowLg}
   margin-bottom: 0.3rem;
 `;
@@ -58,7 +58,7 @@ const CompareItemImage = styled.img<{
   on?: "selection" | "ratings" | "compare" | "main";
   layout?: Layout;
 }>`
-  ${(props) => (props.on === "main" ? "width: 65%;" : "width: 100%;")}
+  ${(props) => (props.on === "main" ? "width: 65%;" : "width: 60%;")}
   height: 100%;
   position: absolute;
   left: 0;

@@ -27,30 +27,32 @@ export const MultipleImage = ({ layout, srcs, on }: Props) => {
           active
           src={"https://cf.shopee.ph/file/" + srcs[currentIndex]}
         />
-        <ArrowContainer>
-          <ToolbarButton
-            tooltipPlace='bottom'
-            icon='ArrowLeftC'
-            name='Prev'
-            size={28}
-            onClick={() =>
-              currentIndex !== 0
-                ? setcurrentIndex(currentIndex - 1)
-                : setcurrentIndex(srcs.length - 1)
-            }
-          />
-          <ToolbarButton
-            tooltipPlace='bottom'
-            name='Next'
-            icon='ArrowRightC'
-            size={28}
-            onClick={() =>
-              srcs.length > currentIndex + 1
-                ? setcurrentIndex(currentIndex + 1)
-                : setcurrentIndex(0)
-            }
-          />
-        </ArrowContainer>
+        {on !== "selection" && (
+          <ArrowContainer>
+            <ToolbarButton
+              tooltipPlace='bottom'
+              icon='ArrowLeftC'
+              name='Prev'
+              size={28}
+              onClick={() =>
+                currentIndex !== 0
+                  ? setcurrentIndex(currentIndex - 1)
+                  : setcurrentIndex(srcs.length - 1)
+              }
+            />
+            <ToolbarButton
+              tooltipPlace='bottom'
+              name='Next'
+              icon='ArrowRightC'
+              size={28}
+              onClick={() =>
+                srcs.length > currentIndex + 1
+                  ? setcurrentIndex(currentIndex + 1)
+                  : setcurrentIndex(0)
+              }
+            />
+          </ArrowContainer>
+        )}
       </div>
       <Indexes>
         {srcs.map((src, index) => (
@@ -65,4 +67,4 @@ export const MultipleImage = ({ layout, srcs, on }: Props) => {
   );
 };
 
-export default MultipleImage
+export default MultipleImage;

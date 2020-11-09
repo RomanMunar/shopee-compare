@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { color, font, mixin } from "../../shared/styles";
 import { Logo } from "../Logo";
 
-export const NavLeft = styled.aside`
-  z-index: 1;
+export const NavLeft = styled.aside<{ isOverlayOn: boolean }>`
+  z-index: ${(props) => (props.isOverlayOn ? 1 : 400)};
   position: fixed;
   top: 0;
   left: 0;

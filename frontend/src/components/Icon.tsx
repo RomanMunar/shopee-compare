@@ -35,7 +35,7 @@ const NavIconContainer = styled.div`
   }
 `;
 
-const SearchIcon = ({ size }: { size: number }) => (
+const Search = ({ size }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -67,7 +67,7 @@ const SearchIcon = ({ size }: { size: number }) => (
     />
   </svg>
 );
-const BookmarkIcon = ({ size }: { size: number }) => (
+const Bookmark = ({ size }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -102,7 +102,7 @@ const BookmarkIcon = ({ size }: { size: number }) => (
     />
   </svg>
 );
-const HelpIcon = ({ size }: { size: number }) => (
+const Help = ({ size }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -133,7 +133,7 @@ const HelpIcon = ({ size }: { size: number }) => (
     />
   </svg>
 );
-const SettingIcon = ({ size }: { size: number }) => (
+const Setting = ({ size }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -158,7 +158,7 @@ const SettingIcon = ({ size }: { size: number }) => (
     />
   </svg>
 );
-const SearchBarIcon = ({ size }: { size: number }) => (
+const SearchBar = ({ size }: { size: number }) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     viewBox='0 0 20 20'
@@ -173,7 +173,7 @@ const SearchBarIcon = ({ size }: { size: number }) => (
     />
   </svg>
 );
-const CheckmarkIcon = ({ size }: { size: number }) => (
+const Checkmark = ({ size }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -198,7 +198,7 @@ const CheckmarkIcon = ({ size }: { size: number }) => (
     />
   </svg>
 );
-const LikeIcon = ({ size = 24 }: { size: number }) => (
+const Like = ({ size = 24 }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -217,7 +217,7 @@ const LikeIcon = ({ size = 24 }: { size: number }) => (
     />
   </svg>
 );
-const ExpandLeftIcon = ({ size = 24 }: { size: number }) => (
+const ExpandLeft = ({ size = 24 }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -267,7 +267,7 @@ const ExpandLeftIcon = ({ size = 24 }: { size: number }) => (
     />
   </svg>
 );
-const ExpandRightIcon = ({ size = 24 }: { size: number }) => (
+const ExpandRight = ({ size = 24 }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -317,7 +317,7 @@ const ExpandRightIcon = ({ size = 24 }: { size: number }) => (
     />
   </svg>
 );
-const FireIcon = ({ size = 24 }: { size: number }) => (
+const Fire = ({ size = 24 }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -335,7 +335,7 @@ const FireIcon = ({ size = 24 }: { size: number }) => (
     />
   </svg>
 );
-const LowPriceIcon = ({ size = 24 }: { size: number }) => (
+const LowPrice = ({ size = 24 }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -373,7 +373,7 @@ const LowPriceIcon = ({ size = 24 }: { size: number }) => (
     />
   </svg>
 );
-const DiscountIcon = ({
+const Discount = ({
   size = 24,
   percent = 0,
 }: {
@@ -398,7 +398,7 @@ const DiscountIcon = ({
     <span style={{ fontSize: "0.35rem" }}>%</span>
   </span>
 );
-const LowStarsCountIcon = ({
+const LowStarsCount = ({
   size,
   percent = 0,
 }: {
@@ -418,13 +418,13 @@ const LowStarsCountIcon = ({
       justifyContent: "center",
     }}
   >
-    <span style={{ fontSize: "0.5rem", fontFamily: "Robot-Bold" }}>
+    <span style={{ fontSize: "0.5rem", fontFamily: "Roboto-Bold" }}>
       {percent}
     </span>
     <span style={{ fontSize: "0.35rem" }}>%</span>
   </span>
 );
-const PriceLowIcon = ({ size = 24 }: { size: number }) => (
+const PriceLow = ({ size = 24 }: { size: number }) => (
   <svg height='16px' width='16px' viewBox='0 0 100 100'>
     <g>
       <path
@@ -444,13 +444,7 @@ const PriceLowIcon = ({ size = 24 }: { size: number }) => (
     </g>
   </svg>
 );
-const StarIcon = ({
-  size,
-  percent = 100,
-}: {
-  size: number;
-  percent?: number;
-}) => (
+const Star = ({ size, percent = 100 }: { size: number; percent?: number }) => (
   <svg
     width={size}
     height={size}
@@ -476,7 +470,7 @@ const StarIcon = ({
     />
   </svg>
 );
-const CloseIcon = ({ size = 24 }: { size: number }) => (
+const Close = ({ size = 24 }: { size: number }) => (
   <svg viewBox='0 0 20 20' fill='#EC1E26' width={size} height={size}>
     <path
       fillRule='evenodd'
@@ -485,7 +479,7 @@ const CloseIcon = ({ size = 24 }: { size: number }) => (
     />
   </svg>
 );
-const PlusIcon = ({ size = 24 }: { size: number }) => (
+const Plus = ({ size = 24 }: { size: number }) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     viewBox='0 0 20 20'
@@ -500,7 +494,7 @@ const PlusIcon = ({ size = 24 }: { size: number }) => (
     />
   </svg>
 );
-const ChevronDownIcon = ({ size = 24 }: { size: number }) => (
+const ChevronDown = ({ size = 24 }: { size: number }) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     viewBox='0 0 20 20'
@@ -516,7 +510,7 @@ const ChevronDownIcon = ({ size = 24 }: { size: number }) => (
   </svg>
 );
 
-const PdfIcon = ({ size = 24 }: { size: number }) => (
+const Pdf = ({ size = 24 }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -545,7 +539,7 @@ const PdfIcon = ({ size = 24 }: { size: number }) => (
     <path d='M18 18V34' stroke='#FFF' strokeWidth='4' strokeLinecap='butt' />
   </svg>
 );
-const SortIcon = ({ size }: { size: number }) => (
+const Sort = ({ size }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -570,7 +564,7 @@ const SortIcon = ({ size }: { size: number }) => (
     />
   </svg>
 );
-const GridIcon = ({ size }: { size: number }) => (
+const Grid = ({ size }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -632,7 +626,7 @@ const GridIcon = ({ size }: { size: number }) => (
     />
   </svg>
 );
-const ArrowCircleLeftIcon = ({ size }: { size: number }) => (
+const ArrowCircleLeft = ({ size }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -664,7 +658,7 @@ const ArrowCircleLeftIcon = ({ size }: { size: number }) => (
     />
   </svg>
 );
-const ArrowCircleRightIcon = ({ size }: { size: number }) => (
+const ArrowCircleRight = ({ size }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -697,7 +691,7 @@ const ArrowCircleRightIcon = ({ size }: { size: number }) => (
   </svg>
 );
 
-const ArrowLeftCIcon = ({ size }: { size: number }) => (
+const ArrowLeftC = ({ size }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -723,7 +717,7 @@ const ArrowLeftCIcon = ({ size }: { size: number }) => (
   </svg>
 );
 
-const ArrowRightCIcon = ({ size }: { size: number }) => (
+const ArrowRightC = ({ size }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -749,7 +743,7 @@ const ArrowRightCIcon = ({ size }: { size: number }) => (
   </svg>
 );
 
-const SpeedIcon = ({ size }: { size: number }) => (
+const Speed = ({ size }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -809,7 +803,7 @@ const SpeedIcon = ({ size }: { size: number }) => (
     />
   </svg>
 );
-const TimeIcon = ({ size }: { size: number }) => (
+const Time = ({ size }: { size: number }) => (
   <svg
     width='24'
     height='24'
@@ -834,7 +828,7 @@ const TimeIcon = ({ size }: { size: number }) => (
     />
   </svg>
 );
-const CalendarIcon = ({ size }: { size: number }) => (
+const Calendar = ({ size }: { size: number }) => (
   <svg
     width='24'
     height='24'
@@ -901,7 +895,7 @@ const CalendarIcon = ({ size }: { size: number }) => (
   </svg>
 );
 
-const ColumnIcon = ({ size = 24 }: { size?: number }) => (
+const Column = ({ size = 24 }: { size?: number }) => (
   <div
     style={{
       display: "flex",
@@ -941,7 +935,7 @@ const ColumnIcon = ({ size = 24 }: { size?: number }) => (
   </div>
 );
 
-const MainLayoutIcon = ({ size = 24 }: { size?: number }) => (
+const MainLayout = ({ size = 24 }: { size?: number }) => (
   <div
     style={{
       display: "flex",
@@ -970,7 +964,7 @@ const MainLayoutIcon = ({ size = 24 }: { size?: number }) => (
     ></div>
   </div>
 );
-const DoubleLayoutIcon = ({ size = 24 }: { size?: number }) => (
+const DoubleLayout = ({ size = 24 }: { size?: number }) => (
   <div
     style={{
       display: "flex",
@@ -1014,7 +1008,7 @@ const DoubleLayoutIcon = ({ size = 24 }: { size?: number }) => (
   </div>
 );
 
-const ProductIcon = ({ size }: { size: number }) => (
+const Product = ({ size }: { size: number }) => (
   <svg width={size} height={size} viewBox='0 0 48 48' fill='#2F88FF'>
     <rect width={size} height={size} fill='#2F88FF' fillOpacity='0.01' />
     <path
@@ -1058,7 +1052,7 @@ const ProductIcon = ({ size }: { size: number }) => (
   </svg>
 );
 
-const PriceIcon = ({ size }: { size: number }) => (
+const Price = ({ size }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -1083,7 +1077,7 @@ const PriceIcon = ({ size }: { size: number }) => (
   </svg>
 );
 
-const SalesIcon = ({ size }: { size: number }) => (
+const Sales = ({ size }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -1141,7 +1135,7 @@ const SalesIcon = ({ size }: { size: number }) => (
   </svg>
 );
 
-export const TrophyIcon = ({
+export const Trophy = ({
   size,
   type,
 }: {
@@ -1221,7 +1215,7 @@ export const TrophyIcon = ({
   );
 };
 
-const DeleteIcon = ({ size }: { size: number }) => (
+const Delete = ({ size }: { size: number }) => (
   <svg
     width={size}
     height={size}
@@ -1251,40 +1245,104 @@ const DeleteIcon = ({ size }: { size: number }) => (
   </svg>
 );
 
+const Link = ({ size }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width={size} height={size} fill='white' fillOpacity='0.01' />
+    <path
+      d='M30 19H20C15.5817 19 12 22.5817 12 27C12 31.4183 15.5817 35 20 35H36C40.4183 35 44 31.4183 44 27C44 24.9711 43.2447 23.1186 42 21.7084'
+      stroke='#333'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
+    />
+    <path
+      d='M6 24.2916C4.75527 22.8814 4 21.0289 4 19C4 14.5817 7.58172 11 12 11H28C32.4183 11 36 14.5817 36 19C36 23.4183 32.4183 27 28 27H18'
+      stroke='#333'
+      strokeWidth='4'
+      strokeLinecap='butt'
+      strokeLinejoin='round'
+    />
+  </svg>
+);
+
+const Clipboard = ({ size }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width={size} height={size} fill='white' fill-opacity='0.01' />
+    <path
+      d='M17 7H16H10C8.89543 7 8 7.89543 8 9L8 42C8 43.1046 8.89543 44 10 44H38C39.1046 44 40 43.1046 40 42V9C40 7.89543 39.1046 7 38 7H33.0499H31'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <rect
+      x='17'
+      y='4'
+      width='14'
+      height='6'
+      fill='#2f88ff'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+
+const Question = ({ size }: { size: number }) => (
+  <svg width={size} height={size} viewBox='0 0 1024 1024'>
+    <path d='M764 280.9c-14-30.6-33.9-58.1-59.3-81.6C653.1 151.4 584.6 125 512 125s-141.1 26.4-192.7 74.2c-25.4 23.6-45.3 51-59.3 81.7-14.6 32-22 65.9-22 100.9v27c0 6.2 5 11.2 11.2 11.2h54c6.2 0 11.2-5 11.2-11.2v-27c0-99.5 88.6-180.4 197.6-180.4s197.6 80.9 197.6 180.4c0 40.8-14.5 79.2-42 111.2-27.2 31.7-65.6 54.4-108.1 64-24.3 5.5-46.2 19.2-61.7 38.8a110.85 110.85 0 0 0-23.9 68.6v31.4c0 6.2 5 11.2 11.2 11.2h54c6.2 0 11.2-5 11.2-11.2v-31.4c0-15.7 10.9-29.5 26-32.9 58.4-13.2 111.4-44.7 149.3-88.7 19.1-22.3 34-47.1 44.3-74 10.7-27.9 16.1-57.2 16.1-87 0-35-7.4-69-22-100.9zM512 787c-30.9 0-56 25.1-56 56s25.1 56 56 56 56-25.1 56-56-25.1-56-56-56z' />
+  </svg>
+);
+
 const Icons: Record<keyof any, React.ElementType> = {
-  Search: SearchIcon,
-  Bookmark: BookmarkIcon,
-  Help: HelpIcon,
-  Setting: SettingIcon,
-  SearchBar: SearchBarIcon,
-  Checkmark: CheckmarkIcon,
-  Like: LikeIcon,
-  ExpandRight: ExpandRightIcon,
-  ExpandLeft: ExpandLeftIcon,
-  Fire: FireIcon,
-  LowPrice: LowPriceIcon,
-  Discount: DiscountIcon,
-  LowStarsCount: LowStarsCountIcon,
-  PriceLow: PriceLowIcon,
-  Plus: PlusIcon,
-  Close: CloseIcon,
-  ChevronDown: ChevronDownIcon,
-  Pdf: PdfIcon,
-  Sort: SortIcon,
-  Grid: GridIcon,
-  Star: StarIcon,
-  ArrowCircleLeft: ArrowCircleLeftIcon,
-  ArrowCircleRight: ArrowCircleRightIcon,
-  ArrowLeftC: ArrowLeftCIcon,
-  ArrowRightC: ArrowRightCIcon,
-  Speed: SpeedIcon,
-  Time: TimeIcon,
-  Calendar: CalendarIcon,
-  Column: ColumnIcon,
-  MainLayout: MainLayoutIcon,
-  DoubleLayout: DoubleLayoutIcon,
-  Product: ProductIcon,
-  Price: PriceIcon,
-  Sales: SalesIcon,
-  Delete: DeleteIcon,
+  Search: Search,
+  Bookmark: Bookmark,
+  Help: Help,
+  Setting: Setting,
+  SearchBar: SearchBar,
+  Checkmark: Checkmark,
+  Like: Like,
+  ExpandRight: ExpandRight,
+  ExpandLeft: ExpandLeft,
+  Fire: Fire,
+  LowPrice: LowPrice,
+  Discount: Discount,
+  LowStarsCount: LowStarsCount,
+  PriceLow: PriceLow,
+  Plus: Plus,
+  Close: Close,
+  ChevronDown: ChevronDown,
+  Pdf: Pdf,
+  Sort: Sort,
+  Grid: Grid,
+  Star: Star,
+  ArrowCircleLeft: ArrowCircleLeft,
+  ArrowCircleRight: ArrowCircleRight,
+  ArrowLeftC: ArrowLeftC,
+  ArrowRightC: ArrowRightC,
+  Speed: Speed,
+  Time: Time,
+  Calendar: Calendar,
+  Column: Column,
+  MainLayout: MainLayout,
+  DoubleLayout: DoubleLayout,
+  Product: Product,
+  Price: Price,
+  Sales: Sales,
+  Delete: Delete,
+  Link: Link,
+  Clipboard: Clipboard,
+  Question: Question,
 };

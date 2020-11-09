@@ -70,7 +70,7 @@ export interface Item {
   sold: number;
   tier_variations: Tier[];
   liked_count: number;
-  brand: string;
+  brand: string | null;
 }
 
 export interface ItemDetailed extends Item {
@@ -102,7 +102,7 @@ export interface Rating {
 export type Layout = "main" | "double" | "none";
 
 export type List = {
-  set: React.Dispatch<React.SetStateAction<ListItem<SearchItem>[]>>;
+  setItems: React.Dispatch<React.SetStateAction<ListItem<SearchItem>[]>>;
   items: ListItem<SearchItem>[];
   id: string;
 };
@@ -113,6 +113,9 @@ export type ListItem<T> = {
 };
 
 export type IconType =
+  | "Question"
+  | "Clipboard"
+  | "Link"
   | "Delete"
   | "Product"
   | "Price"

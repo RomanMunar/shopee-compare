@@ -4,7 +4,6 @@ import { color, font, mixin, shadows } from "../shared/styles";
 
 export const MenuWrapper = styled.div`
   width: 100%;
-  max-width: 600px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -37,7 +36,7 @@ export const SearchPanel = memo(styled.div<{
   position: absolute;
   bottom: 20px;
   height: 95%;
-  width: ${(props) => (props.isSearchPanelMaximized ? "86%" : "40%")};
+  width: ${(props) => (props.isSearchPanelMaximized ? "86%" : "45%")};
   background-color: ${color.backgroundLight};
   align-items: center;
   transition: all 0.2s;

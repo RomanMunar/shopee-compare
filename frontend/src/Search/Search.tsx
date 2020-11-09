@@ -1,168 +1,170 @@
-import React, { ReactElement, useRef, useState } from "react";
-import {
-  DragDropContext,
-  DraggableLocation,
-  DropResult,
-} from "react-beautiful-dnd";
+import React, { ReactElement, useMemo, useRef, useState } from "react";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import { mockData } from "../App/apireponses/mochResponses";
 import Container from "../components/Container";
+import Flex from "../components/Flex";
 import { Icon } from "../components/Icon";
 import { ToolbarButton } from "../components/Toolbar";
 import { Toolbar } from "../components/Toolbar/Styles";
 import { List, ListItem, SearchItem } from "../interfaces";
+import SelectedItemsProvider from "../shared/contexts/useSelectedItemsContext";
+import { useUI } from "../shared/contexts/useUIContext";
 import useOnOutsideClick from "../shared/hooks/useOnOutsideClick";
 import { useQueryParams } from "../shared/hooks/useQueryParams";
-import SelectedItemsProvider from "../shared/hooks/useSelectedItemsContext";
-import { filterByField, reorder } from "../shared/utils/utils";
+import {
+  filterByUniqueField,
+  makeListItems,
+  orderBy,
+  reorder,
+  resultsMove,
+} from "../shared/utils/utils";
 import { Compare } from "./Compare";
 import { CompareSummary } from "./Compare/CompareSummary";
-import { MenuTitle } from "./Compare/Compare.styles";
-import { mockData } from "./mochResponses";
+import { Overlay } from "./Compare/CompareSummary/CompareSummary.styles";
+import { MenuTitle } from "./Compare/SelectionPanel/SelectionPanel.styles";
 import { Results } from "./Results";
-import { SelectPanel } from "./SelectPanel";
-import { SearchBar } from "./SearchBar";
 import { Label, MenuWrapper, SearchPanel } from "./Search.styles";
+import { SearchBar } from "./SearchBar";
+import { SelectPanel } from "./SelectPanel";
 
 export default (): ReactElement => {
   let query = useQueryParams().get("keyword");
+  const {
+    displayOverlay,
+    displaySearchPanel,
+    openSearchPanel,
+    closeSearchPanel,
+    closeOverlay,
+    openSelectPanel,
+    closeSelectPanel,
+    displayCompareSummary,
+    maximizeSearchPanel,
+    toggleMaxSearchPanel,
+    displayMaxSearchPanel,
+  } = useUI();
   const [selectedItems, setSelectedItems] = useState<SearchItem[]>([]);
-  const [isSearchPanelOpen, setIsSearchPanelOpen] = useState(true);
-  const [isSearchPanelMaximized, setIsSearchPanelMaximized] = useState(false);
-  const [isSelectPanelOpen, setIsSelectPanelOpen] = useState(true);
-  const [showCompareSummary, setShowCompareSummary] = useState(false);
-  const [isOverlayHidden, setIsOverlayHidden] = useState(true);
   const [initialSelectedItems, setInitialSelectedItems] = useState<
     ListItem<SearchItem>[]
   >([]);
-  const mainResults = filterByField(mockData, "itemid");
-  const mainResultsList = mainResults.map((item, itemid) => {
-    return {
-      itemid,
-      item,
-    };
-  });
-  const [results, setResults] = useState<ListItem<SearchItem>[]>(
-    mainResultsList
+  const mainResults = filterByUniqueField(
+    mockData
+      .map((i) => {
+        return { ...i, name: i.name.replace(/[^a-zA-Z0-9 ]/g, "") };
+      })
+      .slice(0, 12),
+    "itemid"
   );
+  const mainResultsList = makeListItems(mainResults);
+  const [results, setResults] = useState(mainResultsList);
 
   const onSelectItemsSubmit = () => {
     setSelectedItems(initialSelectedItems.map((isi) => isi.item));
-    setIsSearchPanelOpen(false);
-    setIsOverlayHidden(true);
-    setIsSelectPanelOpen(false);
+    closeSearchPanel();
+    closeOverlay();
+    closeSelectPanel();
   };
-
-  const move = (
-    source: ListItem<SearchItem>[],
-    destination: ListItem<SearchItem>[],
-    droppableSource: DraggableLocation,
-    droppableDestination: DraggableLocation
-  ) => {
-    let sourceClone = Array.from(source);
-    let destClone = Array.from(destination);
-    const [removed] = sourceClone.splice(droppableSource.index, 1);
-    destClone.splice(droppableDestination.index, 0, removed);
-    /* 
-      uncomment nextline if we want to be able to drag 
-      initialselecteditems back to resultsitems  */
-    // const newSourceItems = sourceClone;
-    // return { newSourceItems, newDestinationItems };
-    const newDestinationItems = destClone;
-
-    return { newDestinationItems };
-  };
-  const onBeforeCapture = () => setIsSelectPanelOpen(true);
 
   const lists: List[] = [
     {
-      set: setResults,
-      items: results,
-      id: "results",
-    },
-    {
-      set: setInitialSelectedItems,
+      setItems: setInitialSelectedItems,
       items: initialSelectedItems,
       id: "initialSelectedItems",
     },
   ];
 
+  // useEffect(() => openSearchPanel(), []);
+
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
-    // dropped outside the list
-    if (!destination) {
-      return;
-    }
+    if (!destination) return;
+    console.log(result);
 
     const desList = lists.find((dList) => dList.id === destination.droppableId);
     if (!desList) return;
     const sourceList = lists.find((sList) => sList.id === source.droppableId);
+    console.log(sourceList);
     if (!sourceList) return;
 
     if (source.droppableId === destination.droppableId) {
       const items = reorder(sourceList.items, source.index, destination.index);
-
-      sourceList.set(items);
+      sourceList.setItems(items);
     } else {
-      const { newDestinationItems } = move(
+      console.log("else");
+      console.log({
+        slist: sourceList.items,
+        dlist: desList.items,
+        source,
+        destination,
+      });
+      const { newDestinationItems } = resultsMove(
         sourceList.items,
         desList.items,
         source,
         destination
       );
+      console.log("newDestinationItems");
+      console.log(newDestinationItems);
 
-      desList.set(newDestinationItems);
-      // sourceList.set(newSourceItems);
+      desList.setItems(newDestinationItems);
     }
   };
 
   const $searchPanel = useRef<HTMLDivElement>(null);
-  const $selectPanel = useRef<any>(null);
   useOnOutsideClick($searchPanel, () => {
-    if (
-      selectedItems.length >= 1 &&
-      isSelectPanelOpen === true &&
-      isSearchPanelOpen === true
-    ) {
-      setIsOverlayHidden(true);
-      setIsSearchPanelOpen(false);
-      setIsSelectPanelOpen(false);
+    if (selectedItems.length >= 1 && displaySearchPanel === true) {
+      closeOverlay();
+      closeSearchPanel();
+      closeSelectPanel();
     }
-  }); // useOnOutsideClick($selectPanel, () => setIsOverlayHidden(true));
+  });
+
+  const sortBy = <T extends keyof SearchItem>(sortmethod: T) => {
+    setResults(
+      makeListItems(
+        orderBy(
+          results.map((i) => i.item),
+          [sortmethod],
+          "asc"
+        )
+      )
+    );
+  };
+
+  const n = 4; //tweak this to add more items per line
+  const newResults = useMemo(() => {
+    console.log(
+      new Array(Math.ceil(mainResultsList.length / n))
+        .fill(0)
+        .map((_, index) => mainResultsList.slice(4 * index, n + n * index))
+    );
+    return new Array(Math.ceil(mainResultsList.length / n))
+      .fill(0)
+      .map((_, index) => mainResultsList.slice(4 * index, n + n * index));
+  }, []);
 
   return (
     <>
-      {showCompareSummary && (
-        <CompareSummary setShowCompareSummary={setShowCompareSummary} />
-      )}
-      {!isOverlayHidden && (
-        <div
-          style={{
-            zIndex: 2,
-            position: "absolute",
-            background: "rgba(0,0,0, 0.3)",
-            width: "100%",
-            height: "100%",
-          }}
-        />
-      )}
+      {displayCompareSummary && <CompareSummary />}
+      {displayOverlay && <Overlay />}
       <Container>
         <SelectedItemsProvider>
           <DragDropContext
             onDragEnd={onDragEnd}
-            onBeforeCapture={onBeforeCapture}
+            onBeforeCapture={() => openSelectPanel()}
           >
             <SearchPanel
               ref={$searchPanel}
-              isSearchPanelMaximized={isSearchPanelMaximized}
-              isSearchPanelOpen={isSearchPanelOpen}
+              isSearchPanelMaximized={displayMaxSearchPanel}
+              isSearchPanelOpen={displaySearchPanel}
             >
               <Toolbar place='right-top'>
                 <ToolbarButton
-                  onClick={() =>
-                    setIsSearchPanelMaximized(!isSearchPanelMaximized)
-                  }
-                  name={isSearchPanelMaximized ? "Minimize" : "Maximize"}
+                  onClick={() => {
+                    toggleMaxSearchPanel();
+                  }}
+                  name={displayMaxSearchPanel ? "Minimize" : "Maximize"}
                   icon={
-                    isSearchPanelMaximized
+                    displayMaxSearchPanel
                       ? "ArrowCircleLeft"
                       : "ArrowCircleRight"
                   }
@@ -170,66 +172,83 @@ export default (): ReactElement => {
                 />
                 <ToolbarButton
                   tooltipPlace='bottom'
-                  onClick={() => setIsSearchPanelMaximized(true)}
+                  onClick={() => maximizeSearchPanel()}
                   name='Test'
                   icon='Grid'
                 />
                 <ToolbarButton
-                  onClick={() => setIsSearchPanelOpen(false)}
+                  onClick={() => closeSearchPanel()}
                   icon='Close'
                   name='Close'
                   tooltipPlace='bottom'
                 />
               </Toolbar>
-              <MenuTitle style={{ marginRight: "auto" }}>Search</MenuTitle>
+              <MenuTitle style={{ marginRight: "auto" }}>
+                <span>Search</span>
+                <Icon type='Question' size={24} />
+              </MenuTitle>
               <SearchBar />
               <MenuWrapper>
                 <Label>Search results for "{query}"</Label>
                 <Toolbar withoutMargin place='default'>
-                  <ToolbarButton tooltipPlace='bottom' name='Layout'>
-                    <Icon type='Grid' size={16} />
-                    <Icon type='Sort' size={16} />
-                  </ToolbarButton>
-                  <ToolbarButton tooltipPlace='bottom' name='AlphabetSort'>
+                  <ToolbarButton
+                    onClick={() => sortBy("name")}
+                    tooltipPlace='bottom'
+                    name='Alphabetical'
+                  >
                     A<Icon type='Sort' size={16} />
                   </ToolbarButton>
-                  <ToolbarButton tooltipPlace='bottom' name='PriceSort'>
+                  <ToolbarButton
+                    onClick={() => sortBy("price")}
+                    tooltipPlace='bottom'
+                    name='Price'
+                  >
                     ₱<Icon type='Sort' size={16} />
                   </ToolbarButton>
-                  <ToolbarButton tooltipPlace='bottom' name='StarSort'>
-                    <Icon type='Star' size={17} />
+                  <ToolbarButton
+                    onClick={() => sortBy("sold")}
+                    tooltipPlace='bottom'
+                    name='Sales/mon'
+                  >
+                    <Icon type='Fire' size={17} />
                     <Icon type='Sort' size={16} />
                   </ToolbarButton>
                 </Toolbar>
               </MenuWrapper>
-              <Results
-                results={results}
-                initialSelectedItems={initialSelectedItems}
-              />
-              {!isSearchPanelMaximized && (
-                <div ref={$selectPanel}>
-                  <SelectPanel
-                    initialSelectedItems={initialSelectedItems}
-                    setInitialSelectedItems={setInitialSelectedItems}
-                    isSelectPanelOpen={isSelectPanelOpen}
-                    setIsSelectPanelOpen={setIsSelectPanelOpen}
-                    setIsSearchPanelMaximized={setIsSearchPanelMaximized}
-                    setIsSearchPanelOpen={setIsSearchPanelOpen}
-                    onSelectItemsSubmit={onSelectItemsSubmit}
-                  />
-                </div>
+              <Flex
+                align='center'
+                justify='flex-start'
+                wrap='wrap'
+                overflow='auto'
+              >
+                {newResults.map((row, index) => {
+                  const dropId = `result-${index}`;
+                  const [items, setItems] = useState(row);
+                  lists.push({ id: dropId, items, setItems });
+
+                  return (
+                    <Results
+                      dropId={dropId}
+                      results={items}
+                      initialSelectedItems={initialSelectedItems}
+                    />
+                  );
+                })}
+              </Flex>
+              {!displayMaxSearchPanel && (
+                <SelectPanel
+                  initialSelectedItems={initialSelectedItems}
+                  setInitialSelectedItems={setInitialSelectedItems}
+                  onSelectItemsSubmit={onSelectItemsSubmit}
+                />
               )}
             </SearchPanel>
           </DragDropContext>
           <Compare
             initialSelectedItems={initialSelectedItems}
             setInitialSelectedItems={setInitialSelectedItems}
-            selectedItems={selectedItems}
+            selectedItems={mainResults}
             setSelectedItems={setSelectedItems}
-            setShowCompareSummary={setShowCompareSummary}
-            setIsSearchPanelOpen={setIsSearchPanelOpen}
-            setIsSelectPanelOpen={setIsSelectPanelOpen}
-            setIsOverlayHidden={setIsOverlayHidden}
           />
         </SelectedItemsProvider>
       </Container>

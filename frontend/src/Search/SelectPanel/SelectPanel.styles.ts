@@ -78,5 +78,5 @@ const SelectPanel = styled.div<{ isSelectPanelOpen: boolean }>`
   transform: ${(props) => !props.isSelectPanelOpen && "translateX(-80px)"};
   transition-property: all;
   opacity: ${(props) => props.isSelectPanelOpen && 1};
-  z-index: 100;
+  z-index: 300;
 `;

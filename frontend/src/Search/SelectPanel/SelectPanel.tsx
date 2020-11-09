@@ -5,7 +5,8 @@ import { Icon } from "../../components/Icon";
 import { ToolbarButton } from "../../components/Toolbar/index";
 import { Toolbar } from "../../components/Toolbar/Styles";
 import { ListItem, SearchItem } from "../../interfaces";
-import {ResultItemImage} from "../Results/ResultItemImage";
+import { useUI } from "../../shared/contexts/useUIContext";
+import { ResultItemImage } from "../Results/ResultItemImage";
 import {
   Item,
   Items,
@@ -16,10 +17,6 @@ import {
 } from "./SelectPanel.styles";
 
 type Props = {
-  isSelectPanelOpen: boolean;
-  setIsSelectPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsSearchPanelMaximized: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsSearchPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onSelectItemsSubmit: () => void;
   initialSelectedItems: ListItem<SearchItem>[];
   setInitialSelectedItems: React.Dispatch<
@@ -31,33 +28,34 @@ const SelectPanel = ({
   setInitialSelectedItems,
   initialSelectedItems,
   onSelectItemsSubmit,
-  isSelectPanelOpen,
-  setIsSearchPanelOpen,
-  setIsSelectPanelOpen,
-  setIsSearchPanelMaximized,
 }: Props) => {
+  const {
+    openSearchPanel,
+    closeSelectPanel,
+    displaySelectPanel,
+    maximizeSearchPanel,
+  } = useUI();
   const [showCloseIcon, setShowCloseIcon] = useState(false);
-
   return (
-    <SPanel isSelectPanelOpen={isSelectPanelOpen}>
+    <SPanel isSelectPanelOpen={displaySelectPanel}>
       <MenuWrapper>
         <Title>Selected Items</Title>
         <Toolbar withoutMargin place='right-top'>
           <ToolbarButton
             tooltipPlace='bottom'
-            onClick={() => setIsSelectPanelOpen(false)}
+            onClick={() => closeSelectPanel()}
             name='Minimize'
             icon='ArrowCircleLeft'
           />
           <ToolbarButton
             tooltipPlace='bottom'
-            onClick={() => setIsSearchPanelMaximized(true)}
+            onClick={() => maximizeSearchPanel()}
             name='Maximize'
             icon='Grid'
           />
           <ToolbarButton
             tooltipPlace='bottom'
-            onClick={() => setIsSearchPanelOpen(false)}
+            onClick={() => openSearchPanel()}
             name='Close'
           />
         </Toolbar>
@@ -110,7 +108,7 @@ const SelectPanel = ({
       </Droppable>
       <div style={{ display: "flex", flexShrink: 0 }}>
         {/*//@ts-ignore */}
-        <Button variant='secondary' onClick={() => setIsSelectPanelOpen(false)}>
+        <Button variant='secondary' onClick={() => closeSelectPanel()}>
           Hide
         </Button>
         {/*//@ts-ignore */}

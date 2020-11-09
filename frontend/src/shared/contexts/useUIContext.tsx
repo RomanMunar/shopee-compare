@@ -163,7 +163,12 @@ export const UIProvider: FC = (props) => {
       openCompareSummary,
       closeCompareSummary,
     }),
-    [state]
+    [
+      state,
+      toggleMaxSearchPanel,
+      closeSearchPanelIfPresent,
+      closeSelectPanelIfPresent,
+    ]
   );
 
   return (

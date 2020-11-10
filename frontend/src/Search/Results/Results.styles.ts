@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { Layout } from "../../interfaces";
-import { mixin, shadows, color, font } from "../../shared/styles";
-
-//  SelectPanel Title
+import { color, font, mixin } from "../../shared/styles";
 
 export const Price = styled.span<{ on?: "results" | "compare" }>`
   font-size: ${(props) => (props.on === "results" ? "1.1rem" : "1.6rem")};
@@ -44,16 +42,6 @@ export const Small = styled.span<{ on?: "results" | "compare" }>`
   font-size: ${(props) => (props.on === "compare" ? "0.9rem" : "0.4rem")};
   ${font.regular}
 `;
-export const ResultItemTitle = styled.a`
-  text-align: start;
-  font-size: 0.75rem;
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-`;
 
 export const ResultSection = styled.div<{ isDraggingOver: boolean }>`
   display: flex;
@@ -63,27 +51,6 @@ export const ResultSection = styled.div<{ isDraggingOver: boolean }>`
   width: 100%;
   border: ${(props) => props.isDraggingOver && "1px solid #000"};
   ${mixin.scrollableY}
-`;
-
-export const ResultItem = styled.div<{
-  isDragging: boolean;
-  selected: boolean;
-  big: boolean;
-}>`
-  overflow: hidden;
-  background-color: ${(props) =>
-    props.isDragging ? color.backgroundLightPrimary : color.backgroundLightest};
-  ${shadows.shadowSm}
-  border:  ${(props) => props.selected && `2px solid rgba(11, 135, 91, 0.5)`};
-  text-align: center;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  width: ${(props) => (props.big ? "10.3125rem" : "8.3125rem")};
-  margin-bottom: ${(props) => (props.big ? "1.2rem" : "0.7rem")};
-  margin-right: ${(props) => (props.big ? "10px" : "6px")};
-  &:last-of-type {
-    margin-right: 0;
-  }
 `;
 
 export const Items = styled.div<{

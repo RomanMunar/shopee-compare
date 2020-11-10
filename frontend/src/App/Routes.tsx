@@ -5,7 +5,6 @@ import { PageError } from "../components/PageError.tsx";
 import { Main } from "../Main";
 import { Navbar } from "../components/Navbar";
 import { Search } from "../Search";
-import Bookmarks from "../Bookmarks";
 import Settings from "../Settings";
 import { UIProvider } from "../shared/contexts/useUIContext";
 
@@ -16,7 +15,7 @@ const Router = () => (
       <Routes>
         <Route path='/' element={<Main />} />
         <Route path='/search/*' element={<Search />} />
-        <Route path='/bookmarks' element={<Bookmarks />} />
+        <Route path='/bookmarks' element={<Main />} />
         <Route path='/settings' element={<Settings />} />
         <Route path='/authenticate' element={<Auth />} />
         <Route path='*' element={<PageError />} />

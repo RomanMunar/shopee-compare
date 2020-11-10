@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useUI } from "../../shared/contexts/useUIContext";
 import { NavIcon } from "../Icon";
 import {
@@ -15,6 +15,11 @@ export const Navbar = () => {
   const [activeRoute, setActiveRoute] = useState("/");
   const { pathname: url } = useLocation();
   const { displayOverlay } = useUI();
+  const navigate = useNavigate();
+  if (url === "/") {
+    navigate("/search");
+  }
+
   useEffect(() => {
     setActiveRoute(url);
   }, [url]);

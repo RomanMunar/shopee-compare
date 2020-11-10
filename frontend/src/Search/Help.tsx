@@ -93,7 +93,7 @@ const Help = () => {
     <DialogWrapper guide='search' ref={$helpRef}>
       <Dialog>
         <Flex padding='0 20px' align='center' justify='space-between'>
-          <DialogTitle>Help Guide</DialogTitle>
+          <DialogTitle>Onboarding Guide</DialogTitle>
           <ToolbarButton
             size={24}
             name='Close'

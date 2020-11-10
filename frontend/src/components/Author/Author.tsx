@@ -1,10 +1,15 @@
 import React from "react";
+import { Rating } from "../../interfaces";
 import { Icon } from "../Icon";
 import { AuthorWrapper, AuthorImage } from "./Author.styles";
 
-interface Props {}
+interface Props {
+  name?: string;
+  src?: string;
+  aveStar?: number;
+}
 
-const Author = (props: Props) => {
+const Author = ({ name, src, aveStar }: Props) => {
   const shop = {
     account: {
       portrait: "b07ac6d8449d4f84abb1ba58d9371759",
@@ -19,11 +24,15 @@ const Author = (props: Props) => {
 
   return (
     <AuthorWrapper>
-      <AuthorImage src={"https://cf.shopee.ph/file/" + shop.account.portrait} />
+      <AuthorImage
+        src={`https://cf.shopee.ph/file/${src ? src : shop.account.portrait}`}
+      />
       <div style={{ fontSize: "14px" }}>
-        <span>{shop.name}</span>
+        <span>{name ? name : shop.name}</span>
         <div>
-          {shop.account.total_avg_star.toFixed(1)}{" "}
+          {aveStar
+            ? aveStar.toFixed(1)
+            : shop.account.total_avg_star.toFixed(1)}{" "}
           <Icon type='Star' size={12} />
         </div>
       </div>

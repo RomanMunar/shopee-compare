@@ -114,6 +114,9 @@ const Help = () => {
             </Flex>
           </DialogSection>
           <DialogSection>
+            <div style={{ marginBottom: "15px" }}>
+              <DialogSubheading>Reference</DialogSubheading>
+            </div>
             <Flex>
               <DialogContent>
                 <DialogComponent border='15px'>

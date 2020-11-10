@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { Layout, List, ListItem, SearchItem } from "../../interfaces";
+import { useUI } from "../../shared/contexts/useUIContext";
 import { move, reorder } from "../../shared/utils/utils";
 import { CompareContainer, EmptyContainer, Title } from "./Compare.styles";
+import { CompareGuide } from "./CompareGuide";
+import { CompareSummary } from "./CompareSummary";
 import { MainPanel } from "./MainPanel";
 import { SelectionPanel } from "./SelectionPanel";
 
 export default ({
   selectedItems,
   setSelectedItems,
-  initialSelectedItems,
   setInitialSelectedItems,
 }: {
   setSelectedItems: React.Dispatch<React.SetStateAction<SearchItem[]>>;
@@ -17,7 +19,6 @@ export default ({
   setInitialSelectedItems: React.Dispatch<
     React.SetStateAction<ListItem<SearchItem>[]>
   >;
-  initialSelectedItems: ListItem<SearchItem>[];
 }) => {
   const selectedItemsList: ListItem<SearchItem>[] = selectedItems.map(
     (item, itemid) => {
@@ -100,28 +101,31 @@ export default ({
     );
   }
 
+  const { displayCompareSummary, displayCompareGuide } = useUI();
+
   return (
-    <CompareContainer>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <MainPanel
-          list={lists[0]}
-          setLayout={setLayout}
-          layout={layout}
-          setSelectedItems={setSelectedItems}
-          selectedItems={selectedItems}
-          setInitialSelectedItems={setInitialSelectedItems}
-          initialSelectedItems={initialSelectedItems}
-        />
-        <SelectionPanel
-          list={lists[1]}
-          setLayout={setLayout}
-          layout={layout}
-          setSelectedItems={setSelectedItems}
-          selectedItems={selectedItems}
-          setInitialSelectedItems={setInitialSelectedItems}
-          initialSelectedItems={initialSelectedItems}
-        />
-      </DragDropContext>
-    </CompareContainer>
+    <>
+      <CompareContainer>
+        {displayCompareGuide && <CompareGuide />}
+        {displayCompareSummary && (
+          <CompareSummary selectedItems={selectedItems} />
+        )}
+        <DragDropContext onDragEnd={onDragEnd}>
+          <MainPanel
+            list={lists[0]}
+            setLayout={setLayout}
+            layout={layout}
+            setSelectedItems={setSelectedItems}
+            setInitialSelectedItems={setInitialSelectedItems}
+          />
+          <SelectionPanel
+            list={lists[1]}
+            layout={layout}
+            setSelectedItems={setSelectedItems}
+            setInitialSelectedItems={setInitialSelectedItems}
+          />
+        </DragDropContext>
+      </CompareContainer>
+    </>
   );
 };

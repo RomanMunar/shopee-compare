@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Layout } from "../../interfaces";
-import { color, font } from "../../shared/styles";
+import { font } from "../../shared/styles";
 
 export { Compare, CompareContainer, EmptyContainer, LinkButton, Title };
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const useCopyToClipboard = (text: string) => {
   const copyToClipboard = (str: string) => {
@@ -24,9 +24,10 @@ const useCopyToClipboard = (text: string) => {
 
   const [copied, setCopied] = useState(false);
 
-  const copy = useCallback(() => {
-    if (!copied) setCopied(copyToClipboard(text));
-  }, [text, copied]);
+  const copy = () => {
+    if (copied) return;
+    setCopied(copyToClipboard(text));
+  };
   useEffect(() => () => setCopied(false), [text]);
 
   return [copied, copy];

@@ -67,7 +67,7 @@ const RatingsWrapper = styled.div<{ layout: Layout }>`
   width: 100%;
   grid-template-columns: ${(props) =>
     props.layout === "main" ? "1fr 1fr" : "1fr"};
-  gap: 4%;
+  ${(props) => props.layout === "main" && "gap:4%"};
 `;
 
 const CItem = styled.div<{

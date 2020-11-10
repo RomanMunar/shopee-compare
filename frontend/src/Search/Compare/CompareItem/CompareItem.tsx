@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { ratings } from "../../../App/apireponses/mockRatings";
 import { Draggable } from "react-beautiful-dnd";
 import ReactTooltip from "react-tooltip";
 import { Author } from "../../../components/Author";
@@ -220,7 +221,7 @@ const CompareItem = ({
                   </SectionTitle>
                   {isRatingsHidden && (
                     <RatingsWrapper layout={layout}>
-                      {[0, 0, 0].map((_) => (
+                      {ratings.map((rate) => (
                         <div
                           style={{
                             display: "flex",
@@ -229,23 +230,32 @@ const CompareItem = ({
                             padding: "20px 0",
                           }}
                         >
-                          <Flex dir='column'>
-                            <Author />
+                          <Flex style={{ minWidth: "100%" }} dir='column'>
+                            <Author
+                              name={rate.author_username}
+                              src={rate.author_portrait}
+                              aveStar={rate.rating_star}
+                            />
                             <div style={{ width: "80%", marginLeft: "40px" }}>
                               <DescriptionParagraph>
-                                {
-                                  "• average sounds with good quality microphone\n• long wire for single connector (2m)\n• not zero cancelling but noise reduction \n• well packaged (box, plastic foam, plastic) \n• working properly (tested already)\nPS. CHECK THE VOLUME ON THE LEFT SIDE.\n\nRECOMMENDED! WORTH THE PRICE!"
-                                }
+                                {rate.comment}
                               </DescriptionParagraph>
-                              <MultipleImage
-                                layout={layout}
-                                on={on}
-                                srcs={[
-                                  "663c0665ecd4d9dc80d78e9130f21d47",
-                                  "780749423db8f5ce3ccbcf3b8c859702",
-                                  "7b7e62d34a4c3ac046737564252a652e",
-                                ]}
-                              />
+                              {rate.images ? (
+                                <MultipleImage
+                                  layout={layout}
+                                  on={on}
+                                  srcs={rate.images}
+                                />
+                              ) : (
+                                <div
+                                  style={{
+                                    padding: "10px",
+                                    border: "2px dashed #2F88FF",
+                                  }}
+                                >
+                                  No image
+                                </div>
+                              )}
                             </div>
                           </Flex>
                         </div>

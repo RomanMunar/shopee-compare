@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export { ResultItemImage, ResultItemFixedContainer };
+export { RItemImage, ResultItemFixedContainer };
 
-const ResultItemImage = styled.img<{ direction: "left" | "top" }>`
+const RItemImage = styled.img<{ direction: "left" | "top" }>`
   ${(props) => props.direction === "left" && "border-radius: 10px;"}
   position: absolute;
   bottom: 0;

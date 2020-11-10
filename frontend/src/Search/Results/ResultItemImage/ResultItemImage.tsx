@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  ResultItemFixedContainer,
-  ResultItemImage as Image,
-} from "./ResultItemImage.styles";
+import { ResultItemFixedContainer, RItemImage } from "./ResultItemImage.styles";
 
 interface Props {
   src: string;
@@ -12,7 +9,10 @@ interface Props {
 const ResultItemImage = ({ src, direction = "top" }: Props) => {
   return (
     <ResultItemFixedContainer direction={direction}>
-      <Image direction={direction} src={`https://cf.shopee.ph/file/${src}`} />
+      <RItemImage
+        direction={direction}
+        src={`https://cf.shopee.ph/file/${src}`}
+      />
     </ResultItemFixedContainer>
   );
 };

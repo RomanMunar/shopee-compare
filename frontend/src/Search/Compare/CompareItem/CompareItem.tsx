@@ -1,19 +1,21 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
+import ReactTooltip from "react-tooltip";
+import { Author } from "../../../components/Author";
 import Button from "../../../components/Button";
+import Flex from "../../../components/Flex";
 import GridStats from "../../../components/GridStats";
 import { Icon } from "../../../components/Icon";
 import Select from "../../../components/Select";
 import { ToolbarButton } from "../../../components/Toolbar";
 import { Toolbar } from "../../../components/Toolbar/Styles";
 import { Layout, ListItem, SearchItem } from "../../../interfaces";
-import { Author } from "../../../components/Author";
+import { useCopyToClipboard } from "../../../shared/hooks/useCopyToClipboard";
 import { MultipleImage } from "../MultipleImage";
 import { SellerInfo } from "../SellerInfo";
 import {
   CItem,
   CompareItemTitle,
-  Title,
   DescriptionParagraph,
   DescriptionTitle,
   RatingBar,
@@ -23,12 +25,11 @@ import {
   RatingsWrapper,
   SectionTitle,
   SectionWrapper,
-  ToolbarWrapper,
   SellerSection,
+  Title,
+  ToolbarWrapper,
 } from "./CompareItem.styles";
 import Tags from "./Tags";
-import { useCopyToClipboard } from "../../../shared/hooks/useCopyToClipboard";
-import Flex from "../../../components/Flex";
 
 interface Props {
   res: ListItem<SearchItem>;
@@ -36,19 +37,15 @@ interface Props {
   on: "selection" | "main";
   layout: Layout;
   setSelectedItems: Dispatch<SetStateAction<SearchItem[]>>;
-  selectedItems: SearchItem[];
-  initialSelectedItems: ListItem<SearchItem>[];
   setInitialSelectedItems: Dispatch<SetStateAction<ListItem<SearchItem>[]>>;
 }
 
 const CompareItem = ({
-  selectedItems,
   setSelectedItems,
   layout,
   res,
   index,
   on,
-  initialSelectedItems,
   setInitialSelectedItems,
 }: Props) => {
   const [isDescriptionHidden, setIsDescriptionHidden] = useState(true);
@@ -65,6 +62,7 @@ const CompareItem = ({
       key={"draggable-ci-" + res.itemid}
       draggableId={`res-${res.itemid}`}
       index={index}
+      isDragDisabled={on === "main"}
     >
       {(provided, snapshot) => (
         <CItem
@@ -81,15 +79,11 @@ const CompareItem = ({
               <ToolbarButton tooltipPlace='bottom' name='Test' icon='Grid' />
               <ToolbarButton
                 onClick={() => {
-                  setSelectedItems(
-                    selectedItems.filter(
-                      (item) => item.itemid !== res.item.itemid
-                    )
+                  setSelectedItems((prev) =>
+                    prev.filter((item) => item.itemid !== res.item.itemid)
                   );
-                  setInitialSelectedItems(
-                    initialSelectedItems.filter(
-                      (item) => item.item.itemid !== res.item.itemid
-                    )
+                  setInitialSelectedItems((prev) =>
+                    prev.filter((item) => item.item.itemid !== res.item.itemid)
                   );
                 }}
                 icon='Close'
@@ -107,10 +101,32 @@ const CompareItem = ({
                 .map((word) => (word.length > 10 ? "" : word + " "))}
             </Title>
             {on === "main" && (
-              <div style={{ minWidth: "20px" }}>
-                <Icon onClick={() => copy} type='Clipboard' size={18} />
-                {copied && "YEey copied link"}
-              </div>
+              <>
+                <div
+                  onClick={() => {
+                    if (typeof copy === "boolean") {
+                      return copy;
+                    } else {
+                      return copy();
+                    }
+                  }}
+                  style={{ minWidth: "20px" }}
+                  data-for='clipboard'
+                  data-tip
+                >
+                  <Icon type='Clipboard' size={18} />
+                </div>
+                <ReactTooltip
+                  className={"extraClass"}
+                  place='bottom'
+                  type={"success"}
+                  effect='float'
+                  arrowColor='rgba(0,0,0,0)'
+                  id='clipboard'
+                >
+                  {copied ? "Copied !" : "Click to copy link"}
+                </ReactTooltip>
+              </>
             )}
           </CompareItemTitle>
           {on === "main" && (
@@ -161,27 +177,24 @@ const CompareItem = ({
                     <RatingsSummary>
                       {res.item.item_rating.rating_count
                         .slice(1)
-                        .map((rating, index) => {
-                          console.log(res.item.item_rating.rating_count);
-                          return (
-                            <RatingItem
-                              key={`${5 - index}-rating of${res.item.itemid}`}
-                              style={{ display: "flex" }}
-                            >
-                              <RatingCount>
-                                {index + 1}
-                                <Icon type='Star' size={16} />
-                              </RatingCount>
-                              <RatingBar
-                                percent={
-                                  (rating /
-                                    res.item.item_rating.rating_count[0]) *
-                                  100
-                                }
-                              ></RatingBar>
-                            </RatingItem>
-                          );
-                        })}
+                        .map((rating, index) => (
+                          <RatingItem
+                            key={`${5 - index}-rating of${res.item.itemid}`}
+                            style={{ display: "flex" }}
+                          >
+                            <RatingCount>
+                              {index + 1}
+                              <Icon type='Star' size={16} />
+                            </RatingCount>
+                            <RatingBar
+                              percent={
+                                (rating /
+                                  res.item.item_rating.rating_count[0]) *
+                                100
+                              }
+                            ></RatingBar>
+                          </RatingItem>
+                        ))}
                     </RatingsSummary>
                   )}
                 </SectionWrapper>

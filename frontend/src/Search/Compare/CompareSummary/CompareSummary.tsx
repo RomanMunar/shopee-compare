@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { mockData } from "../../../App/apireponses/mochResponses";
 import Flex from "../../../components/Flex";
 import { Icon, Trophy } from "../../../components/Icon";
 import { ToolbarButton } from "../../../components/Toolbar";
@@ -12,6 +11,7 @@ import { ResultItemImage } from "../../Results/ResultItemImage";
 import { Small } from "../../Results/Results.styles";
 import { Item } from "../../SelectPanel/SelectPanel.styles";
 import {
+  DialogWrapper,
   HeadingWrapper,
   ProductTitle,
   Table,
@@ -20,13 +20,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  TableWrapper,
   ToolbarWrapper,
 } from "./CompareSummary.styles";
 
-const CompareSummary = () => {
+const CompareSummary = ({ selectedItems }: { selectedItems: SearchItem[] }) => {
   const { closeCompareSummary, openOverlay, closeOverlay } = useUI();
-  const reponses: SearchItem[] = filterByUniqueField(mockData, "itemid");
+  const reponses: SearchItem[] = filterByUniqueField(selectedItems, "itemid");
   const $summaryRef = useRef<HTMLDivElement>(null);
   useOnOutsideClick($summaryRef, () => {
     closeOverlay();
@@ -47,7 +46,7 @@ const CompareSummary = () => {
   }, []);
 
   return (
-    <TableWrapper ref={$summaryRef}>
+    <DialogWrapper guide='compare' ref={$summaryRef}>
       <ToolbarWrapper>
         <Toolbar place='right-top'>
           Export to PDF
@@ -112,15 +111,14 @@ const CompareSummary = () => {
                   <Flex align='center' justify='center' wrap='nowrap'>
                     <Trophy type={types[randomNum()]} size={13} />
                     <span>{r.liked_count}</span>
-                  </Flex>{" "}
-                  // random from 0-2
+                  </Flex>
                 </TableData>
               </tr>
             );
           })}
         </TableBody>
       </Table>
-    </TableWrapper>
+    </DialogWrapper>
   );
 };
 

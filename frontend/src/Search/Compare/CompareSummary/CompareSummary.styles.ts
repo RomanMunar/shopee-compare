@@ -4,7 +4,7 @@ import { color, font } from "../../../shared/styles";
 export {
   Overlay,
   ProductTitle,
-  TableWrapper,
+  DialogWrapper,
   ToolbarWrapper,
   HeadingWrapper,
   Table,
@@ -15,8 +15,8 @@ export {
   TableData,
 };
 
-const Overlay = styled.div`
-  z-index: 200;
+const Overlay = styled.div<{ z: number }>`
+  z-index: ${(props) => props.z};
   position: absolute;
   background: rgba(0, 0, 0, 0.3);
   width: 100%;
@@ -37,12 +37,12 @@ const ProductTitle = styled.span`
   -webkit-box-orient: vertical;
 `;
 
-const TableWrapper = styled.div`
+const DialogWrapper = styled.div<{ guide: "search" | "compare" }>`
   width: 50%;
   position: absolute;
-  top: 20%;
+  top: ${(props) => (props.guide === "compare" ? "2%" : "12%")};
   left: 22%;
-  z-index: 400;
+  z-index: 500;
   margin: auto;
   display: flex;
   flex-direction: column;

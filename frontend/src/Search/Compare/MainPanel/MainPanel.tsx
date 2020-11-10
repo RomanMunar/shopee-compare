@@ -12,18 +12,14 @@ import { CompareItem } from "../CompareItem";
 interface Props {
   list: List;
   layout: Layout;
-  initialSelectedItems: ListItem<SearchItem>[];
   setInitialSelectedItems: Dispatch<SetStateAction<ListItem<SearchItem>[]>>;
-  selectedItems: SearchItem[];
   setSelectedItems: Dispatch<SetStateAction<SearchItem[]>>;
   setLayout: Dispatch<React.SetStateAction<Layout>>;
 }
 
 const MainPanel = ({
   list,
-  initialSelectedItems,
   setInitialSelectedItems,
-  selectedItems,
   setSelectedItems,
   setLayout,
   layout,
@@ -74,9 +70,7 @@ const MainPanel = ({
           >
             {list.items.map((res, index) => (
               <CompareItem
-                initialSelectedItems={initialSelectedItems}
                 setInitialSelectedItems={setInitialSelectedItems}
-                selectedItems={selectedItems}
                 setSelectedItems={setSelectedItems}
                 layout={layout}
                 on='main'

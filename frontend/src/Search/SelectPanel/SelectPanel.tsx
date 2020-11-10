@@ -81,10 +81,8 @@ const SelectPanel = ({
                 {showCloseIcon && (
                   <div
                     onClick={() => {
-                      setInitialSelectedItems(
-                        initialSelectedItems.filter(
-                          (res) => item.itemid !== res.item.itemid
-                        )
+                      setInitialSelectedItems((prev) =>
+                        prev.filter((res) => item.itemid !== res.item.itemid)
                       );
                     }}
                     style={{ position: "absolute", right: 0, top: "5px" }}

@@ -11,14 +11,18 @@ interface State {
   displaySelectPanel: boolean;
   displayOverlay: boolean;
   displayCompareSummary: boolean;
+  displayHelp: boolean;
+  displayCompareGuide: boolean;
 }
 
 const initialState = {
-  displaySearchPanel: false,
+  displaySearchPanel: true,
   displayMaxSearchPanel: false,
-  displaySelectPanel: false,
+  displaySelectPanel: true,
   displayOverlay: false,
   displayCompareSummary: false,
+  displayHelp: true,
+  displayCompareGuide: true,
 };
 
 type Action =
@@ -51,6 +55,18 @@ type Action =
     }
   | {
       type: "CLOSE_COMPARE_SUMMARY";
+    }
+  | {
+      type: "OPEN_HELP";
+    }
+  | {
+      type: "CLOSE_HELP";
+    }
+  | {
+      type: "OPEN_COMPARE_GUIDE";
+    }
+  | {
+      type: "CLOSE_COMPARE_GUIDE";
     };
 
 export const UIContext = React.createContext<State | any>(initialState);
@@ -119,6 +135,30 @@ function uiReducer(state: State, action: Action) {
         displayCompareSummary: false,
       };
     }
+    case "OPEN_HELP": {
+      return {
+        ...state,
+        displayHelp: true,
+      };
+    }
+    case "CLOSE_HELP": {
+      return {
+        ...state,
+        displayHelp: false,
+      };
+    }
+    case "OPEN_COMPARE_GUIDE": {
+      return {
+        ...state,
+        displayCompareGuide: true,
+      };
+    }
+    case "CLOSE_COMPARE_GUIDE": {
+      return {
+        ...state,
+        displayCompareGuide: false,
+      };
+    }
   }
 }
 
@@ -145,6 +185,10 @@ export const UIProvider: FC = (props) => {
 
   const openCompareSummary = () => dispatch({ type: "OPEN_COMPARE_SUMMARY" });
   const closeCompareSummary = () => dispatch({ type: "CLOSE_COMPARE_SUMMARY" });
+  const openHelp = () => dispatch({ type: "OPEN_HELP" });
+  const closeHelp = () => dispatch({ type: "CLOSE_HELP" });
+  const openCompareGuide = () => dispatch({ type: "OPEN_COMPARE_GUIDE" });
+  const closeCompareGuide = () => dispatch({ type: "CLOSE_COMPARE_GUIDE" });
 
   const value = useMemo(
     () => ({
@@ -162,13 +206,12 @@ export const UIProvider: FC = (props) => {
       closeOverlay,
       openCompareSummary,
       closeCompareSummary,
+      openHelp,
+      closeHelp,
+      openCompareGuide,
+      closeCompareGuide,
     }),
-    [
-      state,
-      toggleMaxSearchPanel,
-      closeSearchPanelIfPresent,
-      closeSelectPanelIfPresent,
-    ]
+    [state]
   );
 
   return (

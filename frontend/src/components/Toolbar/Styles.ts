@@ -29,7 +29,7 @@ export const Toolbar = styled.div<{
   align-items: center;
   justify-items: flex-start;
   height: 30px;
-  width: auto;
+  width: fit-content;
   border-radius: 15px;
   padding: 0 10px;
   background-color: #f1f1f1;

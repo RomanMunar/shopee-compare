@@ -1,4 +1,10 @@
-import React, { ReactElement, useMemo, useRef, useState } from "react";
+import React, {
+  ReactElement,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { mockData } from "../App/apireponses/mochResponses";
 import Container from "../components/Container";
@@ -19,9 +25,9 @@ import {
   resultsMove,
 } from "../shared/utils/utils";
 import { Compare } from "./Compare";
-import { CompareSummary } from "./Compare/CompareSummary";
 import { Overlay } from "./Compare/CompareSummary/CompareSummary.styles";
 import { MenuTitle } from "./Compare/SelectionPanel/SelectionPanel.styles";
+import Help from "./Help";
 import { Results } from "./Results";
 import { Label, MenuWrapper, SearchPanel } from "./Search.styles";
 import { SearchBar } from "./SearchBar";
@@ -41,6 +47,8 @@ export default (): ReactElement => {
     maximizeSearchPanel,
     toggleMaxSearchPanel,
     displayMaxSearchPanel,
+    displayHelp,
+    openHelp,
   } = useUI();
   const [selectedItems, setSelectedItems] = useState<SearchItem[]>([]);
   const [initialSelectedItems, setInitialSelectedItems] = useState<
@@ -54,8 +62,9 @@ export default (): ReactElement => {
       .slice(0, 12),
     "itemid"
   );
-  const mainResultsList = makeListItems(mainResults);
-  const [results, setResults] = useState(mainResultsList);
+  const [mainResultsList, setMainResultsList] = useState(
+    makeListItems(mainResults)
+  );
 
   const onSelectItemsSubmit = () => {
     setSelectedItems(initialSelectedItems.map((isi) => isi.item));
@@ -72,38 +81,27 @@ export default (): ReactElement => {
     },
   ];
 
-  // useEffect(() => openSearchPanel(), []);
+  useEffect(() => openSearchPanel(), []);
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
     if (!destination) return;
-    console.log(result);
 
     const desList = lists.find((dList) => dList.id === destination.droppableId);
     if (!desList) return;
     const sourceList = lists.find((sList) => sList.id === source.droppableId);
-    console.log(sourceList);
     if (!sourceList) return;
 
     if (source.droppableId === destination.droppableId) {
       const items = reorder(sourceList.items, source.index, destination.index);
       sourceList.setItems(items);
     } else {
-      console.log("else");
-      console.log({
-        slist: sourceList.items,
-        dlist: desList.items,
-        source,
-        destination,
-      });
       const { newDestinationItems } = resultsMove(
         sourceList.items,
         desList.items,
         source,
         destination
       );
-      console.log("newDestinationItems");
-      console.log(newDestinationItems);
 
       desList.setItems(newDestinationItems);
     }
@@ -119,10 +117,10 @@ export default (): ReactElement => {
   });
 
   const sortBy = <T extends keyof SearchItem>(sortmethod: T) => {
-    setResults(
+    setMainResultsList(
       makeListItems(
         orderBy(
-          results.map((i) => i.item),
+          mainResultsList.map((i) => i.item),
           [sortmethod],
           "asc"
         )
@@ -131,21 +129,25 @@ export default (): ReactElement => {
   };
 
   const n = 4; //tweak this to add more items per line
-  const newResults = useMemo(() => {
-    console.log(
+  // We're not using the real results here because results shouldn't change.
+  const newResults = useMemo(
+    () =>
       new Array(Math.ceil(mainResultsList.length / n))
         .fill(0)
-        .map((_, index) => mainResultsList.slice(4 * index, n + n * index))
-    );
-    return new Array(Math.ceil(mainResultsList.length / n))
-      .fill(0)
-      .map((_, index) => mainResultsList.slice(4 * index, n + n * index));
-  }, []);
+        .map((_, index) => mainResultsList.slice(4 * index, n + n * index)),
+    [mainResultsList]
+  );
+
+  const onHelpClick = () => {
+    openHelp();
+  };
 
   return (
     <>
-      {displayCompareSummary && <CompareSummary />}
-      {displayOverlay && <Overlay />}
+      {displayHelp && <Help />}
+      {displayOverlay && (
+        <Overlay z={displayCompareSummary ? 300 : displayHelp ? 400 : 300} />
+      )}
       <Container>
         <SelectedItemsProvider>
           <DragDropContext
@@ -185,35 +187,45 @@ export default (): ReactElement => {
               </Toolbar>
               <MenuTitle style={{ marginRight: "auto" }}>
                 <span>Search</span>
-                <Icon type='Question' size={24} />
               </MenuTitle>
               <SearchBar />
               <MenuWrapper>
                 <Label>Search results for "{query}"</Label>
-                <Toolbar withoutMargin place='default'>
-                  <ToolbarButton
-                    onClick={() => sortBy("name")}
-                    tooltipPlace='bottom'
-                    name='Alphabetical'
-                  >
-                    A<Icon type='Sort' size={16} />
-                  </ToolbarButton>
-                  <ToolbarButton
-                    onClick={() => sortBy("price")}
-                    tooltipPlace='bottom'
-                    name='Price'
-                  >
-                    ₱<Icon type='Sort' size={16} />
-                  </ToolbarButton>
-                  <ToolbarButton
-                    onClick={() => sortBy("sold")}
-                    tooltipPlace='bottom'
-                    name='Sales/mon'
-                  >
-                    <Icon type='Fire' size={17} />
-                    <Icon type='Sort' size={16} />
-                  </ToolbarButton>
-                </Toolbar>
+                <Flex align='center' justify='center'>
+                  <Toolbar withoutMargin place='default'>
+                    <ToolbarButton
+                      onClick={() => sortBy("name")}
+                      tooltipPlace='bottom'
+                      name='Alphabetical'
+                    >
+                      A<Icon type='Sort' size={16} />
+                    </ToolbarButton>
+                    <ToolbarButton
+                      onClick={() => sortBy("price")}
+                      tooltipPlace='bottom'
+                      name='Price'
+                    >
+                      ₱<Icon type='Sort' size={16} />
+                    </ToolbarButton>
+                    <ToolbarButton
+                      onClick={() => sortBy("sold")}
+                      tooltipPlace='bottom'
+                      name='Sales/mon'
+                    >
+                      <Icon type='Fire' size={17} />
+                      <Icon type='Sort' size={16} />
+                    </ToolbarButton>
+                  </Toolbar>
+                  <Flex margin='0 0 0 4px'>
+                    <ToolbarButton
+                      onClick={onHelpClick}
+                      tooltipPlace='bottom'
+                      name='Help'
+                    >
+                      <Icon type='Help' size={18} />
+                    </ToolbarButton>
+                  </Flex>
+                </Flex>
               </MenuWrapper>
               <Flex
                 align='center'
@@ -245,9 +257,8 @@ export default (): ReactElement => {
             </SearchPanel>
           </DragDropContext>
           <Compare
-            initialSelectedItems={initialSelectedItems}
             setInitialSelectedItems={setInitialSelectedItems}
-            selectedItems={mainResults}
+            selectedItems={selectedItems}
             setSelectedItems={setSelectedItems}
           />
         </SelectedItemsProvider>

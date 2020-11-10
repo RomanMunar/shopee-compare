@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.ef426abc.chunk.css",
-    "main.js": "/static/js/main.d6cc16d7.chunk.js",
-    "main.js.map": "/static/js/main.d6cc16d7.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.52e918ba.js",
-    "runtime-main.js.map": "/static/js/runtime-main.52e918ba.js.map",
-    "static/js/2.fb70758e.chunk.js": "/static/js/2.fb70758e.chunk.js",
-    "static/js/2.fb70758e.chunk.js.map": "/static/js/2.fb70758e.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.12595f731ab95b1f5e532e2a8afa38da.js": "/precache-manifest.12595f731ab95b1f5e532e2a8afa38da.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.ef426abc.chunk.css.map": "/static/css/main.ef426abc.chunk.css.map",
-    "static/js/2.fb70758e.chunk.js.LICENSE.txt": "/static/js/2.fb70758e.chunk.js.LICENSE.txt",
-    "static/media/fontStyles.css": "/static/media/Roboto-Regular.11eabca2.ttf"
+    "main.css": "/shopee-compare/static/css/main.a6d67c9b.chunk.css",
+    "main.js": "/shopee-compare/static/js/main.2f41ba25.chunk.js",
+    "main.js.map": "/shopee-compare/static/js/main.2f41ba25.chunk.js.map",
+    "runtime-main.js": "/shopee-compare/static/js/runtime-main.ff397484.js",
+    "runtime-main.js.map": "/shopee-compare/static/js/runtime-main.ff397484.js.map",
+    "static/js/2.25bcc690.chunk.js": "/shopee-compare/static/js/2.25bcc690.chunk.js",
+    "static/js/2.25bcc690.chunk.js.map": "/shopee-compare/static/js/2.25bcc690.chunk.js.map",
+    "index.html": "/shopee-compare/index.html",
+    "precache-manifest.f9688b44fe876ca0e9dfcee9e87b5b93.js": "/shopee-compare/precache-manifest.f9688b44fe876ca0e9dfcee9e87b5b93.js",
+    "service-worker.js": "/shopee-compare/service-worker.js",
+    "static/css/main.a6d67c9b.chunk.css.map": "/shopee-compare/static/css/main.a6d67c9b.chunk.css.map",
+    "static/js/2.25bcc690.chunk.js.LICENSE.txt": "/shopee-compare/static/js/2.25bcc690.chunk.js.LICENSE.txt",
+    "static/media/fontStyles.css": "/shopee-compare/static/media/Roboto-Regular.11eabca2.ttf"
   },
   "entrypoints": [
-    "static/js/runtime-main.52e918ba.js",
-    "static/js/2.fb70758e.chunk.js",
-    "static/css/main.ef426abc.chunk.css",
-    "static/js/main.d6cc16d7.chunk.js"
+    "static/js/runtime-main.ff397484.js",
+    "static/js/2.25bcc690.chunk.js",
+    "static/css/main.a6d67c9b.chunk.css",
+    "static/js/main.2f41ba25.chunk.js"
   ]
 }

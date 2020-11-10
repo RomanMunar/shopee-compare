@@ -46,7 +46,7 @@ const CompareSummary = ({ selectedItems }: { selectedItems: SearchItem[] }) => {
   }, []);
 
   return (
-    <DialogWrapper guide='compare' ref={$summaryRef}>
+    <DialogWrapper guide='search' ref={$summaryRef}>
       <ToolbarWrapper>
         <Toolbar place='right-top'>
           Export to PDF

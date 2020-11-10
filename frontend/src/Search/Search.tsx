@@ -159,7 +159,7 @@ export default (): ReactElement => {
               isSearchPanelMaximized={displayMaxSearchPanel}
               isSearchPanelOpen={displaySearchPanel}
             >
-              <Toolbar place='right-top'>
+              <Toolbar style={{ position: "absolute" }} place='right-top'>
                 <ToolbarButton
                   onClick={() => {
                     toggleMaxSearchPanel();
@@ -185,7 +185,7 @@ export default (): ReactElement => {
                   tooltipPlace='bottom'
                 />
               </Toolbar>
-              <MenuTitle style={{ marginRight: "auto" }}>
+              <MenuTitle style={{ marginRight: "auto", marginTop: "15px" }}>
                 <span>Search</span>
               </MenuTitle>
               <SearchBar />

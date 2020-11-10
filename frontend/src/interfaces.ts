@@ -93,10 +93,10 @@ export interface Rating {
   author_portrait: string;
   author_username: string;
   comment: string;
-  images: string[];
+  images: null | string[];
   rating_star: number;
-  product_items: { modelname: string };
-  tags: [{ description: string }];
+  product_items: any[];
+  tags: null | [{ tag_description: string }];
 }
 
 export type Layout = "main" | "double" | "none";

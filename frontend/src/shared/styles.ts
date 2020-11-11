@@ -3,9 +3,9 @@ import { css } from "styled-components";
 
 export const color = {
   primary: "#2F88FF", // Blue
-  success: "#0B875B", // green
+  success: "#52bb6f", // green
   danger: "#D0021B", // red
-  warning: "#F89C1C", // orange
+  warning: "#f1d335", // orange
   secondary: "#F4F5F7", // light grey
 
   textDarkest: "#172b4d",

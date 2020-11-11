@@ -31,18 +31,21 @@ import {
   ToolbarWrapper,
 } from "./CompareItem.styles";
 import Tags from "./Tags";
+import toast from "../../../shared/hooks/toast";
 
 interface Props {
   res: ListItem<SearchItem>;
   index: number;
   on: "selection" | "main";
   layout: Layout;
+  selectedItems: SearchItem[];
   setSelectedItems: Dispatch<SetStateAction<SearchItem[]>>;
   setInitialSelectedItems: Dispatch<SetStateAction<ListItem<SearchItem>[]>>;
 }
 
 const CompareItem = ({
   setSelectedItems,
+  selectedItems,
   layout,
   res,
   index,
@@ -56,14 +59,35 @@ const CompareItem = ({
   const str =
     "\u3010Noise Cancelling Microphone&Headphone\u3011New Upgrade online class headset noise cancellation mic with Dual \n  3.5mm port and built-in noise reduction headphones\n                                  ************ Focus on online class use\uff0ckeep to upgrade*********\n    \n   -----------------------------------------------------\n  New Upgrade(Noise Reduction Mic):\n  -----------------------------------------------------\n  \u2605\u2605\u2605 Noise Cancellation Mic \u2605\u2605\u2605\n   -----------------------------------------------------\n  \u2605\u2605\u2605 Mic And Voice Volume Wire Control \u2605\u2605\u2605\n\nTips:\n\u2606Noise Reduction Mic \u2606----------Noise Cancellation Mic+Mic And Voice Volume Wire Control+Free splitter cable\n\u2606Grey\uff08Dual 3.5MM\uff09\u2606-----------Use for Computer. No have Mic and Voice Volume Control on the Headset Wire\n\u2606Gold(Dual 3.5mm\uff09\u2606-----------Use for Computer. No have Mic and Voice Volume Control on the Headset Wire\n\u2606White(Dual 3.5mm\uff09\u2606-----------Use for Computer. No have Mic and Voice Volume Control on the Headset Wire\n\n\u2606Grey\uff08Single 3.5MM\uff09\u2606-----------Use for Laptop and Mobile Phone. No have Mic and Voice Volume Control on the Headset Wire\n\u2606Gold\uff08Single 3.5MM\uff09\u2606-----------Use for Laptop and Mobile Phone. No have Mic and Voice Volume Control on the Headset Wire\n\n\n      Please buy from Us. Because:\n   1>We are only one Official Authorized dealer in Shopee. \n   2>Only us have the After-sale service.\n   3>Only us have stock\n\n\n   \u3010Ready Stock\u3011\n     \ud83d\udc4d100% brand new and high quality\n\n   1>Type\uff1a3.5MM Jack Port\n   2>Length\uff1a1.8M      weight: 270g\n   3>Color:Grey/Gold/White\n   4>Line quilt Material: Nylon Braided\n\n    Design\uff1aComfortable to wear\n    \ud83d\udc4dFast Shipment: Send out within 2 days!!\n\n     Package\uff1a\n    \ud83d\udc4dHave retail package\n\n\n   \ud83d\udc96If you like our store ,please follow our store to get more discount in the future!!\ud83d\udc96\n   \ud83c\udf81To be our follower,get surprise now!!!\ud83c\udf81\n\n\n#headphone #headphones #headset #online classes #online class #business #business headset #Business headset";
 
-  const [copied, copy] = useCopyToClipboard("Lorem ipsum");
+  // https://shopee.ph/(COD)-9-Colors-TWS-Bluetooth-Earphone-i12-inPodTouch-Airpod-Key-Wireless-Headphone-Earbuds-Sports-Headsets-For-iPhone-Xiaomi-Smart-Phone-Android-Phone-No-Retail-Box-i.270420997.7041749586
+  const [copied, copy] = useCopyToClipboard(
+    `https://shopee.ph/${res.item.name.replace(/\s/gi, "-")}-i.${
+      res.item.shopid
+    }.${res.item.itemid}`
+  );
+  const onRemoveClick = () => {
+    if (selectedItems.length <= 2 && layout === "double") {
+      toast.show({
+        type: "warning",
+        message: "On doubled layout, you must have atleast 2 items",
+        duration: 8,
+      });
+      return;
+    }
+    setSelectedItems((prev) =>
+      prev.filter((item) => item.itemid !== res.item.itemid)
+    );
+    setInitialSelectedItems((prev) =>
+      prev.filter((item) => item.item.itemid !== res.item.itemid)
+    );
+  };
 
   return (
     <Draggable
       key={"draggable-ci-" + res.itemid}
       draggableId={`res-${res.itemid}`}
       index={index}
-      isDragDisabled={on === "main"}
+      isDragDisabled={on === "main" || layout === "none"}
     >
       {(provided, snapshot) => (
         <CItem
@@ -79,14 +103,7 @@ const CompareItem = ({
             <Toolbar withoutMargin place='right-top'>
               <ToolbarButton tooltipPlace='bottom' name='Test' icon='Grid' />
               <ToolbarButton
-                onClick={() => {
-                  setSelectedItems((prev) =>
-                    prev.filter((item) => item.itemid !== res.item.itemid)
-                  );
-                  setInitialSelectedItems((prev) =>
-                    prev.filter((item) => item.item.itemid !== res.item.itemid)
-                  );
-                }}
+                onClick={onRemoveClick}
                 icon='Close'
                 name='Remove'
                 tooltipPlace='bottom'
@@ -112,7 +129,7 @@ const CompareItem = ({
                     }
                   }}
                   style={{ minWidth: "20px" }}
-                  data-for='clipboard'
+                  data-for={`clipboard-${index}`}
                   data-tip
                 >
                   <Icon type='Clipboard' size={18} />
@@ -123,7 +140,7 @@ const CompareItem = ({
                   type={"success"}
                   effect='float'
                   arrowColor='rgba(0,0,0,0)'
-                  id='clipboard'
+                  id={`clipboard-${index}`}
                 >
                   {copied ? "Copied !" : "Click to copy link"}
                 </ReactTooltip>

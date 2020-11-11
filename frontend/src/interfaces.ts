@@ -113,6 +113,7 @@ export type ListItem<T> = {
 };
 
 export type IconType =
+  | "Swap"
   | "Question"
   | "Clipboard"
   | "Link"

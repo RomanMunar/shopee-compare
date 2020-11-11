@@ -20,11 +20,18 @@ import { useUI } from "../shared/contexts/useUIContext";
 import useOnOutsideClick from "../shared/hooks/useOnOutsideClick";
 import { ResultItemTitle, RItem } from "./Results/ResultItem/ResultItem.stlyes";
 import { ResultItemImage } from "./Results/ResultItemImage";
+import { useKeyPress } from "../shared/hooks/useKeyPressed";
 
 const Help = () => {
   const [selected, setSelected] = useState(false);
   const { closeHelp, openOverlay, closeOverlay } = useUI();
   const $helpRef = useRef<HTMLDivElement>(null);
+  const keyPressed = useKeyPress("Escape");
+  useEffect(() => {
+    if (keyPressed) {
+      handleClose();
+    };
+  }, [keyPressed])
   useOnOutsideClick($helpRef, () => {
     closeOverlay();
     closeHelp();
@@ -32,6 +39,10 @@ const Help = () => {
   useEffect(() => {
     openOverlay();
   }, []);
+  const handleClose = () => {
+    closeOverlay();
+    closeHelp();
+  };
   const item = {
     has_lowest_price_guarantee: true,
     itemid: 6539310796,
@@ -94,11 +105,6 @@ const Help = () => {
     raw_discount: 86,
   };
 
-  const handleClose = () => {
-    closeOverlay();
-    closeHelp();
-  };
-
   return (
     <DialogWrapper guide={"search"} ref={$helpRef}>
       <Dialog>
@@ -118,7 +124,7 @@ const Help = () => {
               hovering your mouse's cursor over the sample item below.
             </DialogContent>
             <DialogContent style={{ fontSize: "13px" }}>
-              - You may open this dialog again by click the{" "}
+              - You may open this dialog again by clicking the{" "}
               <Icon type='Help' size={15} /> icon right beside the sort menu.
             </DialogContent>
           </DialogSection>

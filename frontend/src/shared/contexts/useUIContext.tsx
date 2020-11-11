@@ -16,8 +16,8 @@ const initialState = {
   displaySelectPanel: true,
   displayOverlay: false,
   displayCompareSummary: false,
-  displayHelp: true,
-  displayCompareGuide: true,
+  displayHelp: false,
+  displayCompareGuide: false,
 };
 
 type Action =

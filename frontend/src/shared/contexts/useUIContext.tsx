@@ -1,10 +1,5 @@
 import React, { FC, useMemo } from "react";
 
-/*
-  setSelectedItems
-  setIsSearchPanelMaximized
-  setInitialSelectedItems
- */
 interface State {
   displaySearchPanel: boolean;
   displayMaxSearchPanel: boolean;

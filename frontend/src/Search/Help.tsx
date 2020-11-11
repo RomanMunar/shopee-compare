@@ -1,5 +1,16 @@
-import React, { useEffect, useRef } from "react";
-import styled from "styled-components";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  DialogBody,
+  DialogWrapper,
+  Dialog,
+  DialogSection,
+  DialogHeading,
+  DialogContent,
+  DialogComponent,
+  SubText,
+  ContentDescription,
+} from "../components/Dialog/Dialog.styles";
+import { DialogHeader, IconDescription } from "../components/Dialog";
 import Flex from "../components/Flex";
 import GridStats from "../components/GridStats";
 import { Icon } from "../components/Icon";
@@ -7,12 +18,11 @@ import { ToolbarButton } from "../components/Toolbar";
 import { Toolbar } from "../components/Toolbar/Styles";
 import { useUI } from "../shared/contexts/useUIContext";
 import useOnOutsideClick from "../shared/hooks/useOnOutsideClick";
-import { color, font } from "../shared/styles";
-import { DialogWrapper } from "./Compare/CompareSummary/CompareSummary.styles";
 import { ResultItemTitle, RItem } from "./Results/ResultItem/ResultItem.stlyes";
 import { ResultItemImage } from "./Results/ResultItemImage";
 
 const Help = () => {
+  const [selected, setSelected] = useState(false);
   const { closeHelp, openOverlay, closeOverlay } = useUI();
   const $helpRef = useRef<HTMLDivElement>(null);
   useOnOutsideClick($helpRef, () => {
@@ -90,34 +100,33 @@ const Help = () => {
   };
 
   return (
-    <DialogWrapper guide='search' ref={$helpRef}>
+    <DialogWrapper guide={"search"} ref={$helpRef}>
       <Dialog>
-        <Flex padding='0 20px' align='center' justify='space-between'>
-          <DialogTitle>Onboarding Guide</DialogTitle>
-          <ToolbarButton
-            size={24}
-            name='Close'
-            tooltipPlace='bottom'
-            onClick={handleClose}
-            icon='Close'
-          />
-        </Flex>
+        <DialogHeader handleClose={handleClose}>OnBoarding Guide</DialogHeader>
         <DialogBody>
-          <DialogSection>
-            <Flex dir='column'>
-              <DialogSubheading>How to use</DialogSubheading>
-              <DialogContent>
-                Drag items from the left panel called Search Panel to the right
-                panel called Select Panel and click compare to begin comparing
-                those dragged items.
-              </DialogContent>
-            </Flex>
+          <DialogSection dir='column'>
+            <DialogHeading>How to use</DialogHeading>
+            <DialogContent>
+              Drag items from the left panel called Search Panel to the right
+              panel called Select Panel and click compare to begin comparing
+              those dragged items.
+            </DialogContent>
+            <DialogHeading sub>Note</DialogHeading>
+            <DialogContent style={{ fontSize: "13px" }}>
+              - The item's border turns to green if the item has already been
+              selected or dragged. Representationally, you may see this by
+              hovering your mouse's cursor over the sample item below.
+            </DialogContent>
+            <DialogContent style={{ fontSize: "13px" }}>
+              - You may open this dialog again by click the{" "}
+              <Icon type='Help' size={15} /> icon right beside the sort menu.
+            </DialogContent>
           </DialogSection>
-          <DialogSection>
-            <div style={{ marginBottom: "15px" }}>
-              <DialogSubheading>Reference</DialogSubheading>
-            </div>
-            <Flex>
+          <DialogSection dir='column'>
+            <DialogHeading style={{ marginBottom: "15px" }}>
+              Reference
+            </DialogHeading>
+            <DialogSection sub dir='row'>
               <DialogContent>
                 <DialogComponent border='15px'>
                   <Toolbar withoutMargin place='default'>
@@ -134,12 +143,12 @@ const Help = () => {
                   </Toolbar>
                 </DialogComponent>
               </DialogContent>
-              <Flex margin='0 0 0 10px' dir='column'>
-                <DialogSubheading>
+              <DialogSection style={{ marginLeft: "20px" }} sub>
+                <DialogHeading>
                   Sort menu<SubText>found below the search bar</SubText>
-                </DialogSubheading>
+                </DialogHeading>
                 <DialogContent>
-                  <Flex padding='10px 0' dir='column' align='flex-start'>
+                  <Flex dir='column' align='flex-start'>
                     <Flex align='center' margin='2px 0'>
                       <ToolbarButton tooltipPlace='bottom' name='Alphabetical'>
                         A<Icon type='Sort' size={16} />
@@ -167,132 +176,60 @@ const Help = () => {
                     </Flex>
                   </Flex>
                 </DialogContent>
-              </Flex>
-            </Flex>
-          </DialogSection>
-          <DialogSection>
-            <Flex dir='row'>
-              <DialogContent>
-                <DialogComponent>
-                  <RItem
-                    style={{ marginBottom: "-10px" }}
-                    big={false}
-                    key={`initialItem-${item.itemid}`}
-                    selected={false} //initialSelectedItems.map((i) => i.itemid).includes(itemid)
-                    isDragging={false}
-                  >
-                    <ResultItemImage src={"751996009153746830caf407458a0390"} />
-                    <div style={{ padding: "2px 8px 5px 8px" }}>
-                      <ResultItemTitle>
-                        {item.name.replace(/[^a-zA-Z0-9 ]/g, "")}
-                      </ResultItemTitle>
-                      <GridStats item={item} on='results' />
-                    </div>
-                  </RItem>
-                </DialogComponent>
-              </DialogContent>
-              <div style={{ marginLeft: "15px" }}>
-                <DialogSubheading>Legends</DialogSubheading>
-                <DialogContent>
-                  <Flex padding='10px 0' dir='column' align='flex-start'>
-                    <Flex margin='2px 0'>
-                      <Icon size={18} type='Checkmark' />
-                      <ContentDescription>
-                        Signifies The seller is verified by shopee
-                      </ContentDescription>
-                    </Flex>
-                    <Flex margin='2px 0'>
-                      <Icon size={18} type='PriceLow' />
-                      <ContentDescription>
-                        Item is among the lowests price
-                      </ContentDescription>
-                    </Flex>
-                    <Flex margin='2px 0'>
-                      <Icon size={18} type='LowStarsCount' />
-                      <ContentDescription>
-                        The average 1s and 2 stars rating of the item
-                      </ContentDescription>
-                    </Flex>
-                    <Flex margin='2px 0'>
-                      <Icon size={18} type='Discount' />
-                      <ContentDescription>
-                        Discount percentage of the item
-                      </ContentDescription>
-                    </Flex>
-                    <Flex margin='2px 0'>
-                      <Icon size={18} type='Fire' />
-                      <ContentDescription>
-                        Buyers buy this item favorably
-                      </ContentDescription>
-                    </Flex>
-                  </Flex>
-                </DialogContent>
-              </div>
-            </Flex>
+              </DialogSection>
+            </DialogSection>
+            <DialogSection>
+              <DialogSection dir='row'>
+                <RItem
+                  style={{
+                    marginLeft: "20px",
+                    marginBottom: "-10px",
+                    boxShadow: "0 0 15px 0 rgba(0, 0, 0, 0.6)",
+                  }}
+                  onMouseEnter={() => setSelected(true)}
+                  onMouseLeave={() => setSelected(false)}
+                  big={false}
+                  key={`initialItem-${item.itemid}`}
+                  selected={selected} //initialSelectedItems.map((i) => i.itemid).includes(itemid)
+                  isDragging={false}
+                >
+                  <ResultItemImage src={"751996009153746830caf407458a0390"} />
+                  <div style={{ padding: "2px 8px 5px 8px" }}>
+                    <ResultItemTitle>
+                      {item.name.replace(/[^a-zA-Z0-9 ]/g, "")}
+                    </ResultItemTitle>
+                    <GridStats item={item} on='results' />
+                  </div>
+                </RItem>
+                <div style={{ marginLeft: "20px" }}>
+                  <DialogHeading style={{ marginBottom: "15px" }}>
+                    Legends
+                  </DialogHeading>
+                  <DialogContent>
+                    <IconDescription icon='Checkmark'>
+                      Signifies The seller is verified by shopee
+                    </IconDescription>
+                    <IconDescription icon='PriceLow'>
+                      Item is among the lowests price
+                    </IconDescription>
+                    <IconDescription icon='LowStarsCount'>
+                      The average 1s and 2 stars rating of the item
+                    </IconDescription>
+                    <IconDescription icon='Discount'>
+                      Discount percentage of the item
+                    </IconDescription>
+                    <IconDescription icon='Fire'>
+                      Signifies people buy this item favorably
+                    </IconDescription>
+                  </DialogContent>
+                </div>
+              </DialogSection>
+            </DialogSection>
           </DialogSection>
         </DialogBody>
       </Dialog>
     </DialogWrapper>
   );
 };
-
-export const Dialog = styled.div`
-  width: 100%;
-  padding: 10px 0 0 0;
-  border-radius: 10px;
-  background: ${color.backgroundDarkPrimary};
-`;
-
-export const DialogSection = styled.div`
-  margin: 0 0 20px;
-`;
-
-export const DialogBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  border-radius: 10px;
-  padding: 20px;
-  margin-top: 5px;
-`;
-
-export const DialogTitle = styled.div`
-  font-size: 20px;
-  color: #fff;
-  ${font.bold}
-`;
-
-export const DialogSubheading = styled.span`
-  font-size: 18px;
-  ${font.bold}
-  margin-bottom:5px;
-`;
-
-export const DialogContent = styled.div`
-  margin-left: 20px;
-`;
-
-export const DialogComponent = styled.div<{
-  border?: number | string;
-}>`
-  width: fit-content;
-  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.6);
-  margin-bottom: -10px;
-  border-radius: ${(props) => (props.border ? props.border : "10px")};
-  overflow: hidden;
-`;
-
-export const ContentDescription = styled.div`
-  margin-left: 5px;
-`;
-
-export const SubText = styled.span`
-  color: #747484;
-  font-size: 12px;
-  margin-left: 4px;
-  ::before {
-    content: "“";
-  }
-`;
 
 export default Help;

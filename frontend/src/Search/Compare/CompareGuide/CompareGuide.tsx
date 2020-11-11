@@ -8,11 +8,12 @@ import {
   DialogBody,
   DialogContent,
   DialogSection,
-  DialogSubheading,
+  DialogHeading,
   DialogTitle,
   SubText,
-} from "../../Help";
+} from "../../../components/Dialog/Dialog.styles";
 import { DialogWrapper } from "../CompareSummary/CompareSummary.styles";
+import { DialogHeader } from "../../../components/Dialog";
 
 const CompareGuide = () => {
   const { closeCompareGuide, openOverlay, closeOverlay } = useUI();
@@ -31,49 +32,38 @@ const CompareGuide = () => {
   return (
     <DialogWrapper guide='compare' ref={$compareGuideRef}>
       <Dialog>
-        <Flex padding='0 20px' align='center' justify='space-between'>
-          <DialogTitle>Compare Guide</DialogTitle>
-          <ToolbarButton
-            size={24}
-            name='Close'
-            tooltipPlace='bottom'
-            onClick={handleClose}
-            icon='Close'
-          />
-        </Flex>
+        <DialogHeader handleClose={handleClose}>Compare Guide</DialogHeader>
         <DialogBody>
           <DialogSection>
-            <Flex dir='column'>
-              <DialogSubheading>How to use</DialogSubheading>
-              <DialogContent>
-                Drag an item from the Selected Items Panel to the Compare Panel
-                to replace an item in the compare panel. Your goal here is to
-                narrow down your options and pick the best item there is. .
-                Gambate Kudasai 👋👋
-              </DialogContent>
-            </Flex>
+            <DialogHeading>How to use</DialogHeading>
+            <DialogContent>
+              Drag an item from the Selected Items Panel to the Compare Panel to
+              replace an item in the compare panel. Your goal here is to narrow
+              down your options and pick the best item there is. . Gambate
+              Kudasai 👋👋
+            </DialogContent>
           </DialogSection>
           <DialogSection>
             <Flex dir='column'>
               <div>
-                <DialogSubheading>Layouts</DialogSubheading>
+                <DialogHeading>Layouts</DialogHeading>
                 <SubText style={{ display: "inline" }}>
                   The options are placed at the top center of the compare panel
                 </SubText>
               </div>
               <DialogContent>
-                <DialogSubheading>Main</DialogSubheading>
+                <DialogHeading>Main</DialogHeading>
                 <DialogContent>
                   This layout only previews a single item, drag an item form
                   selected items panel to replace the currently previewed item.
                 </DialogContent>
-                <DialogSubheading>Double</DialogSubheading>
+                <DialogHeading>Double</DialogHeading>
                 <DialogContent>
                   This is the default layout, but is configurable trough the
                   settings. Previews two items, first item can;t be replaced,
                   but is draggable back to the selected items panel.
                 </DialogContent>
-                <DialogSubheading>No Layout</DialogSubheading>
+                <DialogHeading>No Layout</DialogHeading>
                 <DialogContent>
                   This layout previews all selected items. Useful if you want to
                   quickly browse all items to remove obviously inferior items
@@ -85,7 +75,7 @@ const CompareGuide = () => {
           <DialogSection>
             <Flex align='center' justify='center' dir='row-reverse'>
               <div>
-                <DialogSubheading>Recommendation</DialogSubheading>
+                <DialogHeading>Recommendation</DialogHeading>
                 <DialogContent>
                   Assuming that you're on a doubled layout, my recommended flow
                   is to compare the second item to the first item then remove
@@ -96,7 +86,7 @@ const CompareGuide = () => {
                 </DialogContent>
               </div>
               <div>
-                <DialogSubheading>Notes</DialogSubheading>
+                <DialogHeading>Notes</DialogHeading>
                 <DialogContent>
                   Drag items from the left panel called Search Panel to the
                   right panel called Select Panel and click compare to begin

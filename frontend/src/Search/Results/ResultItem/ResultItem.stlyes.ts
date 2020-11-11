@@ -23,7 +23,10 @@ const RItem = styled.div<{
   background-color: ${(props) =>
     props.isDragging ? color.backgroundLightPrimary : color.backgroundLightest};
   ${shadows.shadowSm}
-  border:  ${(props) => props.selected && `2px solid rgba(11, 135, 91, 0.5)`};
+  border:  ${(props) =>
+    props.selected
+      ? "2px solid rgba(11, 135, 91, 0.5)"
+      : "2px solid transparent"};
   text-align: center;
   border-radius: 0.5rem;
   overflow: hidden;

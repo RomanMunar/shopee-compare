@@ -14,13 +14,19 @@ import {
 } from "../../../components/Dialog/Dialog.styles";
 import { DialogWrapper } from "../CompareSummary/CompareSummary.styles";
 import { DialogHeader } from "../../../components/Dialog";
+import { useKeyPress } from "../../../shared/hooks/useKeyPressed";
 
 const CompareGuide = () => {
   const { closeCompareGuide, openOverlay, closeOverlay } = useUI();
   const $compareGuideRef = useRef<HTMLDivElement>(null);
+  const keyPressed = useKeyPress("Escape");
+  useEffect(() => {
+    if (keyPressed) {
+      handleClose();
+    }
+  }, [keyPressed]);
   useOnOutsideClick($compareGuideRef, () => {
-    closeOverlay();
-    closeCompareGuide();
+    handleClose();
   });
   useEffect(() => {
     openOverlay();

@@ -27,6 +27,7 @@
     "react-tooltip": "^4.2.10",
     "react-transition-group": "^4.4.1",
     "styled-components": "^5.2.0",
+    "sweet-pubsub": "^1.1.2",
     "typescript": "^3.9.7",
     "uuid": "^8.3.1"
   },

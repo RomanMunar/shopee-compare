@@ -1,8 +1,9 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Flex from "../../../components/Flex";
 import { Layout, List, ListItem, SearchItem } from "../../../interfaces";
 import { useUI } from "../../../shared/contexts/useUIContext";
+import { useKeyPress } from "../../../shared/hooks/useKeyPressed";
 import { CompareItem } from "../CompareItem";
 import {
   CompareSelection,
@@ -15,16 +16,30 @@ interface Props {
   layout: Layout;
   setInitialSelectedItems: Dispatch<SetStateAction<ListItem<SearchItem>[]>>;
   setSelectedItems: Dispatch<SetStateAction<SearchItem[]>>;
+  selectedItems: SearchItem[];
 }
 
-const MainPanel = ({
+const SelectionPanel = ({
   list,
   setInitialSelectedItems,
   setSelectedItems,
   layout,
+  selectedItems,
 }: Props) => {
-  const { openOverlay, openSearchPanel, openSelectPanel } = useUI();
-
+  const {
+    openOverlay,
+    closeOverlay,
+    openSearchPanel,
+    closeSearchPanel,
+    openSelectPanel,
+  } = useUI();
+  const keyPressed = useKeyPress("Escape");
+  useEffect(() => {
+    if (keyPressed) {
+      closeOverlay();
+      closeSearchPanel();
+    }
+  }, [keyPressed]);
   return (
     <Droppable key='droppable-2' droppableId={list.id} direction='vertical'>
       {(provided, snapshot) => (
@@ -50,6 +65,7 @@ const MainPanel = ({
             {list.items.map((res, index) => (
               <div style={{ marginBottom: "15px" }}>
                 <CompareItem
+                  selectedItems={selectedItems}
                   setInitialSelectedItems={setInitialSelectedItems}
                   setSelectedItems={setSelectedItems}
                   layout={layout}
@@ -67,4 +83,4 @@ const MainPanel = ({
   );
 };
 
-export default MainPanel;
+export default SelectionPanel;

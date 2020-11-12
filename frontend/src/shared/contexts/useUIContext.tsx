@@ -8,6 +8,7 @@ interface State {
   displayCompareSummary: boolean;
   displayHelp: boolean;
   displayCompareGuide: boolean;
+  displayAddToBookmarks: boolean;
 }
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
   displayCompareSummary: false,
   displayHelp: false,
   displayCompareGuide: false,
+  displayAddToBookmarks: false,
 };
 
 type Action =
@@ -62,6 +64,12 @@ type Action =
     }
   | {
       type: "CLOSE_COMPARE_GUIDE";
+    }
+  | {
+      type: "OPEN_ADD_TO_BOOKMARKS";
+    }
+  | {
+      type: "CLOSE_ADD_TO_BOOKMARKS";
     };
 
 export const UIContext = React.createContext<State | any>(initialState);
@@ -154,6 +162,18 @@ function uiReducer(state: State, action: Action) {
         displayCompareGuide: false,
       };
     }
+    case "OPEN_ADD_TO_BOOKMARKS": {
+      return {
+        ...state,
+        displayAddToBookmarks: true,
+      };
+    }
+    case "CLOSE_ADD_TO_BOOKMARKS": {
+      return {
+        ...state,
+        displayAddToBookmarks: false,
+      };
+    }
   }
 }
 
@@ -184,6 +204,9 @@ export const UIProvider: FC = (props) => {
   const closeHelp = () => dispatch({ type: "CLOSE_HELP" });
   const openCompareGuide = () => dispatch({ type: "OPEN_COMPARE_GUIDE" });
   const closeCompareGuide = () => dispatch({ type: "CLOSE_COMPARE_GUIDE" });
+  const openAddToBookmarks = () => dispatch({ type: "OPEN_ADD_TO_BOOKMARKS" });
+  const closeAddToBookmarks = () =>
+    dispatch({ type: "CLOSE_ADD_TO_BOOKMARKS" });
 
   const value = useMemo(
     () => ({
@@ -205,6 +228,8 @@ export const UIProvider: FC = (props) => {
       closeHelp,
       openCompareGuide,
       closeCompareGuide,
+      openAddToBookmarks,
+      closeAddToBookmarks,
     }),
     [state]
   );

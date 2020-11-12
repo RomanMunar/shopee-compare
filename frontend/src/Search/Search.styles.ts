@@ -1,4 +1,3 @@
-import { memo } from "react";
 import styled from "styled-components";
 import { color, font, mixin, shadows } from "../shared/styles";
 
@@ -25,7 +24,7 @@ export const Label = styled.span`
   ${font.bold}
 `;
 
-export const SearchPanel = memo(styled.div<{
+export const SearchPanel = styled.div<{
   isSearchPanelOpen: boolean;
   isSearchPanelMaximized: boolean;
 }>`
@@ -48,4 +47,4 @@ export const SearchPanel = memo(styled.div<{
   opacity: ${(props) => props.isSearchPanelOpen && 1};
   ${shadows.shadowMd}
   z-index: 300;
-`);
+`;

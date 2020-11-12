@@ -76,15 +76,18 @@ const CItem = styled.div<{
   on?: "selection" | "main";
 }>`
   ${(props) => props.layout === "double" && "flex-basis: 50%"};
+  ${(props) => props.layout === "none" && "flex-basis: 25%"};
+  scroll-snap-align: start;
   border-radius: 15px;
   ${shadows.shadowLg}
-  min-width: min-content;
+  min-width: 24%;
   overflow-y: auto;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  transform: none;
   cursor: pointer;
   ${(props) => (props.isDragging ? shadows.shadow2Xl : shadows.shadowMd)};
   background-color: ${(props) => (props.isDragging ? "#fef3ab" : "#fff")};

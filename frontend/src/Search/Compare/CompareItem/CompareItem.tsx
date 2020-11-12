@@ -82,6 +82,8 @@ const CompareItem = ({
     );
   };
 
+  const [showToolbar, setShowToolbar] = useState(false);
+
   return (
     <Draggable
       key={"draggable-ci-" + res.itemid}
@@ -91,6 +93,8 @@ const CompareItem = ({
     >
       {(provided, snapshot) => (
         <CItem
+          onMouseEnter={() => setShowToolbar(true)}
+          onMouseLeave={() => setShowToolbar(false)}
           layout={layout}
           key={"compare-item-" + res.itemid}
           on={on}
@@ -99,17 +103,19 @@ const CompareItem = ({
           {...provided.dragHandleProps}
           isDragging={snapshot.isDragging}
         >
-          <ToolbarWrapper>
-            <Toolbar withoutMargin place='right-top'>
-              <ToolbarButton tooltipPlace='bottom' name='Test' icon='Grid' />
-              <ToolbarButton
-                onClick={onRemoveClick}
-                icon='Close'
-                name='Remove'
-                tooltipPlace='bottom'
-              />
-            </Toolbar>
-          </ToolbarWrapper>
+          {showToolbar && (
+            <ToolbarWrapper>
+              <Toolbar withoutMargin place='right-top'>
+                <ToolbarButton tooltipPlace='bottom' name='Test' icon='Grid' />
+                <ToolbarButton
+                  onClick={onRemoveClick}
+                  icon='Close'
+                  name='Remove'
+                  tooltipPlace='bottom'
+                />
+              </Toolbar>
+            </ToolbarWrapper>
+          )}
           <MultipleImage layout={layout} on={on} srcs={res.item.images} />
           <CompareItemTitle on={on} layout={layout}>
             <Title>

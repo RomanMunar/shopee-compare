@@ -830,13 +830,13 @@ const Time = ({ size }: { size: number }) => (
 );
 const Calendar = ({ size }: { size: number }) => (
   <svg
-    width='24'
-    height='24'
+    width={size}
+    height={size}
     viewBox='0 0 48 48'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <rect width='48' height='48' fill='white' fillOpacity='0.01' />
+    <rect width={size} height={size} fill='white' fillOpacity='0.01' />
     <path
       d='M5 19H43V40C43 41.1046 42.1046 42 41 42H7C5.89543 42 5 41.1046 5 40V19Z'
       fill='#2F88FF'
@@ -1306,6 +1306,47 @@ const Question = ({ size }: { size: number }) => (
   </svg>
 );
 
+const Swap = ({ size }: { size: number }) => (
+  <svg
+    width='24'
+    rotate='180'
+    height='24'
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <path
+      d='M10 8L4 14L10 20'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M38 28L44 34L38 40'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M4 14H44'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M4 34H44'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+
 const Icons: Record<keyof any, React.ElementType> = {
   Search: Search,
   Bookmark: Bookmark,
@@ -1343,6 +1384,7 @@ const Icons: Record<keyof any, React.ElementType> = {
   Sales: Sales,
   Delete: Delete,
   Link: Link,
-  Clipboard: Clipboard,
-  Question: Question,
+  Clipboard,
+  Question,
+  Swap,
 };

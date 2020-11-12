@@ -15,10 +15,6 @@ export const Navbar = () => {
   const [activeRoute, setActiveRoute] = useState("/");
   const { pathname: url } = useLocation();
   const { displayOverlay } = useUI();
-  const navigate = useNavigate();
-  if (url === "/") {
-    navigate("/search");
-  }
 
   useEffect(() => {
     setActiveRoute(url);

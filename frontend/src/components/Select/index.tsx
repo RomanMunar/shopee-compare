@@ -8,7 +8,7 @@ import {
   SelectItem,
 } from "./Styles";
 interface Props {
-  title: string;
+  title?: string;
   DropdownOpen: boolean;
   setDropdownOpen: React.Dispatch<React.SetStateAction<boolean>>;
   options: string[];
@@ -20,11 +20,12 @@ export default ({
   options,
 }: Props): ReactElement => {
   const $sortRef = useRef<HTMLDivElement>(null);
-  useOnOutsideClick($sortRef, () => setDropdownOpen(!DropdownOpen));
-  const [newTitle, setNewTitle] = useState(title);
+  useOnOutsideClick($sortRef, () => setDropdownOpen(false));
+  const notitle = title !== undefined;
+  const [newTitle, setNewTitle] = useState(notitle ? options[0] : title);
   return (
     <SelectContainer>
-      <SelectButton onClick={() => setDropdownOpen(!DropdownOpen)}>
+      <SelectButton onClick={() => setDropdownOpen(true)}>
         {newTitle}
         <Icon type='ChevronDown' size={24} />
       </SelectButton>
@@ -34,7 +35,12 @@ export default ({
             option === newTitle ? (
               ""
             ) : (
-              <SelectItem onClick={() => setNewTitle(option)}>
+              <SelectItem
+                onClick={() => {
+                  setNewTitle(option);
+                  setDropdownOpen(false);
+                }}
+              >
                 {option}
               </SelectItem>
             )

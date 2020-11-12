@@ -1,10 +1,4 @@
-import React, {
-  ReactElement,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { mockData } from "../App/apireponses/mochResponses";
 import Container from "../components/Container";
@@ -15,14 +9,16 @@ import { Toolbar } from "../components/Toolbar/Styles";
 import { List, ListItem, SearchItem } from "../interfaces";
 import SelectedItemsProvider from "../shared/contexts/useSelectedItemsContext";
 import { useUI } from "../shared/contexts/useUIContext";
+import toast from "../shared/hooks/toast";
 import useOnOutsideClick from "../shared/hooks/useOnOutsideClick";
 import { useQueryParams } from "../shared/hooks/useQueryParams";
 import {
+  arrayToNItems,
   filterByUniqueField,
   makeListItems,
-  orderBy,
   reorder,
   resultsMove,
+  sortBy,
 } from "../shared/utils/utils";
 import { Compare } from "./Compare";
 import { Overlay } from "./Compare/CompareSummary/CompareSummary.styles";
@@ -36,9 +32,9 @@ import { SelectPanel } from "./SelectPanel";
 export default (): ReactElement => {
   let query = useQueryParams().get("keyword");
   const {
+    displayAddToBookmarks,
     displayOverlay,
     displaySearchPanel,
-    openSearchPanel,
     closeSearchPanel,
     closeOverlay,
     openSelectPanel,
@@ -49,29 +45,29 @@ export default (): ReactElement => {
     displayMaxSearchPanel,
     displayHelp,
     openHelp,
+    openSearchPanel,
   } = useUI();
   const [selectedItems, setSelectedItems] = useState<SearchItem[]>([]);
   const [initialSelectedItems, setInitialSelectedItems] = useState<
     ListItem<SearchItem>[]
   >([]);
-  const mainResults = filterByUniqueField(
-    mockData
-      .map((i) => {
-        return { ...i, name: i.name.replace(/[^a-zA-Z0-9 ]/g, "") };
-      })
-      .slice(0, 12),
-    "itemid"
+  const n = 4; // items per row, change for maximized panel
+  // Mock data, will remove non-alphabet characts
+  // FilterUniqueField, Removes duplicate items, for ads specifically
+  // MakeListItems adds itemid for dragging and indexing in lists
+  const searchResult = arrayToNItems(
+    makeListItems(
+      filterByUniqueField(
+        mockData
+          .map((i) => {
+            return { ...i, name: i.name.replace(/[^a-zA-Z0-9 ]/g, "") };
+          })
+          .slice(0, 12),
+        "itemid"
+      )
+    ),
+    n
   );
-  const [mainResultsList, setMainResultsList] = useState(
-    makeListItems(mainResults)
-  );
-
-  const onSelectItemsSubmit = () => {
-    setSelectedItems(initialSelectedItems.map((isi) => isi.item));
-    closeSearchPanel();
-    closeOverlay();
-    closeSelectPanel();
-  };
 
   const lists: List[] = [
     {
@@ -116,37 +112,24 @@ export default (): ReactElement => {
     }
   });
 
-  const sortBy = <T extends keyof SearchItem>(sortmethod: T) => {
-    setMainResultsList(
-      makeListItems(
-        orderBy(
-          mainResultsList.map((i) => i.item),
-          [sortmethod],
-          "asc"
-        )
-      )
+  const sort = (sortmethod: keyof SearchItem) =>
+    arrayToNItems(sortBy(searchResult, sortmethod), n).map(
+      (row, index) => lists[index + 1].setItems(row) //Plus one because our first element here is the initialselected items list
     );
-  };
-
-  const n = 4; //tweak this to add more items per line
-  // We're not using the real results here because results shouldn't change.
-  const newResults = useMemo(
-    () =>
-      new Array(Math.ceil(mainResultsList.length / n))
-        .fill(0)
-        .map((_, index) => mainResultsList.slice(4 * index, n + n * index)),
-    [mainResultsList]
-  );
-
-  const onHelpClick = () => {
-    openHelp();
-  };
 
   return (
     <>
       {displayHelp && <Help />}
       {displayOverlay && (
-        <Overlay z={displayCompareSummary ? 300 : displayHelp ? 400 : 300} />
+        <Overlay
+          z={
+            displayCompareSummary
+              ? 300
+              : displayHelp || displayAddToBookmarks
+              ? 400
+              : 300
+          }
+        />
       )}
       <Container>
         <SelectedItemsProvider>
@@ -186,7 +169,7 @@ export default (): ReactElement => {
                 />
               </Toolbar>
               <MenuTitle style={{ marginRight: "auto", marginTop: "15px" }}>
-                <span>Search</span>
+                Search
               </MenuTitle>
               <SearchBar />
               <MenuWrapper>
@@ -194,21 +177,21 @@ export default (): ReactElement => {
                 <Flex align='center' justify='center'>
                   <Toolbar withoutMargin place='default'>
                     <ToolbarButton
-                      onClick={() => sortBy("name")}
+                      onClick={() => sort("name")}
                       tooltipPlace='bottom'
                       name='Alphabetical'
                     >
                       A<Icon type='Sort' size={16} />
                     </ToolbarButton>
                     <ToolbarButton
-                      onClick={() => sortBy("price")}
+                      onClick={() => sort("price")}
                       tooltipPlace='bottom'
                       name='Price'
                     >
                       ₱<Icon type='Sort' size={16} />
                     </ToolbarButton>
                     <ToolbarButton
-                      onClick={() => sortBy("sold")}
+                      onClick={() => sort("sold")}
                       tooltipPlace='bottom'
                       name='Sales/mon'
                     >
@@ -218,7 +201,7 @@ export default (): ReactElement => {
                   </Toolbar>
                   <Flex margin='0 0 0 4px'>
                     <ToolbarButton
-                      onClick={onHelpClick}
+                      onClick={() => openHelp()}
                       tooltipPlace='bottom'
                       name='Help'
                     >
@@ -233,7 +216,7 @@ export default (): ReactElement => {
                 wrap='wrap'
                 overflow='auto'
               >
-                {newResults.map((row, index) => {
+                {searchResult.map((row, index) => {
                   const dropId = `result-${index}`;
                   const [items, setItems] = useState(row);
                   lists.push({ id: dropId, items, setItems });
@@ -243,6 +226,7 @@ export default (): ReactElement => {
                       dropId={dropId}
                       results={items}
                       initialSelectedItems={initialSelectedItems}
+                      setInitialSelectedItems={setInitialSelectedItems}
                     />
                   );
                 })}
@@ -250,8 +234,8 @@ export default (): ReactElement => {
               {!displayMaxSearchPanel && (
                 <SelectPanel
                   initialSelectedItems={initialSelectedItems}
+                  setSelectedItems={setSelectedItems}
                   setInitialSelectedItems={setInitialSelectedItems}
-                  onSelectItemsSubmit={onSelectItemsSubmit}
                 />
               )}
             </SearchPanel>

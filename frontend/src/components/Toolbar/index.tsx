@@ -8,7 +8,7 @@ import "./styles.css";
 type Props = {
   name: string;
   icon?: IconType;
-  onClick?: () => void;
+  onClick?: (e: any) => void;
   tooltipPlace: "top" | "bottom" | "left" | "right";
   size?: number;
   children?: ReactNode;
@@ -24,7 +24,7 @@ export const ToolbarButton = ({
 }: Props) => {
   return (
     <>
-      <Button onClick={onClick} data-tip={name} data-for={name}>
+      <Button onClick={onClick} data-for={name} data-tip>
         {icon ? <Icon type={icon} size={size ? size : 16} /> : children}
       </Button>
       <ReactTooltip
@@ -35,7 +35,9 @@ export const ToolbarButton = ({
         effect='solid'
         arrowColor='rgba(0,0,0,0)'
         id={name}
-      />
+      >
+        {name}
+      </ReactTooltip>
     </>
   );
 };

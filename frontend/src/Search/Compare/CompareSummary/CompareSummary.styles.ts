@@ -37,11 +37,12 @@ const ProductTitle = styled.span`
   -webkit-box-orient: vertical;
 `;
 
-const DialogWrapper = styled.div<{ guide: "search" | "compare" }>`
-  width: 50%;
+const DialogWrapper = styled.div<{ guide: "search" | "compare" | "bookmarks" }>`
+  width: ${(props) => (props.guide === "bookmarks" ? "40%" : "50%")};
   position: absolute;
-  top: ${(props) => (props.guide === "compare" ? "2%" : "12%")};
-  left: 22%;
+  top: ${(props) =>
+    props.guide === "compare" || props.guide === "bookmarks" ? "4%" : "12%"};
+  left: ${(props) => (props.guide === "bookmarks" ? "28%" : "22%")};
   z-index: 500;
   margin: auto;
   display: flex;

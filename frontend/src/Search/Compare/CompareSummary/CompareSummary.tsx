@@ -5,6 +5,7 @@ import { ToolbarButton } from "../../../components/Toolbar";
 import { Toolbar } from "../../../components/Toolbar/Styles";
 import { IconType, SearchItem } from "../../../interfaces";
 import { useUI } from "../../../shared/contexts/useUIContext";
+import { useKeyPress } from "../../../shared/hooks/useKeyPressed";
 import useOnOutsideClick from "../../../shared/hooks/useOnOutsideClick";
 import { filterByUniqueField, priceCompare } from "../../../shared/utils/utils";
 import { ResultItemImage } from "../../Results/ResultItemImage";
@@ -27,10 +28,17 @@ const CompareSummary = ({ selectedItems }: { selectedItems: SearchItem[] }) => {
   const { closeCompareSummary, openOverlay, closeOverlay } = useUI();
   const reponses: SearchItem[] = filterByUniqueField(selectedItems, "itemid");
   const $summaryRef = useRef<HTMLDivElement>(null);
+  const keyPressed = useKeyPress("Escape");
+  useEffect(() => {
+    if (keyPressed) {
+      handleClose();
+    }
+  }, [keyPressed]);
   useOnOutsideClick($summaryRef, () => {
-    closeOverlay();
-    closeCompareSummary();
+    handleClose()
   });
+const handleClose = ()=>{  closeOverlay();
+  closeCompareSummary();}
   // Note: For consistency, I named them type instead of icon
   const headings: { name: string; type: IconType }[] = [
     { name: "Product", type: "Product" },

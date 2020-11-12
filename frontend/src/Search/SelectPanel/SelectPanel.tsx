@@ -6,7 +6,9 @@ import { ToolbarButton } from "../../components/Toolbar/index";
 import { Toolbar } from "../../components/Toolbar/Styles";
 import { ListItem, SearchItem } from "../../interfaces";
 import { useUI } from "../../shared/contexts/useUIContext";
+import toast from "../../shared/hooks/toast";
 import { ResultItemImage } from "../Results/ResultItemImage";
+import SelectItem from "./SelectItem/SelectItem";
 import {
   Item,
   Items,
@@ -17,48 +19,76 @@ import {
 } from "./SelectPanel.styles";
 
 type Props = {
-  onSelectItemsSubmit: () => void;
   initialSelectedItems: ListItem<SearchItem>[];
   setInitialSelectedItems: React.Dispatch<
     React.SetStateAction<ListItem<SearchItem>[]>
   >;
+  setSelectedItems: React.Dispatch<React.SetStateAction<SearchItem[]>>;
 };
 
 const SelectPanel = ({
   setInitialSelectedItems,
+  setSelectedItems,
   initialSelectedItems,
-  onSelectItemsSubmit,
 }: Props) => {
   const {
     openSearchPanel,
     closeSelectPanel,
     displaySelectPanel,
+    closeSearchPanel,
+    closeOverlay,
     maximizeSearchPanel,
   } = useUI();
-  const [showCloseIcon, setShowCloseIcon] = useState(false);
+  const [showIcon, setShowIcon] = useState(false);
+  const onRemoveClick = (itemid: number) => {
+    setInitialSelectedItems((prev) =>
+      prev.filter((res) => itemid !== res.item.itemid)
+    );
+  };
+  const onSelectItemsSubmit = () => {
+    if (initialSelectedItems.length < 2) {
+      toast.show({
+        type: "primary",
+        message: "Please select atleast 2 items",
+      });
+      return;
+    }
+
+    setSelectedItems(initialSelectedItems.map((isi) => isi.item));
+    closeSearchPanel();
+    closeOverlay();
+    closeSelectPanel();
+  };
+
   return (
-    <SPanel isSelectPanelOpen={displaySelectPanel}>
+    <SPanel
+      onMouseEnter={() => setShowIcon(true)}
+      onMouseLeave={() => setShowIcon(false)}
+      isSelectPanelOpen={displaySelectPanel}
+    >
       <MenuWrapper>
         <Title>Selected Items</Title>
-        <Toolbar withoutMargin place='right-top'>
-          <ToolbarButton
-            tooltipPlace='bottom'
-            onClick={() => closeSelectPanel()}
-            name='Minimize'
-            icon='ArrowCircleLeft'
-          />
-          <ToolbarButton
-            tooltipPlace='bottom'
-            onClick={() => maximizeSearchPanel()}
-            name='Maximize'
-            icon='Grid'
-          />
-          <ToolbarButton
-            tooltipPlace='bottom'
-            onClick={() => openSearchPanel()}
-            name='Close'
-          />
-        </Toolbar>
+        {showIcon && (
+          <Toolbar withoutMargin place='right-top'>
+            <ToolbarButton
+              tooltipPlace='bottom'
+              onClick={() => closeSelectPanel()}
+              name='Minimize'
+              icon='ArrowCircleLeft'
+            />
+            <ToolbarButton
+              tooltipPlace='bottom'
+              onClick={() => maximizeSearchPanel()}
+              name='Maximize'
+              icon='Grid'
+            />
+            <ToolbarButton
+              tooltipPlace='bottom'
+              onClick={() => openSearchPanel()}
+              name='Close'
+            />
+          </Toolbar>
+        )}
       </MenuWrapper>
       <Droppable
         key='droppable-155'
@@ -72,33 +102,8 @@ const SelectPanel = ({
             isDraggingOver={snapshot.isDraggingOver}
             {...provided.droppableProps}
           >
-            {initialSelectedItems.map(({ item }, index) => (
-              <Item
-                key={`initialItem-${item.itemid}`}
-                onMouseEnter={() => setShowCloseIcon(true)}
-                onMouseLeave={() => setShowCloseIcon(false)}
-              >
-                {showCloseIcon && (
-                  <div
-                    onClick={() => {
-                      setInitialSelectedItems((prev) =>
-                        prev.filter((res) => item.itemid !== res.item.itemid)
-                      );
-                    }}
-                    style={{ position: "absolute", right: 0, top: "5px" }}
-                  >
-                    <Icon type='Delete' size={13} />
-                  </div>
-                )}
-                <ResultItemImage src={item.image} direction='left' />
-                <ItemText>
-                  {item.name
-                    .replace(/[^a-zA-Z0-9 ]/g, "")
-                    .split("")
-                    .slice(0, 50)}
-                  ...
-                </ItemText>
-              </Item>
+            {initialSelectedItems.map(({ item }) => (
+              <SelectItem onRemoveClick={onRemoveClick} item={item} />
             ))}
             {provided.placeholder}
           </Items>

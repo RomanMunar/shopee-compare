@@ -5,7 +5,6 @@ export { Item, ItemImage, ItemText, Items, Title, MenuWrapper, SelectPanel };
 
 const Item = styled.div`
   position: relative;
-  margin-top: 15px;
   margin-bottom: 15px;
   width: 100%;
   display: flex;

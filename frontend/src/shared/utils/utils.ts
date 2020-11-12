@@ -1,18 +1,79 @@
 import { DraggableLocation } from "react-beautiful-dnd";
-import { ItemRating, Layout, ListItem, SearchItem } from "../../interfaces";
+import {
+  BookMark,
+  ItemRating,
+  Layout,
+  ListItem,
+  SearchItem,
+} from "../../interfaces";
 
 export {
-  resultsMove,
-  makeListItems,
+  arrayToNArray,
+  filterByUniqueField,
   get1and2starAverage,
-  move,
   getRelativeTimeFormat,
   kFormatter,
-  priceCompare,
-  filterByUniqueField,
-  reorder,
+  makeListItems,
+  move,
   orderBy,
+  priceCompare,
+  reorder,
+  resultsMove,
+  arrayToNItems,
+  sortBy,
+  getBookmarks,
+  addBookmark,
+  timeStamptoDate,
+  updateBookmark,
+  removeBookmark,
 };
+
+const timeStamptoDate = (timestamp: number) => {
+  const date = new Date(timestamp);
+  return date.toDateString();
+};
+
+const getBookmarks = () =>
+  JSON.parse(localStorage.getItem("Bookmarks")!) as BookMark[];
+
+const setBookmarks = (bookmarks: BookMark[]) =>
+  localStorage.setItem("Bookmarks", JSON.stringify(bookmarks))!;
+
+const removeBookmark = (id: number) => {
+  const bookmarks = getBookmarks();
+  const items = bookmarks.filter((b) => b.id !== id);
+  setBookmarks(items);
+};
+
+const updateBookmark = (id: number, newBookmark: BookMark) => {
+  const bookmarks = getBookmarks();
+  const items = bookmarks.filter((b) => b.id !== id);
+  setBookmarks([...items, newBookmark]);
+};
+
+const addBookmark = (newBookmark: BookMark): BookMark[] => {
+  const bookmarks = getBookmarks();
+  if (!bookmarks) {
+    setBookmarks([newBookmark]);
+    return [newBookmark];
+  }
+  setBookmarks([newBookmark, ...bookmarks]);
+  return [newBookmark, ...bookmarks];
+};
+// Impossibly cringe way to flatten an array
+// At the time of writing this, I have no internet connection
+// feel free to message me, i might've forgotten to revamp this
+const sortBy = <T>(arr: ListItem<T>[][], sortmethod: keyof T) => {
+  const items: T[] = [];
+  arr.map((i) => i.map((itm) => items.push(itm.item)));
+  const newArr = makeListItems(orderBy(items, [sortmethod], "asc"));
+  return newArr;
+};
+
+const arrayToNItems = <T>(arr: T[], n: number) =>
+  Array(Math.ceil(arr.length / n))
+    .fill(0)
+    .map((_, index) => arr.slice(n * index, n + n * index));
 
 const orderBy = <T>(arr: T[], props: Array<keyof T>, orders: "desc" | "asc") =>
   [...arr].sort((a, b) =>
@@ -48,10 +109,28 @@ const resultsMove = (
   return { newDestinationItems };
 };
 
+const arrayToNArray = <T>(arr: T[], n: number): T[][] => {
+  const result: T[][] = [];
+  for (let i = 0; i < n; i++) {
+    result.push([]);
+  }
+
+  const wordsPerLine = Math.ceil(arr.length / 2);
+  for (let line = 0; line < n; line++) {
+    for (let i = 0; i < wordsPerLine; i++) {
+      const value = arr[i + line * wordsPerLine];
+      if (!value) continue; //avoid adding "undefined" values
+      // @ts-ignore
+      result[line].push(value);
+    }
+  }
+  return result;
+};
+
 const makeListItems = <T>(mainResults: T[]) =>
-  mainResults.map((item, itemid) => {
+  mainResults.map((item, index) => {
     const listItem: ListItem<T> = {
-      itemid,
+      itemid: Date.now() + index, // Date.now doesnt return unique values, we might wanna use an id generator here
       item,
     };
     return listItem;
@@ -106,29 +185,32 @@ const move = (
   return { newSourceItems, newDestinationItems };
 };
 
-const getRelativeTimeFormat = (current: Date, previous: Date) => {
+const getRelativeTimeFormat = (current: any, previous: any) => {
   const msPerMinute = 60 * 1000;
   const msPerHour = msPerMinute * 60;
   const msPerDay = msPerHour * 24;
   const msPerMonth = msPerDay * 30;
   const msPerYear = msPerDay * 365;
 
-  // @ts-ignore this type mismatch, does not cause errors,
-  // dates coerce to numbers if used in a math expressiion. weird,ik
-  const elapsed = current - previous;
+  // @ts-ignore this type mismatch, should not cause errors,
+  // type Date coerce to numbers if used in a math expressiion. weird,ik
+  const elapsed = Math.abs(current - previous);
 
-  if (elapsed < msPerMinute) {
-    return Math.round(elapsed / 1000) + " seconds ago";
-  } else if (elapsed < msPerHour) {
-    return Math.round(elapsed / msPerMinute) + " minutes ago";
+  if (elapsed < msPerHour) {
+    const time = Math.round(elapsed / msPerMinute);
+    return time + ` minute${time > 1 && "s"} ago`;
   } else if (elapsed < msPerDay) {
-    return Math.round(elapsed / msPerHour) + " hours ago";
+    const time = Math.round(elapsed / msPerHour);
+    return `${time === 1 ? "an hour" : `${time} hours`} ago`;
   } else if (elapsed < msPerMonth) {
-    return Math.round(elapsed / msPerDay) + " days ago";
+    const time = Math.round(elapsed / msPerDay);
+    return time + ` day${time > 1 && "s"} ago`;
   } else if (elapsed < msPerYear) {
-    return Math.round(elapsed / msPerMonth) + " months ago";
+    const time = Math.round(elapsed / msPerMonth);
+    return time + ` month${time > 1 && "s"} ago`;
   } else {
-    return Math.round(elapsed / msPerYear) + " years ago";
+    const time = Math.round(elapsed / msPerYear);
+    return time + ` year${time > 1 && "s"} ago`;
   }
 };
 

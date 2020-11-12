@@ -112,6 +112,14 @@ export type ListItem<T> = {
   itemid: number;
 };
 
+export type BookMark = {
+  id: number;
+  pinned: boolean;
+  items: SearchItem[];
+  title: string;
+  description: string;
+};
+
 export type IconType =
   | "Swap"
   | "Question"

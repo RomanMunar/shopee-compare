@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { color, font } from "../../shared/styles";
 
 export const Container = styled.div`
-  z-index: 111;
+  z-index: 11100;
   position: fixed;
   right: 30px;
   top: 50px;
@@ -12,7 +12,7 @@ export const Container = styled.div`
 export const StyledToast = styled.div`
   position: relative;
   margin-bottom: 5px;
-  width: 150px;
+  width: 250px;
   padding: 15px 20px;
   border-radius: 3px;
   color: #fff;

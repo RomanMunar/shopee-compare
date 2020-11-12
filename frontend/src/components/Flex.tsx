@@ -5,6 +5,7 @@ type Props = {
 };
 
 const Flex = styled.div<{
+  scrollType?: "snap";
   align?: "center" | "flex-start" | "flex-end";
   border?: string;
   dir?: "column" | "row" | "column-reverse" | "row-reverse";
@@ -18,6 +19,7 @@ const Flex = styled.div<{
   wrap?: "wrap" | "nowrap";
 }>`
   display: flex;
+  scroll-snap-type: ${(props) => props.scrollType === "snap" && "x mandatory"};
   border: ${(props) => props.border && props.border};
   align-items: ${(props) => props.align && props.align};
   margin: ${(props) => props.margin && props.margin};

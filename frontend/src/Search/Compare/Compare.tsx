@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { Layout, List, ListItem, SearchItem } from "../../interfaces";
 import { useUI } from "../../shared/contexts/useUIContext";
-import { move, reorder } from "../../shared/utils/utils";
+import { makeListItems, move, reorder } from "../../shared/utils/utils";
 import { CompareContainer, EmptyContainer, Title } from "./Compare.styles";
 import { CompareGuide } from "./CompareGuide";
+import { AddToBookmarks } from "./AddToBookmarks";
 import { CompareSummary } from "./CompareSummary";
 import { MainPanel } from "./MainPanel";
 import { SelectionPanel } from "./SelectionPanel";
@@ -20,11 +21,7 @@ export default ({
     React.SetStateAction<ListItem<SearchItem>[]>
   >;
 }) => {
-  const selectedItemsList: ListItem<SearchItem>[] = selectedItems.map(
-    (item, itemid) => {
-      return { itemid, item };
-    }
-  );
+  const selectedItemsList = makeListItems(selectedItems);
   const [mainItem, setMainItem] = useState(selectedItemsList.slice(0, 2));
   const [sideItems, setSideItems] = useState(selectedItemsList.slice(2));
   const [layout, setLayout] = useState<Layout>("double");
@@ -101,7 +98,11 @@ export default ({
     );
   }
 
-  const { displayCompareSummary, displayCompareGuide } = useUI();
+  const {
+    displayAddToBookmarks,
+    displayCompareSummary,
+    displayCompareGuide,
+  } = useUI();
 
   return (
     <>
@@ -110,15 +111,23 @@ export default ({
         {displayCompareSummary && (
           <CompareSummary selectedItems={selectedItems} />
         )}
+        {displayAddToBookmarks && (
+          <AddToBookmarks
+            setSelectedItems={setSelectedItems}
+            selectedItems={selectedItems}
+          />
+        )}
         <DragDropContext onDragEnd={onDragEnd}>
           <MainPanel
             list={lists[0]}
             setLayout={setLayout}
             layout={layout}
             setSelectedItems={setSelectedItems}
+            selectedItems={selectedItems}
             setInitialSelectedItems={setInitialSelectedItems}
           />
           <SelectionPanel
+            selectedItems={selectedItems}
             list={lists[1]}
             layout={layout}
             setSelectedItems={setSelectedItems}

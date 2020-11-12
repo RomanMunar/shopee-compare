@@ -19,6 +19,7 @@ const RItem = styled.div<{
   selected: boolean;
   big: boolean;
 }>`
+  position: relative;
   overflow: hidden;
   background-color: ${(props) =>
     props.isDragging ? color.backgroundLightPrimary : color.backgroundLightest};

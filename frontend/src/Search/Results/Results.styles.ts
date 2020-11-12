@@ -2,11 +2,21 @@ import styled from "styled-components";
 import { Layout } from "../../interfaces";
 import { color, font, mixin } from "../../shared/styles";
 
-export const Price = styled.span<{ on?: "results" | "compare" }>`
+export {
+  AddRowButton,
+  Badges,
+  GridContainer,
+  Items,
+  Price,
+  ResultSection,
+  Small,
+};
+
+const Price = styled.span<{ on?: "results" | "compare" }>`
   font-size: ${(props) => (props.on === "results" ? "1.1rem" : "1.6rem")};
   ${font.regular}
 `;
-export const Badges = styled.div<{ wide?: boolean }>`
+const Badges = styled.div<{ wide?: boolean }>`
   margin-bottom: 5px;
   align-self: end;
   display: grid;
@@ -16,7 +26,7 @@ export const Badges = styled.div<{ wide?: boolean }>`
   grid-area: test;
 `;
 
-export const GridContainer = styled.div<{ wide?: boolean; layout?: Layout }>`
+const GridContainer = styled.div<{ wide?: boolean; layout?: Layout }>`
   ${(props) =>
     props.wide === true
       ? props.layout !== "none"
@@ -38,12 +48,13 @@ export const GridContainer = styled.div<{ wide?: boolean; layout?: Layout }>`
   align-items: center;
 `;
 
-export const Small = styled.span<{ on?: "results" | "compare" }>`
+const Small = styled.span<{ on?: "results" | "compare" }>`
   font-size: ${(props) => (props.on === "compare" ? "0.9rem" : "0.4rem")};
   ${font.regular}
 `;
 
-export const ResultSection = styled.div<{ isDraggingOver: boolean }>`
+const ResultSection = styled.div<{ isDraggingOver: boolean }>`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -53,7 +64,7 @@ export const ResultSection = styled.div<{ isDraggingOver: boolean }>`
   ${mixin.scrollableY}
 `;
 
-export const Items = styled.div<{
+const Items = styled.div<{
   isDraggingOver: boolean;
   isSelectedItemsEmpty: boolean;
 }>`
@@ -68,4 +79,31 @@ export const Items = styled.div<{
   margin-top: 15px;
   border-radius: 15px;
   margin-bottom: 10px;
+`;
+
+const AddRowButton = styled.button<{
+  showAddRow: boolean;
+  right?: boolean;
+  remove?: boolean;
+}>`
+  padding: 1px 5px;
+  background: ${(props) =>
+    props.right ? (props.remove ? color.danger : color.success) : "#2f88f8"};
+  color: white;
+  position: absolute;
+  top: 10px;
+  ${(props) => (props.right ? "right: 5px;" : "left: 5px;")}
+  border-radius: 4px;
+  white-space: nowrap;
+  visibility: hidden;
+  opacity: 0;
+  transition: all ${(props) => (props.right ? "0.3s" : "0.1s")};
+  visibility: ${(props) => props.showAddRow && "visible"};
+  ${(props) =>
+    !props.showAddRow && !props.right && "transform:translateX(-80px)"};
+  transition-property: all;
+  opacity: ${(props) => props.showAddRow && 1};
+  &:hover {
+    transform: scale(1.1);
+  }
 `;

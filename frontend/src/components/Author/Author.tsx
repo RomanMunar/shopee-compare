@@ -1,7 +1,6 @@
 import React from "react";
-import { Rating } from "../../interfaces";
 import { Icon } from "../Icon";
-import { AuthorWrapper, AuthorImage } from "./Author.styles";
+import { AuthorImage, AuthorWrapper } from "./Author.styles";
 
 interface Props {
   name?: string;

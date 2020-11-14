@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { IconType } from "../interfaces";
+import { color } from "../shared/styles";
 
 interface Props {
   type: IconType;
@@ -46,7 +47,7 @@ const Search = ({ size }: { size: number }) => (
     <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M21 38C30.3888 38 38 30.3888 38 21C38 11.6112 30.3888 4 21 4C11.6112 4 4 11.6112 4 21C4 30.3888 11.6112 38 21 38Z'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -78,7 +79,7 @@ const Bookmark = ({ size }: { size: number }) => (
     <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M10 44C8.89543 44 8 43.1046 8 42V6C8 4.89543 8.89543 4 10 4H38C39.1046 4 40 4.89543 40 6V42C40 43.1046 39.1046 44 38 44H10Z'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -87,7 +88,7 @@ const Bookmark = ({ size }: { size: number }) => (
       fillRule='evenodd'
       clipRule='evenodd'
       d='M21 22V4H33V22L27 15.7273L21 22Z'
-      fill='#43CCF8'
+      fill={color.accent}
       stroke='#FFF'
       strokeWidth='4'
       strokeLinecap='butt'
@@ -113,7 +114,7 @@ const Help = ({ size }: { size: number }) => (
     <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M24 44C29.5228 44 34.5228 41.7614 38.1421 38.1421C41.7614 34.5228 44 29.5228 44 24C44 18.4772 41.7614 13.4772 38.1421 9.85786C34.5228 6.23858 29.5228 4 24 4C18.4772 4 13.4772 6.23858 9.85786 9.85786C6.23858 13.4772 4 18.4772 4 24C4 29.5228 6.23858 34.5228 9.85786 38.1421C13.4772 41.7614 18.4772 44 24 44Z'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -144,14 +145,14 @@ const Setting = ({ size }: { size: number }) => (
     <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M36.686 15.171C37.9364 16.9643 38.8163 19.0352 39.2147 21.2727H44V26.7273H39.2147C38.8163 28.9648 37.9364 31.0357 36.686 32.829L40.0706 36.2137L36.2137 40.0706L32.829 36.686C31.0357 37.9364 28.9648 38.8163 26.7273 39.2147V44H21.2727V39.2147C19.0352 38.8163 16.9643 37.9364 15.171 36.686L11.7863 40.0706L7.92939 36.2137L11.314 32.829C10.0636 31.0357 9.18372 28.9648 8.78533 26.7273H4V21.2727H8.78533C9.18372 19.0352 10.0636 16.9643 11.314 15.171L7.92939 11.7863L11.7863 7.92939L15.171 11.314C16.9643 10.0636 19.0352 9.18372 21.2727 8.78533V4H26.7273V8.78533C28.9648 9.18372 31.0357 10.0636 32.829 11.314L36.2137 7.92939L40.0706 11.7863L36.686 15.171Z'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
     />
     <path
       d='M24 29C26.7614 29 29 26.7614 29 24C29 21.2386 26.7614 19 24 19C21.2386 19 19 21.2386 19 24C19 26.7614 21.2386 29 24 29Z'
-      fill='#43CCF8'
+      fill={color.accent}
       stroke='#FFF'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -209,7 +210,7 @@ const Like = ({ size = 24 }: { size: number }) => (
     <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinecap='butt'
@@ -232,7 +233,7 @@ const ExpandLeft = ({ size = 24 }: { size: number }) => (
       width='40'
       height='40'
       rx='3'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -282,7 +283,7 @@ const ExpandRight = ({ size = 24 }: { size: number }) => (
       width='40'
       height='40'
       rx='3'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -348,7 +349,7 @@ const LowPrice = ({ size = 24 }: { size: number }) => (
       cx='11'
       cy='11'
       r='5'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinecap='butt'
@@ -358,7 +359,7 @@ const LowPrice = ({ size = 24 }: { size: number }) => (
       cx='37'
       cy='37'
       r='5'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinecap='butt'
@@ -428,7 +429,7 @@ const PriceLow = ({ size = 24 }: { size: number }) => (
   <svg height='16px' width='16px' viewBox='0 0 100 100'>
     <g>
       <path
-        fill='#2F88FF'
+        fill={color.primary}
         stroke='#333'
         strokeWidth='7'
         strokeLinejoin='round'
@@ -454,8 +455,8 @@ const Star = ({ size, percent = 100 }: { size: number; percent?: number }) => (
   >
     <defs>
       <linearGradient id='grad2'>
-        <stop offset='0%' stopColor='#2F88FF' />
-        <stop offset={percent + "%"} stopColor='#2F88FF' />
+        <stop offset='0%' stopColor={color.primary} />
+        <stop offset={percent + "%"} stopColor={color.primary} />
         <stop offset={percent + "%"} stopColor='#fff' />
         <stop offset='100%' stopColor='#fff' />
       </linearGradient>
@@ -522,7 +523,7 @@ const Pdf = ({ size = 24 }: { size: number }) => (
     <path d='M48 0H0V48H48V0Z' fill='white' fillOpacity='0.01' />
     <path
       d='M10 4H30L40 14V42C40 43.1046 39.1046 44 38 44H10C8.89543 44 8 43.1046 8 42V6C8 4.89543 8.89543 4 10 4Z'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -550,14 +551,14 @@ const Sort = ({ size }: { size: number }) => (
     <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M24 42L15 29H33L24 42Z'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
     />
     <path
       d='M24 6L15 19H33L24 6Z'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -579,7 +580,7 @@ const Grid = ({ size }: { size: number }) => (
       width='40'
       height='40'
       rx='3'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -589,7 +590,7 @@ const Grid = ({ size }: { size: number }) => (
       y='12'
       width='8'
       height='8'
-      fill='#43CCF8'
+      fill={color.accent}
       stroke='#FFF'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -599,7 +600,7 @@ const Grid = ({ size }: { size: number }) => (
       y='12'
       width='8'
       height='8'
-      fill='#43CCF8'
+      fill={color.accent}
       stroke='#FFF'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -609,7 +610,7 @@ const Grid = ({ size }: { size: number }) => (
       y='28'
       width='8'
       height='8'
-      fill='#43CCF8'
+      fill={color.accent}
       stroke='#FFF'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -619,7 +620,7 @@ const Grid = ({ size }: { size: number }) => (
       y='28'
       width='8'
       height='8'
-      fill='#43CCF8'
+      fill={color.accent}
       stroke='#FFF'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -637,7 +638,7 @@ const ArrowCircleLeft = ({ size }: { size: number }) => (
     <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -669,7 +670,7 @@ const ArrowCircleRight = ({ size }: { size: number }) => (
     <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -702,7 +703,7 @@ const ArrowLeftC = ({ size }: { size: number }) => (
     <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -728,7 +729,7 @@ const ArrowRightC = ({ size }: { size: number }) => (
     <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -754,7 +755,7 @@ const Speed = ({ size }: { size: number }) => (
     <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M30.2972 18.7786C30.2972 18.7786 27.0679 27.8808 25.5334 29.4699C23.9988 31.0591 21.4665 31.1033 19.8774 29.5687C18.2882 28.0341 18.244 25.5018 19.7786 23.9127C21.3132 22.3236 30.2972 18.7786 30.2972 18.7786Z'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -814,7 +815,7 @@ const Time = ({ size }: { size: number }) => (
     <rect width='48' height='48' fill='white' fillOpacity='0.01' />
     <path
       d='M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -839,7 +840,7 @@ const Calendar = ({ size }: { size: number }) => (
     <rect width={size} height={size} fill='white' fillOpacity='0.01' />
     <path
       d='M5 19H43V40C43 41.1046 42.1046 42 41 42H7C5.89543 42 5 41.1046 5 40V19Z'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -1009,8 +1010,8 @@ const DoubleLayout = ({ size = 24 }: { size?: number }) => (
 );
 
 const Product = ({ size }: { size: number }) => (
-  <svg width={size} height={size} viewBox='0 0 48 48' fill='#2F88FF'>
-    <rect width={size} height={size} fill='#2F88FF' fillOpacity='0.01' />
+  <svg width={size} height={size} viewBox='0 0 48 48' fill={color.primary}>
+    <rect width={size} height={size} fill={color.primary} fillOpacity='0.01' />
     <path
       d='M4 14L3.10557 12.2111C2.428 12.5499 2 13.2425 2 14H4ZM24 4L24.8944 2.21115C24.3314 1.92962 23.6686 1.92962 23.1056 2.21115L24 4ZM44 14H46C46 13.2425 45.572 12.5499 44.8944 12.2111L44 14ZM44 34L44.8944 35.7889C45.572 35.4501 46 34.7575 46 34H44ZM24 44L23.1056 45.7889C23.6686 46.0704 24.3314 46.0704 24.8944 45.7889L24 44ZM4 34H2C2 34.7575 2.428 35.4501 3.10557 35.7889L4 34ZM4.89443 15.7889L24.8944 5.78885L23.1056 2.21115L3.10557 12.2111L4.89443 15.7889ZM42 14V34H46V14H42ZM43.1056 32.2111L23.1056 42.2111L24.8944 45.7889L44.8944 35.7889L43.1056 32.2111ZM24.8944 42.2111L4.89443 32.2111L3.10557 35.7889L23.1056 45.7889L24.8944 42.2111ZM6 34V14H2V34H6ZM44.8944 12.2111L24.8944 2.21115L23.1056 5.78885L43.1056 15.7889L44.8944 12.2111Z'
       fill='#333'
@@ -1018,7 +1019,7 @@ const Product = ({ size }: { size: number }) => (
     <path
       d='M4 14L24 24'
       stroke='#333'
-      fill='#2F88FF'
+      fill={color.primary}
       strokeWidth='4'
       strokeLinecap='butt'
       strokeLinejoin='round'
@@ -1027,11 +1028,11 @@ const Product = ({ size }: { size: number }) => (
       fillRule='evenodd'
       clipRule='evenodd'
       d='M24 24V44V24Z'
-      fill='#2f88ff'
+      fill={color.primary}
     />
     <path
       d='M24 44V24'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinecap='butt'
@@ -1039,7 +1040,7 @@ const Product = ({ size }: { size: number }) => (
     />
     <path
       d='M44 14L24 24'
-      fill='#2F88FF'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinecap='butt'
@@ -1063,7 +1064,7 @@ const Price = ({ size }: { size: number }) => (
     <rect width={size} height={size} fill='white' fillOpacity='0.01' />
     <path
       d='M42.1691 29.2451L29.2631 42.1511C28.5879 42.8271 27.6716 43.2069 26.7161 43.2069C25.7606 43.2069 24.8444 42.8271 24.1691 42.1511L8 26V8H26L42.1691 24.1691C43.5649 25.5732 43.5649 27.841 42.1691 29.2451Z'
-      fill='#2f88ff'
+      fill={color.primary}
       stroke='#333'
       strokeWidth='4'
       strokeLinejoin='round'
@@ -1100,7 +1101,7 @@ const Sales = ({ size }: { size: number }) => (
         <rect
           stroke='#333'
           strokeWidth='4'
-          fill='#2f88ff'
+          fill={color.primary}
           fillRule='nonzero'
           strokeLinejoin='round'
           x='6'
@@ -1292,7 +1293,7 @@ const Clipboard = ({ size }: { size: number }) => (
       y='4'
       width='14'
       height='6'
-      fill='#2f88ff'
+      fill={color.primary}
       stroke='#333'
       stroke-width='4'
       stroke-linejoin='round'
@@ -1347,6 +1348,112 @@ const Swap = ({ size }: { size: number }) => (
   </svg>
 );
 
+const Save = ({ size }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <path
+      d='M6 9C6 7.34315 7.34315 6 9 6H34.2814L42 13.2065V39C42 40.6569 40.6569 42 39 42H9C7.34315 42 6 40.6569 6 39V9Z'
+      fill='#2f88ff'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <path
+      fill-rule='evenodd'
+      clip-rule='evenodd'
+      d='M24.0083 6L24 13.3846C24 13.7245 23.5523 14 23 14H15C14.4477 14 14 13.7245 14 13.3846L14 6'
+      fill='#43CCF8'
+    />
+    <path
+      d='M24.0083 6L24 13.3846C24 13.7245 23.5523 14 23 14H15C14.4477 14 14 13.7245 14 13.3846L14 6H24.0083Z'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M9 6H34.2814'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M14 26H34'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M14 34H24.0083'
+      stroke='#FFF'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+const Reset = ({ size }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <path
+      d='M39.5 24C39.5 25.1046 40.3954 26 41.5 26C42.6046 26 43.5 25.1046 43.5 24H39.5ZM16.6101 7.36573L17.3762 9.21319L16.6101 7.36573ZM13.4993 9.03158L12.3867 7.36962L13.4993 9.03158ZM6.86962 12.8867C6.25515 13.8046 6.50111 15.0468 7.41898 15.6612C8.33686 16.2757 9.57908 16.0298 10.1935 15.1119L6.86962 12.8867ZM7.5 24C7.5 22.8954 6.60457 22 5.5 22C4.39543 22 3.5 22.8954 3.5 24H7.5ZM30.3899 40.6343L29.6238 38.7868L30.3899 40.6343ZM33.5007 38.9684L34.6133 40.6304L33.5007 38.9684ZM40.1304 35.1133C40.7449 34.1954 40.4989 32.9532 39.581 32.3388C38.6631 31.7243 37.4209 31.9702 36.8065 32.8881L40.1304 35.1133ZM43.5 24C43.5 12.9543 34.5457 4 23.5 4V8C32.3366 8 39.5 15.1634 39.5 24H43.5ZM23.5 4C20.792 4 18.2049 4.53931 15.844 5.51826L17.3762 9.21319C19.2599 8.4321 21.327 8 23.5 8V4ZM15.844 5.51826C14.6257 6.02345 13.4686 6.6453 12.3867 7.36962L14.6119 10.6935C15.4778 10.1138 16.403 9.61673 17.3762 9.21319L15.844 5.51826ZM12.3867 7.36962C11.2963 8.0996 10.2819 8.93378 9.35786 9.85786L12.1863 12.6863C12.9267 11.9459 13.7391 11.2778 14.6119 10.6935L12.3867 7.36962ZM9.35786 9.85786C8.43378 10.7819 7.5996 11.7963 6.86962 12.8867L10.1935 15.1119C10.7778 14.2391 11.4459 13.4267 12.1863 12.6863L9.35786 9.85786ZM3.5 24C3.5 35.0457 12.4543 44 23.5 44V40C14.6634 40 7.5 32.8366 7.5 24H3.5ZM23.5 44C26.208 44 28.7951 43.4607 31.156 42.4817L29.6238 38.7868C27.7401 39.5679 25.673 40 23.5 40V44ZM31.156 42.4817C32.3743 41.9766 33.5314 41.3547 34.6133 40.6304L32.3881 37.3065C31.5222 37.8862 30.597 38.3833 29.6238 38.7868L31.156 42.4817ZM34.6133 40.6304C35.7037 39.9004 36.7181 39.0662 37.6421 38.1421L34.8137 35.3137C34.0733 36.0541 33.2609 36.7222 32.3881 37.3065L34.6133 40.6304ZM37.6421 38.1421C38.5662 37.2181 39.4004 36.2037 40.1304 35.1133L36.8065 32.8881C36.2222 33.7609 35.5541 34.5733 34.8137 35.3137L37.6421 38.1421Z'
+      fill='#333'
+    />
+    <path
+      d='M41.5 8V24'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M5.5 24L5.5 40'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+const Undo = ({ size }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox='0 0 48 48'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='48' height='48' fill='white' fill-opacity='0.01' />
+    <path
+      d='M11.2721 36.7279C14.5294 39.9853 19.0294 42 24 42C33.9411 42 42 33.9411 42 24C42 14.0589 33.9411 6 24 6C19.0294 6 14.5294 8.01472 11.2721 11.2721C9.61407 12.9301 6 17 6 17'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M6 9V17H14'
+      stroke='#333'
+      stroke-width='4'
+      stroke-linecap='butt'
+      stroke-linejoin='round'
+    />
+  </svg>
+);
+
 const Icons: Record<keyof any, React.ElementType> = {
   Search: Search,
   Bookmark: Bookmark,
@@ -1387,4 +1494,7 @@ const Icons: Record<keyof any, React.ElementType> = {
   Clipboard,
   Question,
   Swap,
+  Save,
+  Undo,
+  Reset,
 };

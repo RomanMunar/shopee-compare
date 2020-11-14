@@ -1,3 +1,13 @@
+// Metro Manila,South Luzon,North Luzon,Visayas,Mindanao,-2
+export type SellerLocation =
+  | "Metro Manila"
+  | "South Luzon"
+  | "North Luzon"
+  | "Visayas"
+  | "Mindanao"
+  | "-2";
+export type Sort = "relevance" | "price" | "latest" | "sales";
+
 export interface ShopeeResponse<T> {
   data: T;
   error: number;
@@ -159,4 +169,7 @@ export type IconType =
   | "Close"
   | "ChevronDown"
   | "Pdf"
-  | "Sort";
+  | "Sort"
+  | "Save"
+  | "Undo"
+  | "Reset";

@@ -1,9 +1,37 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { IconType } from "../../interfaces";
 import Flex from "../Flex";
 import { Icon } from "../Icon";
 import { ToolbarButton } from "../Toolbar";
-import { ContentDescription, DialogTitle } from "./Dialog.styles";
+import {
+  ContentDescription,
+  DontShowAgainCheckbox,
+  DialogTitle,
+} from "./Dialog.styles";
+import {
+  getDialogs,
+  Dialog,
+  setDialogs,
+} from "../../shared/utils/localStorage";
+
+export const DontShowThisAgain = ({ dialog }: { dialog: Dialog }) => {
+  const dialogs = getDialogs();
+  const [checked, setChecked] = useState(!dialogs.includes(dialog));
+  useEffect(() => {
+    if (checked) {
+      setDialogs(dialogs.filter((d) => d !== dialog));
+    } else {
+      setDialogs([...dialogs, dialog]);
+    }
+  }, [checked]);
+
+  return (
+    <DontShowAgainCheckbox onClick={() => setChecked(!checked)}>
+      <input type='checkbox' checked={checked} />
+      Don't show this again
+    </DontShowAgainCheckbox>
+  );
+};
 
 export const DialogHeader = ({
   handleClose,

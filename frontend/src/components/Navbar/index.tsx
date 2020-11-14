@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useUI } from "../../shared/contexts/useUIContext";
 import { NavIcon } from "../Icon";
 import {
-  NavLeft,
-  LogoLink,
-  StyledLogo,
   Bottom,
   Item,
-  ItemText,
+  ItemText, LogoLink, NavLeft,
+  StyledLogo
 } from "./Styles";
 
 export const Navbar = () => {

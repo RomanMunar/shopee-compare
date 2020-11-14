@@ -1,16 +1,16 @@
 import styled from "styled-components";
 import { font, color, shadows } from "../../shared/styles";
 
-export const TButton = styled.button`
+export const TButton = styled.button<{ noTransform?: boolean }>`
   ${font.bold}
-  color:${color.textLink};
+  color:${color.backgroundDarkPrimary};
   display: flex;
   justify-content: center;
   align-items: center;
   transition: all 0.2s;
   margin-top: 4px;
   &:hover {
-    transform: scale(1.1);
+    ${(props) => !props.noTransform && "transform: scale(1.1)"};
   }
   &:active {
     transform: scale(0.9);

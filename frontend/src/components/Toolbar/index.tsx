@@ -12,6 +12,7 @@ type Props = {
   tooltipPlace: "top" | "bottom" | "left" | "right";
   size?: number;
   children?: ReactNode;
+  noTransform?: boolean;
 };
 
 export const ToolbarButton = ({
@@ -21,10 +22,16 @@ export const ToolbarButton = ({
   onClick,
   children,
   size,
+  noTransform,
 }: Props) => {
   return (
     <>
-      <Button onClick={onClick} data-for={name} data-tip>
+      <Button
+        noTransform={noTransform}
+        onClick={onClick}
+        data-for={name}
+        data-tip
+      >
         {icon ? <Icon type={icon} size={size ? size : 16} /> : children}
       </Button>
       <ReactTooltip

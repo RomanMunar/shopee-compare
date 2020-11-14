@@ -18,33 +18,39 @@ import { BookMark } from "../../interfaces";
 import {
   updateBookmark,
   removeBookmark,
-  arrayToNItems,
-  getRelativeTimeFormat,
-  timeStamptoDate,
-} from "../../shared/utils/utils";
+} from "../../shared/utils/localStorage";
+import { arrayToNItems, timeStamptoDate } from "../../shared/utils/utils";
 import { ResultItemImage } from "../../Search/Results/ResultItemImage";
 import Flex from "../../components/Flex";
 import toast from "../../shared/hooks/toast";
+import { getSettings } from "../../shared/utils/localStorage";
+import { color } from "../../shared/styles";
 
 interface Props {
   bookmark: BookMark;
+  setSortedBookMarks: React.Dispatch<React.SetStateAction<BookMark[]>>;
+  pinned: boolean;
 }
 
-const BookmarkItem = ({ bookmark }: Props) => {
+const BookmarkItem = ({ pinned, bookmark, setSortedBookMarks }: Props) => {
   const newItems = arrayToNItems(bookmark.items, 3);
-  const [showDate, setShowDate] = useState(false);
-  const [pinned, setPinned] = useState(bookmark.pinned); //Optimistic ui update
+  const autoExpand = getSettings().action.includes("expandBookmarks");
+  const [showItems, setShowItems] = useState(!autoExpand || false);
   const [removed, setRemoved] = useState(false); //Optimistic ui update
-  const [toolbarShown, setToolbarShown] = useState(false); //Optimistic ui update
-  const [ShownRemoveWarning, setShownRemoveWarning] = useState(false); //Optimistic ui update
+  const [toolbarShown, setToolbarShown] = useState(false);
+  const [ShownRemoveWarning, setShownRemoveWarning] = useState(false);
 
   if (removed) {
     return <div />;
   }
+
   const onPinClick = () => {
-    if (pinned || bookmark.pinned) {
+    if (pinned) {
       updateBookmark(bookmark.id, { ...bookmark, pinned: false });
-      setPinned(false);
+      setSortedBookMarks((prev) => [
+        ...prev.filter((p) => p.id !== bookmark.id),
+        { ...bookmark, pinned: false },
+      ]);
       toast.show({
         type: "success",
         title: "Saved",
@@ -52,7 +58,11 @@ const BookmarkItem = ({ bookmark }: Props) => {
       });
       return;
     }
-    setPinned(true);
+    // Pushes the current bookmark to the top and as pinned
+    setSortedBookMarks((prev) => [
+      { ...bookmark, pinned: true },
+      ...prev.filter((p) => p.id !== bookmark.id),
+    ]);
     updateBookmark(bookmark.id, { ...bookmark, pinned: true });
     toast.show({
       type: "success",
@@ -90,6 +100,8 @@ const BookmarkItem = ({ bookmark }: Props) => {
 
   return (
     <Timeline
+      length={newItems.length * 50}
+      showItems={showItems}
       onMouseEnter={() => setToolbarShown(true)}
       onMouseLeave={() => setToolbarShown(false)}
     >
@@ -97,10 +109,21 @@ const BookmarkItem = ({ bookmark }: Props) => {
         showAddRow={toolbarShown}
         style={{
           top: 0,
+          display: "flex",
           right: "90px",
           position: "absolute",
         }}
       >
+        <Toolbar withoutShadow withoutMargin place='default'>
+          <ToolbarButton
+            noTransform
+            onClick={() => ""}
+            tooltipPlace='bottom'
+            name='Compare Items'
+          >
+            Compare Now +
+          </ToolbarButton>
+        </Toolbar>
         <Toolbar withoutShadow withoutMargin place='default'>
           <ToolbarButton
             onClick={onPinClick}
@@ -118,24 +141,30 @@ const BookmarkItem = ({ bookmark }: Props) => {
           </ToolbarButton>
         </Toolbar>
       </AnimatedToolbar>
-      <TimeLineWrapper
-        onMouseEnter={() => setShowDate(true)}
-        onMouseLeave={() => setShowDate(false)}
-      >
-        <Circle pinned={pinned} />
-        <Line pinned={pinned} />
+      <TimeLineWrapper showItems={showItems}>
+        <Circle
+          onClick={() => setShowItems(!showItems)}
+          showItems={showItems}
+          pinned={pinned}
+        />
+        <Line
+          onClick={() => setShowItems(!showItems)}
+          showItems={showItems}
+          pinned={pinned}
+        />
       </TimeLineWrapper>
       <Content>
-        <div>
-          <BookmarkTitle>{bookmark.title}</BookmarkTitle> —{" "}
-          {bookmark.description}
+        <div style={{ display: "flex" }}>
           <div>
-            {showDate
-              ? timeStamptoDate(bookmark.id)
-              : getRelativeTimeFormat(bookmark.id, Date.now())}
+            <BookmarkTitle>{bookmark.title}</BookmarkTitle>
+            <span>{timeStamptoDate(bookmark.id)}</span>
+          </div>
+          —{" "}
+          <div style={{ marginRight: "20px", width: "50%" }}>
+            {bookmark.description}
           </div>
         </div>
-        <Items>
+        <Items showItems={showItems}>
           {newItems.map((n) => (
             <Flex margin='0 0 10px'>
               {n.map((i) => (
@@ -158,7 +187,7 @@ const Pin = ({ size }: { size: number }) => (
     width={size}
     height={size}
     viewBox='0 0 20 20'
-    fill='#2f88ff'
+    fill={color.primary}
   >
     <path
       strokeWidth='2'

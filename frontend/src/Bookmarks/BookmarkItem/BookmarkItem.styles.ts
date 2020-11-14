@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { font } from "../../shared/styles";
+import { color, font } from "../../shared/styles";
 
 export {
   Timeline,
@@ -10,7 +10,6 @@ export {
   BookmarkTitle,
   Items,
   Item,
-  ItemImage,
   ItemTitle,
   AnimatedToolbar,
 };
@@ -24,11 +23,11 @@ const AnimatedToolbar = styled.div<{ showAddRow: boolean }>`
   transition-property: all;
   opacity: ${(props) => props.showAddRow && 1};
   z-index: 300;
-  &:hover {
-    transform: scale(1.1);
-  }
 `;
-const Timeline = styled.div`
+const Timeline = styled.div<{ showItems: boolean; length: number }>`
+  transition: all 0.2s;
+  height: ${(props) => props.length + 90 + "px"};
+  height: ${(props) => props.showItems && "60px"};
   position: relative;
   margin: 20px 0 15px;
   display: flex;
@@ -36,25 +35,45 @@ const Timeline = styled.div`
     margin: 0 0 15px;
   }
 `;
-const TimeLineWrapper = styled.div`
+const TimeLineWrapper = styled.div<{ showItems: boolean }>`
+  transition: all 0.2s;
+  height: ${(props) => props.showItems && "60px"};
   width: 20px;
   position: relative;
   margin-right: 20px;
 `;
-const Circle = styled.div<{ pinned?: boolean }>`
+const Circle = styled.div<{ showItems: boolean; pinned?: boolean }>`
+  cursor: pointer;
   width: 20px;
   height: 20px;
-  background: ${(props) => (props.pinned ? "#1cead1" : "#2f88ff")};
-  border: 3px solid ${(props) => (props.pinned ? "#cbf9f2" : "#bec8e6;")};
+  transition: all 0.2s;
+  background: ${(props) =>
+    props.pinned
+      ? props.showItems
+        ? "#cbf9f2"
+        : "#1cead1"
+      : props.showItems
+      ? "#bec8e6"
+      : color.primary};
+  border: 3px solid
+    ${(props) =>
+      props.pinned
+        ? props.showItems
+          ? "#1cead1"
+          : "#cbf9f2"
+        : props.showItems
+        ? color.primary
+        : "#bec8e6"};
   border-radius: 50%;
   margin: 5px 0;
 `;
-const Line = styled.div<{ pinned?: boolean }>`
+const Line = styled.div<{ pinned?: boolean; showItems: boolean }>`
+  cursor: pointer;
   width: 6px;
   background: ${(props) =>
     props.pinned
-      ? "linear-gradient(45deg, #2370e21c, #2f88ffab, #20ead1cc)"
-      : "linear-gradient(45deg, #2370e21c, #2f88ffab, #2774dacc)"};
+      ? `linear-gradient(45deg, #2370e21c, ${color.primary}ab, #20ead1cc)`
+      : `linear-gradient(45deg, #2370e21c, ${color.primary}ab, #2774dacc)`};
   border-radius: 5px;
   position: absolute;
   height: 90%;
@@ -65,25 +84,25 @@ const Content = styled.div`
 `;
 const BookmarkTitle = styled.span`
   ${font.medium}
+  display:block;
 `;
-const Items = styled.div`
+const Items = styled.div<{ showItems: boolean }>`
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.1s;
+  visibility: ${(props) => props.showItems && "hidden"};
+  ${(props) => props.showItems && "transform:translateY(-80px)"};
+  transition-property: all;
+  opacity: ${(props) => props.showItems && 0};
   margin-top: 15px;
   display: flex;
   flex-direction: column;
-  width: 60%;
 `;
 const Item = styled.div`
   padding-right: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
-`;
-const ItemImage = styled.div`
-  height: 65px;
-  width: 50%;
-  margin-inline-end: 10px;
-  background: linear-gradient(45deg, #8033b9, #ea0bd9, #ffe000, #ffa04e);
-  border-radius: 15px;
 `;
 const ItemTitle = styled.div`
   margin-left: 10px;

@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import Container from "../components/Container";
 import Flex from "../components/Flex";
-import { Icon } from "../components/Icon";
-import Select from "../components/Select";
-import { ToolbarButton } from "../components/Toolbar";
+import { Select } from "../components/Select";
 import { Toolbar } from "../components/Toolbar/Styles";
-import { getBookmarks, orderBy } from "../shared/utils/utils";
+import { getBookmarks } from "../shared/utils/localStorage";
 import BookmarkItem from "./BookmarkItem/BookmarkItem";
 import { ContainedRoute, Title } from "./Bookmarks.styles";
 const Bookmarks = () => {
   const rawBookmarks = getBookmarks();
-  const sortedBookMarks = rawBookmarks
-    .filter((r) => r.pinned)
-    .sort((a, b) => b.id - a.id)
-    .concat(rawBookmarks.filter((r) => !r.pinned).sort((a, b) => b.id - a.id));
-  const [showDate, setShowDate] = useState(false);
-  const [showDateDropdown, setShowDateDropdown] = useState(false);
+  const [sortedBookMarks, setSortedBookMarks] = useState(
+    rawBookmarks
+      .filter((r) => r.pinned)
+      .sort((a, b) => b.id - a.id)
+      .concat(rawBookmarks.filter((r) => !r.pinned).sort((a, b) => b.id - a.id))
+  );
+  const [dateOption, setDateOption] = useState<
+    ["Most Recent" | "This Week" | "This Month" | "This Year"]
+  >();
 
   return (
     <Container>
@@ -24,26 +25,10 @@ const Bookmarks = () => {
           <Title>Bookmarks</Title>
           <Toolbar withoutMargin place='default'>
             <Select
-              DropdownOpen={showDateDropdown}
-              setDropdownOpen={setShowDateDropdown}
-              title='Date'
+              selectedOption={dateOption}
+              setSelectedOption={setDateOption}
               options={["Most Recent", "This Week", "This Month", "This Year"]}
             />
-            <ToolbarButton
-              onClick={() => ""}
-              tooltipPlace='bottom'
-              name='Price'
-            >
-              ₱<Icon type='Sort' size={16} />
-            </ToolbarButton>
-            <ToolbarButton
-              onClick={() => ""}
-              tooltipPlace='bottom'
-              name='Sales/mon'
-            >
-              <Icon type='Fire' size={17} />
-              <Icon type='Sort' size={16} />
-            </ToolbarButton>
           </Toolbar>
         </Flex>
         <div
@@ -55,7 +40,11 @@ const Bookmarks = () => {
           }}
         >
           {sortedBookMarks.map((bookmark) => (
-            <BookmarkItem bookmark={bookmark} />
+            <BookmarkItem
+              pinned={bookmark.pinned}
+              setSortedBookMarks={setSortedBookMarks}
+              bookmark={bookmark}
+            />
           ))}
         </div>
       </ContainedRoute>

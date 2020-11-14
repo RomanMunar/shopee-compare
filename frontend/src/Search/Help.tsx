@@ -1,26 +1,30 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  DialogBody,
-  DialogWrapper,
-  Dialog,
-  DialogSection,
-  DialogHeading,
-  DialogContent,
-  DialogComponent,
-  SubText,
+  DialogHeader,
+  DontShowThisAgain,
+  IconDescription,
+} from "../components/Dialog";
+import {
   ContentDescription,
+  Dialog,
+  DialogBody,
+  DialogComponent,
+  DialogContent,
+  DialogHeading,
+  DialogSection,
+  DialogWrapper,
+  SubText,
 } from "../components/Dialog/Dialog.styles";
-import { DialogHeader, IconDescription } from "../components/Dialog";
 import Flex from "../components/Flex";
 import GridStats from "../components/GridStats";
 import { Icon } from "../components/Icon";
 import { ToolbarButton } from "../components/Toolbar";
 import { Toolbar } from "../components/Toolbar/Styles";
 import { useUI } from "../shared/contexts/useUIContext";
+import { useKeyPress } from "../shared/hooks/useKeyPressed";
 import useOnOutsideClick from "../shared/hooks/useOnOutsideClick";
 import { ResultItemTitle, RItem } from "./Results/ResultItem/ResultItem.stlyes";
 import { ResultItemImage } from "./Results/ResultItemImage";
-import { useKeyPress } from "../shared/hooks/useKeyPressed";
 
 const Help = () => {
   const [selected, setSelected] = useState(false);
@@ -30,14 +34,16 @@ const Help = () => {
   useEffect(() => {
     if (keyPressed) {
       handleClose();
-    };
-  }, [keyPressed])
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [keyPressed]);
   useOnOutsideClick($helpRef, () => {
     closeOverlay();
     closeHelp();
   });
   useEffect(() => {
     openOverlay();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleClose = () => {
     closeOverlay();
@@ -109,6 +115,7 @@ const Help = () => {
     <DialogWrapper guide={"search"} ref={$helpRef}>
       <Dialog>
         <DialogHeader handleClose={handleClose}>OnBoarding Guide</DialogHeader>
+        <DontShowThisAgain dialog='showHelpGuide' />
         <DialogBody>
           <DialogSection dir='column'>
             <DialogHeading>How to use</DialogHeading>

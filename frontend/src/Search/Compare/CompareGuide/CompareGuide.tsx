@@ -1,20 +1,18 @@
 import React, { useEffect, useRef } from "react";
-import Flex from "../../../components/Flex";
-import { ToolbarButton } from "../../../components/Toolbar";
-import { useUI } from "../../../shared/contexts/useUIContext";
-import useOnOutsideClick from "../../../shared/hooks/useOnOutsideClick";
+import { DialogHeader, DontShowThisAgain } from "../../../components/Dialog";
 import {
   Dialog,
   DialogBody,
   DialogContent,
-  DialogSection,
   DialogHeading,
-  DialogTitle,
+  DialogSection,
   SubText,
 } from "../../../components/Dialog/Dialog.styles";
-import { DialogWrapper } from "../CompareSummary/CompareSummary.styles";
-import { DialogHeader } from "../../../components/Dialog";
+import Flex from "../../../components/Flex";
+import { useUI } from "../../../shared/contexts/useUIContext";
 import { useKeyPress } from "../../../shared/hooks/useKeyPressed";
+import useOnOutsideClick from "../../../shared/hooks/useOnOutsideClick";
+import { DialogWrapper } from "../CompareSummary/CompareSummary.styles";
 
 const CompareGuide = () => {
   const { closeCompareGuide, openOverlay, closeOverlay } = useUI();
@@ -24,13 +22,16 @@ const CompareGuide = () => {
     if (keyPressed) {
       handleClose();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keyPressed]);
   useOnOutsideClick($compareGuideRef, () => {
     handleClose();
   });
   useEffect(() => {
     openOverlay();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const handleClose = () => {
     closeOverlay();
     closeCompareGuide();
@@ -39,6 +40,7 @@ const CompareGuide = () => {
     <DialogWrapper guide='compare' ref={$compareGuideRef}>
       <Dialog>
         <DialogHeader handleClose={handleClose}>Compare Guide</DialogHeader>
+        <DontShowThisAgain dialog='showHelpGuide' />
         <DialogBody>
           <DialogSection>
             <DialogHeading>How to use</DialogHeading>
@@ -46,7 +48,10 @@ const CompareGuide = () => {
               Drag an item from the Selected Items Panel to the Compare Panel to
               replace an item in the compare panel. Your goal here is to narrow
               down your options and pick the best item there is. . Gambate
-              Kudasai 👋👋
+              Kudasai{" "}
+              <span aria-label='hand wave' role='img'>
+                👋👋
+              </span>
             </DialogContent>
           </DialogSection>
           <DialogSection>
@@ -58,23 +63,42 @@ const CompareGuide = () => {
                 </SubText>
               </div>
               <DialogContent>
-                <DialogHeading>Main</DialogHeading>
-                <DialogContent>
-                  This layout only previews a single item, drag an item form
-                  selected items panel to replace the currently previewed item.
-                </DialogContent>
-                <DialogHeading>Double</DialogHeading>
-                <DialogContent>
-                  This is the default layout, but is configurable trough the
-                  settings. Previews two items, first item can;t be replaced,
-                  but is draggable back to the selected items panel.
-                </DialogContent>
-                <DialogHeading>No Layout</DialogHeading>
-                <DialogContent>
-                  This layout previews all selected items. Useful if you want to
-                  quickly browse all items to remove obviously inferior items
-                  before proceeding to compare them side by side.
-                </DialogContent>
+                <div>
+                  <DialogHeading
+                    style={{ display: "inline", marginRight: "5px" }}
+                  >
+                    Main
+                  </DialogHeading>
+                  <span>
+                    This layout only previews a single item, drag an item form
+                    selected items panel to replace the currently previewed
+                    item.
+                  </span>
+                </div>
+                <div>
+                  <DialogHeading
+                    style={{ display: "inline", marginRight: "5px" }}
+                  >
+                    Double
+                  </DialogHeading>
+                  <span>
+                    This is the default layout, but is configurable trough the
+                    settings. Previews two items, first item can;t be replaced,
+                    but is draggable back to the selected items panel.
+                  </span>
+                </div>
+                <div>
+                  <DialogHeading
+                    style={{ display: "inline", marginRight: "5px" }}
+                  >
+                    No Layout
+                  </DialogHeading>
+                  <span>
+                    This layout previews all selected items. Useful if you want
+                    to quickly browse all items to remove obviously inferior
+                    items before proceeding to compare them side by side.
+                  </span>
+                </div>
               </DialogContent>
             </Flex>
           </DialogSection>

@@ -6,27 +6,40 @@ import {
   SelectButton,
   SelectBody,
   SelectItem,
-} from "./Styles";
+} from "./Select.styles";
 interface Props {
   title?: string;
-  DropdownOpen: boolean;
-  setDropdownOpen: React.Dispatch<React.SetStateAction<boolean>>;
   options: string[];
+  selectedOption?: any;
+  setSelectedOption?: React.Dispatch<React.SetStateAction<any>>;
+  lead?: string;
 }
 export default ({
   title,
-  DropdownOpen,
-  setDropdownOpen,
   options,
+  selectedOption,
+  setSelectedOption,
+  lead,
 }: Props): ReactElement => {
+  const [DropdownOpen, setDropdownOpen] = useState(false);
   const $sortRef = useRef<HTMLDivElement>(null);
-  useOnOutsideClick($sortRef, () => setDropdownOpen(false));
-  const notitle = title !== undefined;
+  const $buttonRef = useRef<HTMLButtonElement>(null);
+  useOnOutsideClick($sortRef, (e) => {
+    if (!$buttonRef.current || $buttonRef.current.contains(e.target)) {
+      return;
+    }
+    setDropdownOpen(false);
+  });
+  const notitle = title === undefined;
   const [newTitle, setNewTitle] = useState(notitle ? options[0] : title);
   return (
     <SelectContainer>
-      <SelectButton onClick={() => setDropdownOpen(true)}>
-        {newTitle}
+      <SelectButton
+        ref={$buttonRef}
+        onClick={() => setDropdownOpen(!DropdownOpen)}
+      >
+        {lead ? lead : ""}
+        {selectedOption ? selectedOption : newTitle}
         <Icon type='ChevronDown' size={24} />
       </SelectButton>
       {DropdownOpen && (
@@ -37,11 +50,13 @@ export default ({
             ) : (
               <SelectItem
                 onClick={() => {
-                  setNewTitle(option);
+                  setSelectedOption
+                    ? setSelectedOption(option)
+                    : setNewTitle(option);
                   setDropdownOpen(false);
                 }}
               >
-                {option}
+                {lead ? lead + option : option}
               </SelectItem>
             )
           )}

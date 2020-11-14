@@ -4,9 +4,12 @@ import { color, font } from "../../shared/styles";
 export const SelectContainer = styled.div`
   position: relative;
   display: inline-block;
+
+  text-transform: capitalize;
 `;
 
 export const SelectButton = styled.button`
+  text-transform: capitalize;
   display: inline-flex;
   align-items: center;
   border: 0px;

@@ -17,6 +17,7 @@ const Flex = styled.div<{
   padding?: string;
   shrink?: number;
   wrap?: "wrap" | "nowrap";
+  width?: number | string;
 }>`
   display: flex;
   scroll-snap-type: ${(props) => props.scrollType === "snap" && "x mandatory"};

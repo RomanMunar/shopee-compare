@@ -63,6 +63,12 @@ export default createGlobalStyle`
     color: #42413d;
   }
 
+  [type="checkbox"] {
+    width:15px;
+    height:15px;
+    margin-right:5px;
+  }
+  
   [role="button"], button, input, select, textarea {
     outline: none;
     &:focus {
@@ -71,9 +77,6 @@ export default createGlobalStyle`
     &:disabled {
       opacity: 1;
     }
-  }
-  [role="button"], button, input, textarea {
-    appearance: none;
   }
   select:-moz-focusring {
     color: transparent;

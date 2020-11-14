@@ -3,12 +3,14 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { Layout, List, ListItem, SearchItem } from "../../interfaces";
 import { useUI } from "../../shared/contexts/useUIContext";
 import { makeListItems, move, reorder } from "../../shared/utils/utils";
+import { getDialogs, getSettings } from "../../shared/utils/localStorage";
 import { CompareContainer, EmptyContainer, Title } from "./Compare.styles";
 import { CompareGuide } from "./CompareGuide";
 import { AddToBookmarks } from "./AddToBookmarks";
 import { CompareSummary } from "./CompareSummary";
 import { MainPanel } from "./MainPanel";
 import { SelectionPanel } from "./SelectionPanel";
+import { useSearchParams } from "react-router-dom";
 
 export default ({
   selectedItems,
@@ -21,10 +23,16 @@ export default ({
     React.SetStateAction<ListItem<SearchItem>[]>
   >;
 }) => {
+  const dialogs = getDialogs();
+  const [params] = useSearchParams();
+  const items = params.get("items");
+  if (items) {
+    // setSelectedItems();
+  }
   const selectedItemsList = makeListItems(selectedItems);
   const [mainItem, setMainItem] = useState(selectedItemsList.slice(0, 2));
   const [sideItems, setSideItems] = useState(selectedItemsList.slice(2));
-  const [layout, setLayout] = useState<Layout>("double");
+  const [layout, setLayout] = useState<Layout>(getSettings().preference.layout);
   const lists: List[] = [
     {
       setItems: setMainItem,
@@ -53,9 +61,6 @@ export default ({
         setSideItems([]);
         break;
     }
-    // We do not want for selectedItemsList to update here,
-    // we are mutating with splice, it'll infinitely recurse
-    // For more info: https://doesitmutate.xyz/splice/
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layout, selectedItems]);
 
@@ -107,7 +112,9 @@ export default ({
   return (
     <>
       <CompareContainer>
-        {displayCompareGuide && <CompareGuide />}
+        {dialogs.includes("showCompareGuide") && displayCompareGuide && (
+          <CompareGuide />
+        )}
         {displayCompareSummary && (
           <CompareSummary selectedItems={selectedItems} />
         )}

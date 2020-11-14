@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import pubsub from "sweet-pubsub";
-import { Icon } from "../../components/Icon";
+import { CloseIcon, Container, Message, StyledToast, Title } from "./Styles";
 
-import { Container, StyledToast, CloseIcon, Title, Message } from "./Styles";
 
 const Toast = () => {
   const [toasts, setToasts] = useState([]);

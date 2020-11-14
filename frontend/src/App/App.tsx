@@ -11,7 +11,7 @@ function App() {
       <NormalizedStyles />
       <BaseStyles />
       <Routes />
-      <Toast />;
+      <Toast />
     </Fragment>
   );
 }

@@ -1,9 +1,10 @@
 import { Layout } from "../../../interfaces";
 import styled from "styled-components";
-import { mixin, shadows } from "../../../shared/styles";
+import { color, mixin, shadows } from "../../../shared/styles";
 
 export {
   ArrowContainer,
+  SubImages,
   IndexCircle,
   Indexes,
   CompareItemFixed,
@@ -28,37 +29,37 @@ const IndexCircle = styled.div<{ active: boolean }>`
   margin-right: 2px;
 `;
 
-const Indexes = styled.div`
+const Indexes = styled.div<{ on?: "ratings" }>`
   background: linear-gradient(rgba(255, 255, 255, 0), rgba(37, 37, 38, 0.27));
-  width: 100%;
-  position: absolute;
+  ${(props) => props.on === "ratings" && "background: transparent"};
+  overflow: auto;
   bottom: 0;
-  height: 15px;
+  height: 60px;
   ${mixin.clickable}
   z-index: 2;
-  margin-top: -20px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  padding-bottom: 5px;
+  padding: 5px;
 `;
 const CompareItemFixed = styled.div<{ layout?: Layout }>`
   position: relative;
-  background-color: #d2d5dd;
+  background: linear-gradient(180deg, #3b3c3ecc, #303131);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-right: 100%;
-  padding-bottom: ${(props) => (props.layout === "main" ? "45%" : "40%")};
-  ${shadows.shadowLg}
-  margin-bottom: 0.3rem;
+  padding-bottom: 40%;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 `;
 const CompareItemImage = styled.img<{
   active: boolean;
   on?: "selection" | "ratings" | "compare" | "main";
   layout?: Layout;
 }>`
-  ${(props) => (props.on === "main" ? "width: 65%;" : "width: 60%;")}
+  width: ${(props) => (props.on === "main" ? " 75%" : " 60%")};
+  padding: 5px;
   height: 100%;
   position: absolute;
   left: 0;
@@ -66,4 +67,12 @@ const CompareItemImage = styled.img<{
   margin-left: auto;
   margin-right: auto;
   bottom: 0;
+`;
+
+const SubImages = styled.img<{ active: boolean }>`
+  border: 2px solid ${(props) => (props.active ? color.primary : "transparent")};
+  max-width: 80px;
+  max-height: 80px;
+  height: 100%;
+  margin-right: 5px;
 `;

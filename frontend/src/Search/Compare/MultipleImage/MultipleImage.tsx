@@ -7,6 +7,7 @@ import {
   Indexes,
   CompareItemFixed,
   CompareItemImage,
+  SubImages,
 } from "./MultipleImage.styles";
 
 interface Props {
@@ -16,54 +17,82 @@ interface Props {
 }
 
 export const MultipleImage = ({ layout, srcs, on }: Props) => {
-  const [currentIndex, setcurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
-    <CompareItemFixed layout={layout}>
-      <div>
-        <CompareItemImage
-          layout={layout}
-          on={on}
-          active
-          src={"https://cf.shopee.ph/file/" + srcs[currentIndex]}
-        />
-        {on !== "selection" && (
-          <ArrowContainer>
-            <ToolbarButton
-              tooltipPlace='bottom'
-              icon='ArrowLeftC'
-              name='Prev'
-              size={28}
-              onClick={() =>
-                currentIndex !== 0
-                  ? setcurrentIndex(currentIndex - 1)
-                  : setcurrentIndex(srcs.length - 1)
-              }
-            />
-            <ToolbarButton
-              tooltipPlace='bottom'
-              name='Next'
-              icon='ArrowRightC'
-              size={28}
-              onClick={() =>
-                srcs.length > currentIndex + 1
-                  ? setcurrentIndex(currentIndex + 1)
-                  : setcurrentIndex(0)
-              }
-            />
-          </ArrowContainer>
-        )}
+    <>
+      <div style={{ width: "100%" }}>
+        <CompareItemFixed layout={layout}>
+          <div>
+            {on !== "ratings" && (
+              <CompareItemImage
+                layout={layout}
+                on={on}
+                active
+                // src={"https://cf.shopee.ph/file/" + srcs[currentIndex]}
+                src={"https://cf.shopee.ph/file/" + srcs[currentIndex]}
+              />
+            )}
+            {on !== "selection" && (
+              <ArrowContainer>
+                <ToolbarButton
+                  tooltipPlace='bottom'
+                  icon='ArrowLeftC'
+                  name='Prev'
+                  size={28}
+                  onClick={() =>
+                    currentIndex !== 0
+                      ? setCurrentIndex(currentIndex - 1)
+                      : setCurrentIndex(srcs.length - 1)
+                  }
+                />
+                <ToolbarButton
+                  tooltipPlace='bottom'
+                  name='Next'
+                  icon='ArrowRightC'
+                  size={28}
+                  onClick={() =>
+                    srcs.length > currentIndex + 1
+                      ? setCurrentIndex(currentIndex + 1)
+                      : setCurrentIndex(0)
+                  }
+                />
+              </ArrowContainer>
+            )}
+          </div>
+        </CompareItemFixed>
       </div>
-      <Indexes>
-        {srcs.map((src, index) => (
-          <IndexCircle
-            key={`index-circle-${index}-of-${src}`}
-            onClick={() => setcurrentIndex(index)}
-            active={currentIndex === index}
-          />
-        ))}
-      </Indexes>
-    </CompareItemFixed>
+      {on === "main" && (
+        <div
+          style={{
+            position: "relative",
+            minHeight: "70px",
+            width: "100%",
+            overflowX: "scroll",
+            background: "#131417de",
+          }}
+        >
+          {" "}
+          <div
+            style={{
+              position: "absolute",
+              bottom: 0,
+            }}
+          >
+            <Indexes>
+              {srcs.map((src, index) => (
+                <SubImages
+                  onClick={() => setCurrentIndex(index)}
+                  active={currentIndex === index}
+                  key={`index-${index}-of-${src}`}
+                  src={"https://cf.shopee.ph/file/" + src}
+                />
+              ))}
+            </Indexes>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

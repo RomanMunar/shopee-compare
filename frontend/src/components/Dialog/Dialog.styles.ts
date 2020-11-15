@@ -12,13 +12,7 @@ export {
   DialogTitle,
   DialogWrapper,
   SubText,
-  DontShowAgainCheckbox,
 };
-const DontShowAgainCheckbox = styled.div`
-  position: absolute;
-  bottom: 30px;
-  right: 50px;
-`;
 
 const DialogWrapper = styled.div<{ guide: "search" | "compare" }>`
   width: 50%;

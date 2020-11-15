@@ -18,10 +18,15 @@ const Flex = styled.div<{
   shrink?: number;
   wrap?: "wrap" | "nowrap";
   width?: number | string;
+  height?: number | string;
+  background?: string;
 }>`
   display: flex;
   scroll-snap-type: ${(props) => props.scrollType === "snap" && "x mandatory"};
   border: ${(props) => props.border && props.border};
+  width: ${(props) => props.width && props.width};
+  height: ${(props) => props.height && props.height};
+  background: ${(props) => props.background && props.background};
   align-items: ${(props) => props.align && props.align};
   margin: ${(props) => props.margin && props.margin};
   padding: ${(props) => props.padding && props.padding};

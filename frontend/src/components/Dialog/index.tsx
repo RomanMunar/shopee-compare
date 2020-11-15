@@ -1,1 +1,1 @@
-export { DontShowThisAgain, IconDescription, DialogHeader } from "./Dialog";
+export { IconDescription, DialogHeader } from "./Dialog";

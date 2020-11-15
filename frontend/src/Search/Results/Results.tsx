@@ -1,6 +1,8 @@
 import React, { ReactElement, useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
-import { ListItem, SearchItem } from "../../interfaces";
+import { List, ListItem, SearchItem } from "../../interfaces";
+import { useUI } from "../../shared/contexts/useUIContext";
+import { getSettings } from "../../shared/utils/localStorage";
 import { ResultItem } from "./ResultItem/";
 import { AddRowButton, ResultSection } from "./Results.styles";
 
@@ -11,6 +13,7 @@ type Props = {
   setInitialSelectedItems: React.Dispatch<
     React.SetStateAction<ListItem<SearchItem>[]>
   >;
+  lists:List[];
 };
 
 function Results({
@@ -18,7 +21,13 @@ function Results({
   results,
   initialSelectedItems,
   setInitialSelectedItems,
+  lists
 }: Props): ReactElement {
+  const [items, setItems] = useState(results);
+  lists.push({ id: dropId, items, setItems });
+
+  const isAddRowEnabled = getSettings().action.includes("addRow");
+  const { openSelectPanel } = useUI();
   const [showAddRow, setShowAddRow] = useState(false);
   const [addedRow, setAddedRow] = useState(false);
   const selected = results.every((r) =>
@@ -44,7 +53,7 @@ function Results({
               isDraggingOver={snapshot.isDraggingOver}
               {...provided.droppableProps}
             >
-              {results.map((item, index) => (
+              {items.map((item, index) => (
                 <ResultItem
                   setInitialSelectedItems={setInitialSelectedItems}
                   initialSelectedItems={initialSelectedItems}
@@ -53,7 +62,7 @@ function Results({
                 />
               ))}
               {provided.placeholder}
-              {!selected && !addedRow && (
+              {isAddRowEnabled && !selected && !addedRow && (
                 <AddRowButton
                   onClick={() => {
                     setInitialSelectedItems((prev) =>
@@ -63,6 +72,7 @@ function Results({
                         )
                       )
                     );
+                    openSelectPanel();
                     setAddedRow(true);
                   }}
                   showAddRow={showAddRow}

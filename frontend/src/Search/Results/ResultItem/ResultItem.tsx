@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import GridStats from "../../../components/GridStats";
-import { ToolbarButton } from "../../../components/Toolbar";
 import { ListItem, SearchItem } from "../../../interfaces";
 import { useUI } from "../../../shared/contexts/useUIContext";
 import { ResultItemImage } from "../ResultItemImage";
 import { AddRowButton } from "../Results.styles";
-import { RItem, ResultItemTitle } from "./ResultItem.stlyes";
+import { ResultItemTitle, RItem } from "./ResultItem.stlyes";
 
 interface Props {
   index: number;
@@ -25,7 +24,7 @@ const ResultItem = ({
 }: Props) => {
   const { item: itm } = item;
 
-  const { displayMaxSearchPanel } = useUI();
+  const { displayMaxSearchPanel, openSelectPanel } = useUI();
   const [showAddRow, setShowAddRow] = useState(false);
   const [showRemoveRow, setShowRemoveRow] = useState(false);
   const selected = initialSelectedItems
@@ -67,7 +66,10 @@ const ResultItem = ({
           </div>
           {!selected ? (
             <AddRowButton
-              onClick={() => setInitialSelectedItems((prev) => [...prev, item])}
+              onClick={() => {
+                openSelectPanel();
+                setInitialSelectedItems((prev) => [...prev, item]);
+              }}
               right
               showAddRow={showAddRow}
             >
@@ -75,16 +77,17 @@ const ResultItem = ({
             </AddRowButton>
           ) : (
             <AddRowButton
-              onClick={() =>
+              onClick={() => {
+                openSelectPanel();
                 setInitialSelectedItems((prev) =>
                   prev.filter((res) => item.itemid !== res.itemid)
-                )
-              }
+                );
+              }}
               right
               remove
               showAddRow={showRemoveRow}
             >
-              —
+              -
             </AddRowButton>
           )}
         </RItem>

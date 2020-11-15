@@ -17,8 +17,8 @@ const initialState = {
   displaySelectPanel: true,
   displayOverlay: false,
   displayCompareSummary: false,
-  displayHelp: false,
-  displayCompareGuide: false,
+  displayHelp: true,
+  displayCompareGuide: true,
   displayAddToBookmarks: false,
 };
 
@@ -231,6 +231,7 @@ export const UIProvider: FC = (props) => {
       openAddToBookmarks,
       closeAddToBookmarks,
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [state]
   );
 

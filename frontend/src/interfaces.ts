@@ -1,4 +1,20 @@
+import { UserID } from "./shared/utils/localStorage";
+
 // Metro Manila,South Luzon,North Luzon,Visayas,Mindanao,-2
+export type Message = {
+  type: "bug" | "suggestion" | "question";
+  message: string;
+  removed: boolean;
+  upvote: number;
+  downvote: number;
+  createdAt: number;
+  updatedAt: number | null;
+  userId: UserID;
+  title?: string;
+  authorName?: string;
+  reply?: string;
+};
+
 export type SellerLocation =
   | "Metro Manila"
   | "South Luzon"
@@ -131,6 +147,9 @@ export type BookMark = {
 };
 
 export type IconType =
+  | "Upvote"
+  | "Downvote"
+  | "Github"
   | "Swap"
   | "Question"
   | "Clipboard"
@@ -172,4 +191,5 @@ export type IconType =
   | "Sort"
   | "Save"
   | "Undo"
-  | "Reset";
+  | "Reset"
+  | "ReplyCheck";

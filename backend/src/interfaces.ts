@@ -1,3 +1,18 @@
+export type UserID = number;
+export type Message = {
+  type: "bug" | "suggestion" | "question";
+  message: string;
+  removed: boolean;
+  upvote: number;
+  downvote: number;
+  createdAt: number;
+  updatedAt: number | null;
+  userId: UserID;
+  title?: string;
+  authorName?: string;
+  reply?: string;
+};
+
 export interface ShopeeResponse<T> {
   data: T;
   error: number;

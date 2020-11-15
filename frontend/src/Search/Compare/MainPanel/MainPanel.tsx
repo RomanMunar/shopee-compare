@@ -1,15 +1,14 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { Droppable } from "react-beautiful-dnd";
-import toast from "../../../shared/hooks/toast";
 import Flex from "../../../components/Flex";
 import { ToolbarButton } from "../../../components/Toolbar";
 import { Toolbar } from "../../../components/Toolbar/Styles";
 import { Layout, List, ListItem, SearchItem } from "../../../interfaces";
 import { useUI } from "../../../shared/contexts/useUIContext";
+import { getSettings } from "../../../shared/utils/localStorage";
 import { Compare, LinkButton } from "../Compare.styles";
-import { MenuTitle } from "../SelectionPanel/SelectionPanel.styles";
 import { CompareItem } from "../CompareItem";
-import { Icon } from "../../../components/Icon";
+import { MenuTitle } from "../SelectionPanel/SelectionPanel.styles";
 
 interface Props {
   list: List;
@@ -39,47 +38,46 @@ const MainPanel = ({
       {(provided, snapshot) => (
         <Compare layout={layout} isDraggingOver={snapshot.isDraggingOver}>
           <Flex align='flex-end' justify='space-between'>
-            <Flex justify='flex-start'>
+            <MenuTitle>Compare</MenuTitle>
+            <Toolbar withoutMargin place='right-top'>
+              <ToolbarButton
+                onClick={() => {
+                  setLayout("main");
+                }}
+                name='Main Layout'
+                icon='MainLayout'
+                tooltipPlace='bottom'
+              />
+              <ToolbarButton
+                onClick={() =>
+                  layout === "double"
+                    ? list.setItems((prev) => [
+                        prev[1],
+                        prev[0],
+                        ...prev.slice(2),
+                      ])
+                    : setLayout("double")
+                }
+                name={layout === "double" ? "Swap" : "Double Layout"}
+                icon={layout === "double" ? "Swap" : "DoubleLayout"}
+                tooltipPlace='bottom'
+              />
+              <ToolbarButton
+                onClick={() => setLayout("none")}
+                name='No Layout'
+                icon='Column'
+                tooltipPlace='bottom'
+              />
+            </Toolbar>
+            <Toolbar withoutMargin place='right-top'>
+              <span onClick={() => openCompareSummary()}>Show Summary</span>
               <ToolbarButton
                 onClick={() => openAddToBookmarks()}
                 name='Add to bookmarks'
                 icon='Bookmark'
                 tooltipPlace='bottom'
-                size={24}
+                size={20}
               />
-              <MenuTitle>Compare</MenuTitle>
-            </Flex>
-            <Flex align='center'>
-              <Toolbar withoutMargin place='right-top'>
-                <ToolbarButton
-                  onClick={() => {
-                    setLayout("main");
-                  }}
-                  name='Main Layout'
-                  icon='MainLayout'
-                  tooltipPlace='bottom'
-                />
-                <ToolbarButton
-                  onClick={() =>
-                    layout === "double"
-                      ? list.setItems((prev) => [
-                          prev[1],
-                          prev[0],
-                          ...prev.slice(2),
-                        ])
-                      : setLayout("double")
-                  }
-                  name={layout === "double" ? "Swap" : "Double Layout"}
-                  icon={layout === "double" ? "Swap" : "DoubleLayout"}
-                  tooltipPlace='bottom'
-                />
-                <ToolbarButton
-                  onClick={() => setLayout("none")}
-                  name='No Layout'
-                  icon='Column'
-                  tooltipPlace='bottom'
-                />
-              </Toolbar>
               <ToolbarButton
                 onClick={() => openCompareGuide()}
                 name='Help'
@@ -87,11 +85,7 @@ const MainPanel = ({
                 icon='Help'
                 tooltipPlace='bottom'
               />
-            </Flex>
-            {/* @ts-ignore */}
-            <LinkButton onClick={() => openCompareSummary()}>
-              Show Summary
-            </LinkButton>
+            </Toolbar>
           </Flex>
           <Flex
             overflow='auto'

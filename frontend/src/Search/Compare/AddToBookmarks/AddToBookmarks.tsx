@@ -42,9 +42,7 @@ const AddToBookmarks = ({ setSelectedItems, selectedItems }: Props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keyPressed]);
-  useOnOutsideClick($compareGuideRef, () => {
-    handleClose();
-  });
+  useOnOutsideClick($compareGuideRef, () => handleClose());
   useEffect(() => {
     openOverlay();
     // eslint-disable-next-line react-hooks/exhaustive-deps

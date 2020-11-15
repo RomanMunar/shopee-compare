@@ -14,7 +14,8 @@ import toast from "../../../shared/hooks/toast";
 import { useKeyPress } from "../../../shared/hooks/useKeyPressed";
 import useOnOutsideClick from "../../../shared/hooks/useOnOutsideClick";
 import { color } from "../../../shared/styles";
-import { addBookmark, arrayToNArray } from "../../../shared/utils/utils";
+import { arrayToNArray } from "../../../shared/utils/utils";
+import { addBookmark } from "../../../shared/utils/localStorage";
 import SelectItem from "../../SelectPanel/SelectItem/SelectItem";
 import { DialogWrapper } from "../CompareSummary/CompareSummary.styles";
 import {
@@ -39,12 +40,14 @@ const AddToBookmarks = ({ setSelectedItems, selectedItems }: Props) => {
     if (keyPressed) {
       handleClose();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keyPressed]);
   useOnOutsideClick($compareGuideRef, () => {
     handleClose();
   });
   useEffect(() => {
     openOverlay();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

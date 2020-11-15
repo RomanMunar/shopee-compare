@@ -1,6 +1,5 @@
 import { DraggableLocation } from "react-beautiful-dnd";
 import {
-  BookMark,
   ItemRating,
   Layout,
   ListItem,
@@ -21,44 +20,12 @@ export {
   resultsMove,
   arrayToNItems,
   sortBy,
-  getBookmarks,
-  addBookmark,
   timeStamptoDate,
-  updateBookmark,
-  removeBookmark,
 };
 
 const timeStamptoDate = (timestamp: number) => {
   const date = new Date(timestamp);
   return date.toDateString();
-};
-
-const getBookmarks = () =>
-  JSON.parse(localStorage.getItem("Bookmarks")!) as BookMark[];
-
-const setBookmarks = (bookmarks: BookMark[]) =>
-  localStorage.setItem("Bookmarks", JSON.stringify(bookmarks))!;
-
-const removeBookmark = (id: number) => {
-  const bookmarks = getBookmarks();
-  const items = bookmarks.filter((b) => b.id !== id);
-  setBookmarks(items);
-};
-
-const updateBookmark = (id: number, newBookmark: BookMark) => {
-  const bookmarks = getBookmarks();
-  const items = bookmarks.filter((b) => b.id !== id);
-  setBookmarks([...items, newBookmark]);
-};
-
-const addBookmark = (newBookmark: BookMark): BookMark[] => {
-  const bookmarks = getBookmarks();
-  if (!bookmarks) {
-    setBookmarks([newBookmark]);
-    return [newBookmark];
-  }
-  setBookmarks([newBookmark, ...bookmarks]);
-  return [newBookmark, ...bookmarks];
 };
 // Impossibly cringe way to flatten an array
 // At the time of writing this, I have no internet connection
@@ -99,13 +66,7 @@ const resultsMove = (
   let destClone = Array.from(destination);
   const [removed] = sourceClone.splice(droppableSource.index, 1);
   destClone.splice(droppableDestination.index, 0, removed);
-  /* 
-      uncomment nextline if we want to be able to drag 
-      initialselecteditems back to resultsitems  */
-  // const newSourceItems = sourceClone;
-  // return { newSourceItems, newDestinationItems };
   const newDestinationItems = destClone;
-
   return { newDestinationItems };
 };
 
@@ -119,8 +80,7 @@ const arrayToNArray = <T>(arr: T[], n: number): T[][] => {
   for (let line = 0; line < n; line++) {
     for (let i = 0; i < wordsPerLine; i++) {
       const value = arr[i + line * wordsPerLine];
-      if (!value) continue; //avoid adding "undefined" values
-      // @ts-ignore
+      if (!value) continue;
       result[line].push(value);
     }
   }
@@ -130,7 +90,10 @@ const arrayToNArray = <T>(arr: T[], n: number): T[][] => {
 const makeListItems = <T>(mainResults: T[]) =>
   mainResults.map((item, index) => {
     const listItem: ListItem<T> = {
-      itemid: Date.now() + index, // Date.now doesnt return unique values, we might wanna use an id generator here
+      // all id's are created at the same time
+      // leading to Date.now not returning unique values
+      // we might wanna use an id generator here
+      itemid: Date.now() + index,
       item,
     };
     return listItem;
@@ -145,9 +108,9 @@ const get1and2starAverage = (item_rating: ItemRating) =>
     ).toFixed(1)
   );
 
-const move = (
-  source: ListItem<SearchItem>[],
-  destination: ListItem<SearchItem>[],
+const move = <T>(
+  source: ListItem<T>[],
+  destination: ListItem<T>[],
   droppableSource: DraggableLocation,
   droppableDestination: DraggableLocation,
   layout: Layout,
@@ -198,19 +161,19 @@ const getRelativeTimeFormat = (current: any, previous: any) => {
 
   if (elapsed < msPerHour) {
     const time = Math.round(elapsed / msPerMinute);
-    return time + ` minute${time > 1 && "s"} ago`;
+    return `${time === 1 ? "a minute" : `${time} minutes`} ago`;
   } else if (elapsed < msPerDay) {
     const time = Math.round(elapsed / msPerHour);
     return `${time === 1 ? "an hour" : `${time} hours`} ago`;
   } else if (elapsed < msPerMonth) {
     const time = Math.round(elapsed / msPerDay);
-    return time + ` day${time > 1 && "s"} ago`;
+    return `${time === 1 ? "a day" : `${time} days`} ago`;
   } else if (elapsed < msPerYear) {
     const time = Math.round(elapsed / msPerMonth);
-    return time + ` month${time > 1 && "s"} ago`;
+    return `${time === 1 ? "a months" : `${time} monthss`} ago`;
   } else {
     const time = Math.round(elapsed / msPerYear);
-    return time + ` year${time > 1 && "s"} ago`;
+    return `${time === 1 ? "a year" : `${time} years`} ago`;
   }
 };
 
@@ -227,7 +190,8 @@ const priceCompare = ({
   price_min: number;
 }) =>
   price === price_max
-    ? price.toString().slice(0, price.toString().split("").length - 5)
+    ? // Trims price's padding of 5 zeros
+      price.toString().slice(0, price.toString().split("").length - 5)
     : `${price_min
         .toString()
         .slice(0, price_min.toString().split("").length - 5)}-${kFormatter(
@@ -238,6 +202,7 @@ const priceCompare = ({
         )
       )}`;
 
+// Removes duplicates of field T
 const filterByUniqueField = <T>(array: T[], field: keyof T) => {
   const displayedResults: T[] = [];
   array.filter(function (item) {

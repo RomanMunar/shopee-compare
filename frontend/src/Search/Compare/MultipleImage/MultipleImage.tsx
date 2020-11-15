@@ -3,11 +3,10 @@ import { ToolbarButton } from "../../../components/Toolbar";
 import { Layout } from "../../../interfaces";
 import {
   ArrowContainer,
-  IndexCircle,
-  Indexes,
   CompareItemFixed,
   CompareItemImage,
-  SubImages,
+  Indexes,
+  SubImages
 } from "./MultipleImage.styles";
 
 interface Props {
@@ -72,7 +71,6 @@ export const MultipleImage = ({ layout, srcs, on }: Props) => {
             background: "#131417de",
           }}
         >
-          {" "}
           <div
             style={{
               position: "absolute",

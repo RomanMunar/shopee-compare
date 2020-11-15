@@ -1,11 +1,10 @@
-import { Layout } from "../../../interfaces";
 import styled from "styled-components";
-import { color, mixin, shadows } from "../../../shared/styles";
+import { Layout } from "../../../interfaces";
+import { color, mixin } from "../../../shared/styles";
 
 export {
   ArrowContainer,
   SubImages,
-  IndexCircle,
   Indexes,
   CompareItemFixed,
   CompareItemImage,
@@ -19,14 +18,6 @@ const ArrowContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 100%;
-`;
-
-const IndexCircle = styled.div<{ active: boolean }>`
-  background-color: ${(props) =>
-    props.active ? "#252526" : "rgba(37, 37, 38, 0.5)"};
-  border-radius: 50%;
-  padding: 5px;
-  margin-right: 2px;
 `;
 
 const Indexes = styled.div<{ on?: "ratings" }>`

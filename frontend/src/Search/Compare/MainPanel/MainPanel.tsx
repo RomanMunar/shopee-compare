@@ -5,8 +5,7 @@ import { ToolbarButton } from "../../../components/Toolbar";
 import { Toolbar } from "../../../components/Toolbar/Styles";
 import { Layout, List, ListItem, SearchItem } from "../../../interfaces";
 import { useUI } from "../../../shared/contexts/useUIContext";
-import { getSettings } from "../../../shared/utils/localStorage";
-import { Compare, LinkButton } from "../Compare.styles";
+import { Compare } from "../Compare.styles";
 import { CompareItem } from "../CompareItem";
 import { MenuTitle } from "../SelectionPanel/SelectionPanel.styles";
 

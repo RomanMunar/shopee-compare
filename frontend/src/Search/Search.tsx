@@ -13,12 +13,12 @@ import {
   makeListItems,
   reorder,
   resultsMove,
-  sortBy
+  sortBy,
 } from "../shared/utils/utils";
 import { Compare } from "./Compare";
 import { Overlay } from "./Compare/CompareSummary/CompareSummary.styles";
 import Help from "./Help";
-import SearchPanel from "./SearchPanel/SearchPanel";
+import { SearchPanel } from "./SearchPanel";
 import { SelectPanel } from "./SelectPanel";
 
 export default (): ReactElement => {

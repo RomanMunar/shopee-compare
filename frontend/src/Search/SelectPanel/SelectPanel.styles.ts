@@ -77,7 +77,7 @@ const SelectPanelStyle = styled.div<{ isSelectPanelOpen: boolean }>`
   width: 80%;
   height: 55%;
   top: 80px;
-  left: 105%;
+  left: 53%;
   visibility: hidden;
   opacity: 0;
   transition: all 0.2s;

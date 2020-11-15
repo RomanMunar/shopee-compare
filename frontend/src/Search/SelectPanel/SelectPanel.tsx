@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 import { useSearchParams } from "react-router-dom";
 import Button from "../../components/Button";
@@ -9,10 +9,10 @@ import { useUI } from "../../shared/contexts/useUIContext";
 import toast from "../../shared/hooks/toast";
 import SelectItem from "./SelectItem/SelectItem";
 import {
-  Title,
   Items,
   MenuWrapper,
   SelectPanelStyle,
+  Title,
 } from "./SelectPanel.styles";
 
 type Props = {

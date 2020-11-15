@@ -1,20 +1,17 @@
 import React, { useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
+import { useSearchParams } from "react-router-dom";
 import Button from "../../components/Button";
-import { Icon } from "../../components/Icon";
 import { ToolbarButton } from "../../components/Toolbar/index";
 import { Toolbar } from "../../components/Toolbar/Styles";
 import { ListItem, SearchItem } from "../../interfaces";
 import { useUI } from "../../shared/contexts/useUIContext";
 import toast from "../../shared/hooks/toast";
-import { ResultItemImage } from "../Results/ResultItemImage";
 import SelectItem from "./SelectItem/SelectItem";
 import {
-  Item,
   Items,
-  ItemText,
   MenuWrapper,
-  SelectPanel as SPanel,
+  SelectPanelStyle,
   Title,
 } from "./SelectPanel.styles";
 
@@ -39,13 +36,16 @@ const SelectPanel = ({
     closeOverlay,
     maximizeSearchPanel,
   } = useUI();
-  const [showIcon, setShowIcon] = useState(false);
+  const [params, setParams] = useSearchParams();
   const onRemoveClick = (itemid: number) => {
     setInitialSelectedItems((prev) =>
       prev.filter((res) => itemid !== res.item.itemid)
     );
   };
   const onSelectItemsSubmit = () => {
+    setParams({
+      items: initialSelectedItems.map((i) => i.item.itemid).toString(),
+    });
     if (initialSelectedItems.length < 2) {
       toast.show({
         type: "primary",
@@ -61,34 +61,28 @@ const SelectPanel = ({
   };
 
   return (
-    <SPanel
-      onMouseEnter={() => setShowIcon(true)}
-      onMouseLeave={() => setShowIcon(false)}
-      isSelectPanelOpen={displaySelectPanel}
-    >
+    <SelectPanelStyle isSelectPanelOpen={displaySelectPanel}>
       <MenuWrapper>
         <Title>Selected Items</Title>
-        {showIcon && (
-          <Toolbar withoutMargin place='right-top'>
-            <ToolbarButton
-              tooltipPlace='bottom'
-              onClick={() => closeSelectPanel()}
-              name='Minimize'
-              icon='ArrowCircleLeft'
-            />
-            <ToolbarButton
-              tooltipPlace='bottom'
-              onClick={() => maximizeSearchPanel()}
-              name='Maximize'
-              icon='Grid'
-            />
-            <ToolbarButton
-              tooltipPlace='bottom'
-              onClick={() => openSearchPanel()}
-              name='Close'
-            />
-          </Toolbar>
-        )}
+        <Toolbar withoutMargin place='right-top'>
+          <ToolbarButton
+            tooltipPlace='bottom'
+            onClick={() => closeSelectPanel()}
+            name='Minimize'
+            icon='ArrowCircleLeft'
+          />
+          <ToolbarButton
+            tooltipPlace='bottom'
+            onClick={() => maximizeSearchPanel()}
+            name='Maximize'
+            icon='Grid'
+          />
+          <ToolbarButton
+            tooltipPlace='bottom'
+            onClick={() => openSearchPanel()}
+            name='Close'
+          />
+        </Toolbar>
       </MenuWrapper>
       <Droppable
         key='droppable-155'
@@ -119,7 +113,7 @@ const SelectPanel = ({
           Compare
         </Button>
       </div>
-    </SPanel>
+    </SelectPanelStyle>
   );
 };
 

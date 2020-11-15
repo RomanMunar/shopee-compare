@@ -7,6 +7,7 @@ export const color = {
   danger: "#D0021B", // red
   warning: "#f1d335", // orange
   secondary: "#F4F5F7", // light grey
+  accent: "#1CEAD1",
 
   textDarkest: "#172b4d",
   textDark: "#42526E",

@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Flex from "../../../components/Flex";
 import { Icon, Trophy } from "../../../components/Icon";
+import { Select } from "../../../components/Select";
 import { ToolbarButton } from "../../../components/Toolbar";
 import { Toolbar } from "../../../components/Toolbar/Styles";
 import { IconType, SearchItem } from "../../../interfaces";
@@ -26,31 +27,88 @@ import {
 
 const CompareSummary = ({ selectedItems }: { selectedItems: SearchItem[] }) => {
   const { closeCompareSummary, openOverlay, closeOverlay } = useUI();
-  const reponses: SearchItem[] = filterByUniqueField(selectedItems, "itemid");
+  const [sortOption, setSorOption] = useState<
+    "price" | "rating" | "sales" | "likes" | "name"
+  >("price");
+  const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
+  const [reponses, setReponses] = useState<SearchItem[]>(
+    filterByUniqueField(selectedItems, "itemid")
+  );
   const $summaryRef = useRef<HTMLDivElement>(null);
   const keyPressed = useKeyPress("Escape");
   useEffect(() => {
     if (keyPressed) {
       handleClose();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keyPressed]);
   useOnOutsideClick($summaryRef, () => {
-    handleClose()
+    handleClose();
   });
-const handleClose = ()=>{  closeOverlay();
-  closeCompareSummary();}
+  const handleClose = () => {
+    closeOverlay();
+    closeCompareSummary();
+  };
+  const byName = () =>
+    setReponses(
+      selectedItems.sort(function (a, b) {
+        var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+        var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+
+        // names must be equal
+        return 0;
+      })
+    );
+  const byPrice = () =>
+    setReponses(selectedItems.sort((a, b) => a.price - b.price));
+  const byRating = () =>
+    setReponses(
+      selectedItems.sort(
+        (a, b) => a.item_rating.rating_count[0] - b.item_rating.rating_count[0]
+      )
+    );
+  useEffect(() => {
+    switch (sortOption) {
+      case "name":
+        byName();
+        break;
+      case "price":
+        byPrice();
+        break;
+      case "sales":
+        bySales();
+        break;
+      case "rating":
+        byRating();
+        break;
+      case "likes":
+        byLikes();
+        break;
+    }
+  }, [sortOption]);
+  const bySales = () =>
+    setReponses(selectedItems.sort((a, b) => b.sold - a.sold));
+  const byLikes = () =>
+    setReponses(selectedItems.sort((a, b) => b.liked_count - a.liked_count));
   // Note: For consistency, I named them type instead of icon
   const headings: { name: string; type: IconType }[] = [
-    { name: "Product", type: "Product" },
+    { name: "Name", type: "Product" },
     { name: "Price", type: "Price" },
     { name: "Rating", type: "Star" },
     { name: "Sales", type: "Sales" },
-    { name: "Stars", type: "Like" },
+    { name: "Likes", type: "Like" },
   ];
   const randomNum = () => parseInt(((Math.random() * 10) / 4).toFixed()); // random from 0-2
 
   useEffect(() => {
     openOverlay();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -62,6 +120,15 @@ const handleClose = ()=>{  closeOverlay();
             tooltipPlace='bottom'
             name='Export to PDF'
             icon='Pdf'
+          />
+        </Toolbar>
+        <Toolbar place='right-top'>
+          <Select
+            selectedOption={sortOption}
+            setSelectedOption={setSorOption}
+            title='Price'
+            lead='By '
+            options={["price", "rating", "sales", "likes", "name"]}
           />
         </Toolbar>
       </ToolbarWrapper>

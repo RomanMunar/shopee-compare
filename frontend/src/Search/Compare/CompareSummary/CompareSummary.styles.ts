@@ -50,6 +50,8 @@ const DialogWrapper = styled.div<{ guide: "search" | "compare" | "bookmarks" }>`
 `;
 
 const ToolbarWrapper = styled.div`
+  display: flex;
+  align-items: center;
   position: absolute;
   top: -40px;
   right: 0;

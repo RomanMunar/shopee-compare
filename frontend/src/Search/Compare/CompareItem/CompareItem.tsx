@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ratings } from "../../../App/apireponses/mockRatings";
 import { Draggable } from "react-beautiful-dnd";
 import ReactTooltip from "react-tooltip";
@@ -7,7 +7,7 @@ import Button from "../../../components/Button";
 import Flex from "../../../components/Flex";
 import GridStats from "../../../components/GridStats";
 import { Icon } from "../../../components/Icon";
-import Select from "../../../components/Select";
+import { Select } from "../../../components/Select";
 import { ToolbarButton } from "../../../components/Toolbar";
 import { Toolbar } from "../../../components/Toolbar/Styles";
 import { Layout, ListItem, SearchItem } from "../../../interfaces";
@@ -32,6 +32,8 @@ import {
 } from "./CompareItem.styles";
 import Tags from "./Tags";
 import toast from "../../../shared/hooks/toast";
+import { Indexes, SubImages } from "../MultipleImage/MultipleImage.styles";
+import { getSettings } from "../../../shared/utils/localStorage";
 
 interface Props {
   res: ListItem<SearchItem>;
@@ -52,14 +54,28 @@ const CompareItem = ({
   on,
   setInitialSelectedItems,
 }: Props) => {
+  const isDndAllowed = getSettings().action.includes("DndInNoLayout");
   const [isDescriptionHidden, setIsDescriptionHidden] = useState(true);
   const [isRatingsHidden, setIsRatingsHidden] = useState(true);
   const [isRatingsSummaryHidden, setIsRatingsSummaryHidden] = useState(true);
-  const [ratingsDropdownOpen, setRatingsDropdownOpen] = useState(false);
+  const [ratingsOption, setRatingsOption] = useState<
+    "Lowest" | "Highest" | "Recent"
+  >();
+  useEffect(() => {
+    switch (ratingsOption) {
+      case "Highest":
+        // setRatings( fetch item rating)
+        break;
+      case "Lowest":
+        // setRatings( fetch item rating)
+        break;
+      case "Recent":
+        // setRatings( fetch item rating)
+        break;
+    }
+  }, [ratingsOption]);
   const str =
     "\u3010Noise Cancelling Microphone&Headphone\u3011New Upgrade online class headset noise cancellation mic with Dual \n  3.5mm port and built-in noise reduction headphones\n                                  ************ Focus on online class use\uff0ckeep to upgrade*********\n    \n   -----------------------------------------------------\n  New Upgrade(Noise Reduction Mic):\n  -----------------------------------------------------\n  \u2605\u2605\u2605 Noise Cancellation Mic \u2605\u2605\u2605\n   -----------------------------------------------------\n  \u2605\u2605\u2605 Mic And Voice Volume Wire Control \u2605\u2605\u2605\n\nTips:\n\u2606Noise Reduction Mic \u2606----------Noise Cancellation Mic+Mic And Voice Volume Wire Control+Free splitter cable\n\u2606Grey\uff08Dual 3.5MM\uff09\u2606-----------Use for Computer. No have Mic and Voice Volume Control on the Headset Wire\n\u2606Gold(Dual 3.5mm\uff09\u2606-----------Use for Computer. No have Mic and Voice Volume Control on the Headset Wire\n\u2606White(Dual 3.5mm\uff09\u2606-----------Use for Computer. No have Mic and Voice Volume Control on the Headset Wire\n\n\u2606Grey\uff08Single 3.5MM\uff09\u2606-----------Use for Laptop and Mobile Phone. No have Mic and Voice Volume Control on the Headset Wire\n\u2606Gold\uff08Single 3.5MM\uff09\u2606-----------Use for Laptop and Mobile Phone. No have Mic and Voice Volume Control on the Headset Wire\n\n\n      Please buy from Us. Because:\n   1>We are only one Official Authorized dealer in Shopee. \n   2>Only us have the After-sale service.\n   3>Only us have stock\n\n\n   \u3010Ready Stock\u3011\n     \ud83d\udc4d100% brand new and high quality\n\n   1>Type\uff1a3.5MM Jack Port\n   2>Length\uff1a1.8M      weight: 270g\n   3>Color:Grey/Gold/White\n   4>Line quilt Material: Nylon Braided\n\n    Design\uff1aComfortable to wear\n    \ud83d\udc4dFast Shipment: Send out within 2 days!!\n\n     Package\uff1a\n    \ud83d\udc4dHave retail package\n\n\n   \ud83d\udc96If you like our store ,please follow our store to get more discount in the future!!\ud83d\udc96\n   \ud83c\udf81To be our follower,get surprise now!!!\ud83c\udf81\n\n\n#headphone #headphones #headset #online classes #online class #business #business headset #Business headset";
-
-  // https://shopee.ph/(COD)-9-Colors-TWS-Bluetooth-Earphone-i12-inPodTouch-Airpod-Key-Wireless-Headphone-Earbuds-Sports-Headsets-For-iPhone-Xiaomi-Smart-Phone-Android-Phone-No-Retail-Box-i.270420997.7041749586
   const [copied, copy] = useCopyToClipboard(
     `https://shopee.ph/${res.item.name.replace(/\s/gi, "-")}-i.${
       res.item.shopid
@@ -89,7 +105,7 @@ const CompareItem = ({
       key={"draggable-ci-" + res.itemid}
       draggableId={`res-${res.itemid}`}
       index={index}
-      isDragDisabled={on === "main" || layout === "none"}
+      isDragDisabled={on === "main" && layout === "none" && !isDndAllowed}
     >
       {(provided, snapshot) => (
         <CItem
@@ -235,8 +251,8 @@ const CompareItem = ({
                   </SectionTitle>
                   <SectionTitle>
                     <Select
-                      DropdownOpen={ratingsDropdownOpen}
-                      setDropdownOpen={setRatingsDropdownOpen}
+                      selectedOption={ratingsOption}
+                      setSelectedOption={setRatingsOption}
                       title='Sort By'
                       options={["Lowest", "Highest", "Recent"]}
                     />
@@ -264,11 +280,40 @@ const CompareItem = ({
                                 {rate.comment}
                               </DescriptionParagraph>
                               {rate.images ? (
-                                <MultipleImage
-                                  layout={layout}
-                                  on={on}
-                                  srcs={rate.images}
-                                />
+                                <div style={{ minHeight: "80px" }}>
+                                  <Indexes on='ratings'>
+                                    {rate.images.map((src, index) => (
+                                      <>
+                                        <SubImages
+                                          active={false}
+                                          key={`index-${index}-of-${src}`}
+                                          src={
+                                            "https://cf.shopee.ph/file/" + src
+                                          }
+                                          data-for={`rating-img-${src}`}
+                                          data-tip
+                                        />
+                                        <ReactTooltip
+                                          className={"extraClass"}
+                                          place='bottom'
+                                          effect='float'
+                                          arrowColor='rgba(0,0,0,0)'
+                                          id={`rating-img-${src}`}
+                                        >
+                                          <img
+                                            src={
+                                              "https://cf.shopee.ph/file/" + src
+                                            }
+                                            style={{
+                                              width: "300px",
+                                              height: "300px",
+                                            }}
+                                          />
+                                        </ReactTooltip>
+                                      </>
+                                    ))}
+                                  </Indexes>
+                                </div>
                               ) : (
                                 <div
                                   style={{

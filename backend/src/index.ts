@@ -2,6 +2,7 @@ import express from "express";
 import fetch from "node-fetch";
 import {
   ItemDetailed,
+  Message,
   Rating,
   SearchResponse,
   Shop,
@@ -9,9 +10,74 @@ import {
   ShopeeRatingResponse,
   ShopeeResponse,
 } from "./interfaces";
+
 const app = express();
 
 app.use(express.json());
+
+app.get("/messages", async (req, res) => {
+  try {
+    const data = await fetch(
+      "https://forum4shopeecompare-11a9.restdb.io/rest/messages",
+      {
+        headers: {
+          "cache-control": "no-cache",
+          "x-apikey": "7ad0b4f0708986a4ebc8b485da9255db075b8",
+        },
+      }
+    ).then((res) => res.json());
+    console.log({ data });
+    res.status(200).json({ data });
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+app.post("/messages", async (req, res) => {
+  const {
+    type,
+    message,
+    removed,
+    upvote,
+    downvote,
+    createdAt,
+    updatedAt,
+    userId,
+    title,
+    authorName,
+    reply,
+  } = req.body as Message;
+  const postData = {
+    type,
+    message,
+    removed,
+    upvote,
+    downvote,
+    createdAt,
+    updatedAt,
+    userId,
+    title,
+    authorName,
+    reply,
+  };
+  try {
+    const data = await fetch(
+      "https://forum4shopeecompare-11a9.restdb.io/rest/messages",
+      {
+        body: JSON.stringify(postData),
+        method: "POST",
+        headers: {
+          "cache-control": "no-cache",
+          "x-apikey": "7ad0b4f0708986a4ebc8b485da9255db075b8",
+        },
+      }
+    ).then((res) => res.json());
+    console.log({ data });
+    res.status(200).json({ data });
+  } catch (e) {
+    console.log(e);
+  }
+});
 
 app.get("/search/:keyword", async (req, res) => {
   try {
@@ -127,7 +193,7 @@ app.get("/shop/:shopid", async (req, res) => {
     ).then((res) => res.json());
     const { data, error, error_msg } = response;
     const newData = {
-      account:{
+      account: {
         portrait: data.account.portrait,
         total_avg_star: data.account.total_avg_star,
       },

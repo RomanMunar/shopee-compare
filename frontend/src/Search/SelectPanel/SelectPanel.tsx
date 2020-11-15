@@ -9,10 +9,10 @@ import { useUI } from "../../shared/contexts/useUIContext";
 import toast from "../../shared/hooks/toast";
 import SelectItem from "./SelectItem/SelectItem";
 import {
+  Title,
   Items,
   MenuWrapper,
   SelectPanelStyle,
-  Title,
 } from "./SelectPanel.styles";
 
 type Props = {

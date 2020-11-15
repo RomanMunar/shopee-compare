@@ -39,6 +39,7 @@ const SelectionPanel = ({
       closeOverlay();
       closeSearchPanel();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keyPressed]);
   return (
     <Droppable key='droppable-2' droppableId={list.id} direction='vertical'>

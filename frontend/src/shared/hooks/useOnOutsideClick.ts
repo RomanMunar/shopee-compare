@@ -2,7 +2,7 @@ import { MutableRefObject, useEffect } from "react";
 
 export default function (
   ref: MutableRefObject<any>,
-  handler: (e?: Event) => void
+  handler: (e?: any) => void
 ) {
   useEffect(() => {
     const listener = (event: Event) => {

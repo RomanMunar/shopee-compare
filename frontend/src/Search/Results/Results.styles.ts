@@ -86,7 +86,7 @@ const AddRowButton = styled.button<{
   right?: boolean;
   remove?: boolean;
 }>`
-  padding: 1px 5px;
+  padding: 1px ${props => props.remove ? "7px" :"5px"};
   background: ${(props) =>
     props.right ? (props.remove ? color.danger : color.success) : "#2f88f8"};
   color: white;

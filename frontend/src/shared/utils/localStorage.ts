@@ -16,7 +16,10 @@ interface LocalStorage {
   Bookmarks: BookMark[];
   Settings: Settings;
   Dialogs: Dialogs;
+  UserID: UserID;
 }
+
+export type UserID = number;
 export type Dialog = "showHelpGuide" | "showCompareGuide";
 export type Dialogs = Dialog[];
 type LocalStorageItem = keyof LocalStorage;
@@ -26,7 +29,9 @@ const getLocalStorageItem = <T extends LocalStorageItem>(
   ? BookMark[]
   : T extends "Settings"
   ? Settings
-  : Dialogs => JSON.parse(localStorage.getItem(item)!);
+  : T extends "Dialogs"
+  ? Dialogs
+  : UserID => JSON.parse(localStorage.getItem(item)!);
 
 const setLocalStorageItem = <T extends LocalStorageItem>(
   item: T,
@@ -34,8 +39,20 @@ const setLocalStorageItem = <T extends LocalStorageItem>(
     ? BookMark[]
     : T extends "Settings"
     ? Settings
-    : Dialogs
+    : T extends "Dialogs"
+    ? Dialogs
+    : UserID
 ) => localStorage.setItem(item, JSON.stringify(payload))!;
+
+export const getUserID = () => {
+  const userID = getLocalStorageItem("UserID");
+  if (!userID) {
+    const id = Date.now();
+    setLocalStorageItem("UserID", id);
+    return id;
+  }
+  return userID;
+};
 
 export type Action =
   | "blockSeller"

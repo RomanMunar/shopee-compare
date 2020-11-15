@@ -30,9 +30,15 @@ interface Props {
   bookmark: BookMark;
   setSortedBookMarks: React.Dispatch<React.SetStateAction<BookMark[]>>;
   pinned: boolean;
+  dontShowToolbar?: boolean;
 }
 
-const BookmarkItem = ({ pinned, bookmark, setSortedBookMarks }: Props) => {
+const BookmarkItem = ({
+  pinned,
+  bookmark,
+  setSortedBookMarks,
+  dontShowToolbar,
+}: Props) => {
   const newItems = arrayToNItems(bookmark.items, 3);
   const autoExpand = getSettings().action.includes("expandBookmarks");
   const [showItems, setShowItems] = useState(!autoExpand || false);
@@ -110,7 +116,7 @@ const BookmarkItem = ({ pinned, bookmark, setSortedBookMarks }: Props) => {
         style={{
           top: 0,
           display: "flex",
-          right: "90px",
+          right: dontShowToolbar ? "0" : "10%",
           position: "absolute",
         }}
       >
@@ -124,22 +130,24 @@ const BookmarkItem = ({ pinned, bookmark, setSortedBookMarks }: Props) => {
             Compare Now +
           </ToolbarButton>
         </Toolbar>
-        <Toolbar withoutShadow withoutMargin place='default'>
-          <ToolbarButton
-            onClick={onPinClick}
-            tooltipPlace='bottom'
-            name={pinned ? "Unpin bookmark" : "Pin bookmark"}
-          >
-            <Pin size={17} />
-          </ToolbarButton>
-          <ToolbarButton
-            onClick={(e) => onRemoveClick(e)}
-            tooltipPlace='bottom'
-            name='Remove Bookmark'
-          >
-            <Icon type='Delete' size={17} />
-          </ToolbarButton>
-        </Toolbar>
+        {!dontShowToolbar && (
+          <Toolbar withoutShadow withoutMargin place='default'>
+            <ToolbarButton
+              onClick={onPinClick}
+              tooltipPlace='bottom'
+              name={pinned ? "Unpin bookmark" : "Pin bookmark"}
+            >
+              <Pin size={17} />
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={(e) => onRemoveClick(e)}
+              tooltipPlace='bottom'
+              name='Remove Bookmark'
+            >
+              <Icon type='Delete' size={17} />
+            </ToolbarButton>
+          </Toolbar>
+        )}
       </AnimatedToolbar>
       <TimeLineWrapper showItems={showItems}>
         <Circle

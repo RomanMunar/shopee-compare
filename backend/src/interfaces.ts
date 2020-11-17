@@ -1,10 +1,17 @@
+export type Model = {
+  price: number;
+  name: string;
+  tier_index: [number, number];
+  stock: number;
+  sold: number;
+};
 export type UserID = number;
 export type Message = {
   type: "bug" | "suggestion" | "question";
   message: string;
   removed: boolean;
-  upvote: number;
-  downvote: number;
+  upvote: UserID[];
+  downvote: UserID[];
   createdAt: number;
   updatedAt: number | null;
   userId: UserID;
@@ -13,39 +20,20 @@ export type Message = {
   reply?: string;
 };
 
-export interface ShopeeResponse<T> {
-  data: T;
-  error: number;
-  error_msg: string | null;
-}
+export type SellerLocation =
+  | "Metro Manila"
+  | "South Luzon"
+  | "North Luzon"
+  | "Visayas"
+  | "Mindanao"
+  | "-2";
+export type Sort = "relevancy" | "price" | "latest" | "sales";
 
-export interface ShopeeRatingResponse<T> {
-  data: {
-    item: any;
-    ratings: T;
-  };
-  error: number;
-  error_msg: string | null;
-}
-
-export interface ShopeeItemResponse<T> {
-  data: any;
-  error: number;
-  error_msg: string | null;
-  item: T;
-}
-
-export interface SearchResponse {
-  error: number | string | null;
-  error_msg: string | null;
-  items: SearchItem[];
-}
-
-interface SearchItem extends Item {
+export interface SearchItem extends Item {
   adsid: number | null;
 }
 
-type ItemRating = {
+export type ItemRating = {
   rating_star: number;
   rating_count: number[];
   rcount_with_context: number;
@@ -85,22 +73,41 @@ export interface Item {
   sold: number;
   tier_variations: Tier[];
   liked_count: number;
-  brand: string;
+  brand: string | null;
 }
 
 export interface ItemDetailed extends Item {
   historical_sold: number;
   description: string;
-  models: [
-    {
-      price: number;
-      image: string;
-      name: string;
-      extinfo: {
-        tier_index: [number, number];
-      };
-    }
-  ];
+  models: Model[];
+}
+
+export interface ShopeeResponse<T> {
+  data: T;
+  error: number;
+  error_msg: string | null;
+}
+
+export interface ShopeeRatingResponse<T> {
+  data: {
+    item: any;
+    ratings: T;
+  };
+  error: number;
+  error_msg: string | null;
+}
+
+export interface ShopeeItemResponse<T> {
+  data: any;
+  error: number;
+  error_msg: string | null;
+  item: T;
+}
+
+export interface SearchResponse {
+  error: number | string | null;
+  error_msg: string | null;
+  items: SearchItem[];
 }
 
 export interface Rating {

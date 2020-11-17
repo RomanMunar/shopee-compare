@@ -1,0 +1,36 @@
+@baseUrl=http://localhost:5000
+
+POST {{baseUrl}}/messages
+content-type: application/json
+
+{
+  "type": "bug",
+  "downvote": [123123,12312321,12312321,12312321,12312321,12312321,12312321,12312321,12312321,12312321,12312321],
+  "upvote": [2021312321,398490],
+  "message": "Dropping items to select panel shakes the panel",
+  "userId": 2312321
+}
+### 
+#https://shopee.ph/api/v2/search_items/?by=sales&keyword=gymnastic%20ring&limit=50&locations=-2%2CMindanao&newest=0&order=desc&page_type=search&skip_autocorrect=1&version=2
+#https://shopee.ph/api/v2/search_items/locations=-2%2CMetro+Manila&keyword=headphones&by=sales&minPrice=1000&maxPrice=2000&order=desc&limit=20&noCorrection=true&page_type=search&skip_autocorrect=1&version=2
+### Upvote 
+POST  {{baseUrl}}/messages/5fb1aec1b981b55000002e59/upvote/1605483741890
+
+### Downvote
+POST  {{baseUrl}}/messages/5fb1aec1b981b55000002e59/downvote/1605483741890
+
+### Delete
+DELETE  {{baseUrl}}/messages/5fb1b04db981b55000002e76/user/1605479126297
+
+
+### Get all Messages
+GET {{baseUrl}}/messages/
+
+### Search a product
+GET {{baseUrl}}/search?locations=Metro+Manila%2CMindanao%2CNorth+Luzon%2CSouth+Luzon%2CVisayas%2C-2&keyword=headphones&by=sales&order=desc
+
+### Get an item
+GET  {{baseUrl}}/item/get?itemid=2625791160&shopid=168042480
+
+### Get an item's rating
+GET {{baseUrl}}/item/get_ratings?offset=0&filter=0&type=0&itemid=5544088247&shopid=38592024&limit=10

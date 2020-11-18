@@ -17,7 +17,16 @@ export {
   SellerSection,
   Title,
   ToolbarWrapper,
+  PaginationWrapper,
+  UpperpartContainer,
 };
+
+const PaginationWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 
 const Title = styled.span`
   overflow: hidden;
@@ -26,8 +35,6 @@ const Title = styled.span`
   display: -webkit-box;
   width: 100%;
   -webkit-box-orient: vertical;
-  font-size: 14px;
-  font-family: Roboto-medium;
 `;
 
 const SellerSection = styled.div`
@@ -38,7 +45,6 @@ const SellerSection = styled.div`
   justify-content: flex-start;
   align-items: center;
   padding: 10px 0;
-  margin-top: 20px;
 `;
 
 const SectionWrapper = styled.div`
@@ -62,12 +68,20 @@ const SectionTitle = styled.div`
   width: 100%;
 `;
 
-const RatingsWrapper = styled.div<{ layout: Layout }>`
-  display: grid;
+const UpperpartContainer = styled.div`
+  position: relative;
+  flex-direction: column;
+  padding: 15px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
   width: 100%;
-  grid-template-columns: ${(props) =>
-    props.layout === "main" ? "1fr 1fr" : "1fr"};
-  ${(props) => props.layout === "main" && "gap:4%"};
+`;
+
+const RatingsWrapper = styled.div<{ layout: Layout }>`
+  ${(props) => props.layout === "main" && "display: grid"};
+  width: 100%;
+  grid-template-columns: ${(props) => props.layout === "main" && "1fr 1fr 1fr"};
 `;
 
 const CItem = styled.div<{
@@ -97,11 +111,8 @@ const CompareItemTitle = styled.div<{
   layout: Layout;
   on: "selection" | "main";
 }>`
-  ${(props) =>
-    props.layout === "main" && props.on === "main"
-      ? "padding: 20px 40px"
-      : "padding: 10px"};
   ${(props) => props.on === "main" && font.medium}
+  ${(props) => props.on === "main" && "font-size: 20px"};
   text-align: start;
   display: flex;
   align-items: flex-end;

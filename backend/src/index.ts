@@ -20,9 +20,9 @@ app.use(express.json());
 
 /* 
   ************************************** A BIG ASS NOTE *************************************
-  We are not using jwt/cookies mainly because i don't want to require users to login/register
-  so, we are storing a unique id on each of the device that the app has been used, this id
-  is what we're using to identify them for up/downvotes,and  editing/deleting messages.
+  * We are not using jwt/cookies mainly because i don't want to require users to login/register
+  * so, we are storing a unique id on each of the device that the app has been used, this id
+  * is what we're using to identify them for up/downvotes,and  editing/deleting messages.
   *******************************************************************************************
 */
 

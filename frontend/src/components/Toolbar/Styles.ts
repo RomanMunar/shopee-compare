@@ -9,6 +9,7 @@ export const TButton = styled.button<{ noTransform?: boolean }>`
   align-items: center;
   transition: all 0.2s;
   margin-top: 4px;
+  white-space:nowrap;
   &:hover {
     ${(props) => !props.noTransform && "transform: scale(1.1)"};
   }

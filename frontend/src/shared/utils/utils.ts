@@ -1,10 +1,5 @@
 import { DraggableLocation } from "react-beautiful-dnd";
-import {
-  ItemRating,
-  Layout,
-  ListItem,
-  SearchItem,
-} from "../../interfaces";
+import { ItemRating, Layout, ListItem, SearchItem } from "../../interfaces";
 
 export {
   arrayToNArray,
@@ -21,6 +16,7 @@ export {
   arrayToNItems,
   sortBy,
   timeStamptoDate,
+  trimPrice,
 };
 
 const timeStamptoDate = (timestamp: number) => {
@@ -180,6 +176,9 @@ const getRelativeTimeFormat = (current: any, previous: any) => {
 const kFormatter = (num: number) =>
   Math.abs(num) > 999 ? (Math.abs(num) / 1000).toFixed(1) + "k" : Math.abs(num);
 
+const trimPrice = (price: number) =>
+  price.toString().slice(0, price.toString().split("").length - 5);
+
 const priceCompare = ({
   price,
   price_max,
@@ -191,7 +190,7 @@ const priceCompare = ({
 }) =>
   price === price_max
     ? // Trims price's padding of 5 zeros
-      price.toString().slice(0, price.toString().split("").length - 5)
+      trimPrice(price)
     : `${price_min
         .toString()
         .slice(0, price_min.toString().split("").length - 5)}-${kFormatter(

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   DialogHeader,
-  DontShowThisAgain,
   IconDescription,
 } from "../components/Dialog";
 import {
@@ -115,7 +114,6 @@ const Help = () => {
     <DialogWrapper guide={"search"} ref={$helpRef}>
       <Dialog>
         <DialogHeader handleClose={handleClose}>OnBoarding Guide</DialogHeader>
-        <DontShowThisAgain dialog='showHelpGuide' />
         <DialogBody>
           <DialogSection dir='column'>
             <DialogHeading>How to use</DialogHeading>

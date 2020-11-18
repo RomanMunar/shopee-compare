@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { DialogHeader, DontShowThisAgain } from "../../../components/Dialog";
+import { DialogHeader } from "../../../components/Dialog";
 import {
   Dialog,
   DialogBody,
@@ -40,7 +40,6 @@ const CompareGuide = () => {
     <DialogWrapper guide='compare' ref={$compareGuideRef}>
       <Dialog>
         <DialogHeader handleClose={handleClose}>Compare Guide</DialogHeader>
-        <DontShowThisAgain dialog='showHelpGuide' />
         <DialogBody>
           <DialogSection>
             <DialogHeading>How to use</DialogHeading>

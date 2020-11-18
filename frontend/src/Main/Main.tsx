@@ -31,6 +31,12 @@ const Main = () => {
       message:
         "Once na-release ko na yung guide, you'd have to use it instead :''(",
     });
+    toast.show({
+      type: "success",
+      title: "yun lang naman.",
+      message:
+        "continue to the main search page, by clicking the searchicon, located on the most left side",
+    });
   }, []);
   return (
     <Container>

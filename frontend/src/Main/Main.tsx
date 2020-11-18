@@ -21,12 +21,12 @@ const Main = () => {
   const [toolbarShown, setToolbarShown] = useState(false);
   useEffect(() => {
     toast.show({
-      type: "primary",
+      type: "success",
       title: "Welcome !!",
       message: "WIP yung guide para ma-replicate niyo to locally",
     });
     toast.show({
-      type: "primary",
+      type: "success",
       title: "Rejected yung affiliate application ko.",
       message:
         "Once na-release ko na yung guide, you'd have to use it instead :''(",

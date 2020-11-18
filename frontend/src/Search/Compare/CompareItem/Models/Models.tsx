@@ -12,7 +12,7 @@ interface Props {
 
 const Models = ({ models }: Props) => {
   const [isModelsHidden, setIsModelsHidden] = useState(false);
-  if (models.length >= 1) {
+  if (models.length <= 1) {
     return <div />;
   }
 
@@ -28,7 +28,7 @@ const Models = ({ models }: Props) => {
           <span>{isModelsHidden ? "Hide" : "Show"}</span>
         </Button>
       </SectionTitle>
-      {isModelsHidden && (
+      {!isModelsHidden && (
         <Flex dir='row' align='flex-start' justify='flex-start' wrap='wrap'>
           {models.map((m) => (
             <ModelItem>

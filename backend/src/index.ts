@@ -214,7 +214,7 @@ app.post("/messages", async (req, res) => {
   }
 });
 
-app.get("/search", async (req, res) => {
+app.get("/api/search", async (req, res) => {
   // Already validated query from the client side,
   // but feel free to submit a pr, for revalidating these queries :)
   const query = req.query as {
@@ -292,7 +292,7 @@ app.get("/search", async (req, res) => {
 });
 
 // https://shopee.ph/api/v2/item/get?itemid=2625791160&shopid=168042480
-app.get("/item/get", async (req, res) => {
+app.get("/api/item/get", async (req, res) => {
   const { itemid, shopid } = req.query;
   if (!itemid || !shopid) {
     return res
@@ -358,7 +358,7 @@ app.get("/item/get", async (req, res) => {
 });
 
 //https://shopee.ph/api/v2/shop/get?is_brief=1&shopid=194193277
-app.get("/shop/get", async (req, res) => {
+app.get("/api/shop/get", async (req, res) => {
   const { shopid } = req.query;
   try {
     const response: ShopeeResponse<Shop> = await fetch(
@@ -386,7 +386,7 @@ app.get("/shop/get", async (req, res) => {
 
 //https://shopee.ph/api/v2/item/get_ratings?filter=0&flag=1&itemid=${itemid}&shopid=${shopid}
 //https://shopee.ph/api/v2/item/get_ratings?filter=0&flag=1&itemid=1840601784&shopid=119577304
-app.get("/item/get_ratings", async (req, res) => {
+app.get("/api/item/get_ratings", async (req, res) => {
   const query = req.query as {
     itemid: string;
     shopid: SellerLocation;

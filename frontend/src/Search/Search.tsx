@@ -3,7 +3,6 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { useSearchParams } from "react-router-dom";
 import Container from "../components/Container";
 import { List, ListItem, SearchItem } from "../interfaces";
-import SelectedItemsProvider from "../shared/contexts/useSelectedItemsContext";
 import { useUI } from "../shared/contexts/useUIContext";
 import useOnOutsideClick from "../shared/hooks/useOnOutsideClick";
 import {
@@ -129,32 +128,30 @@ export default (): ReactElement => {
         />
       )}
       <Container>
-        <SelectedItemsProvider>
-          <DragDropContext
-            onDragEnd={onDragEnd}
-            onBeforeCapture={() => openSelectPanel()}
-          >
-            <SearchPanel
-              searchResult={searchResult}
-              lists={lists}
-              initialSelectedItems={initialSelectedItems}
-              setInitialSelectedItems={setInitialSelectedItems}
-              selectedItems={selectedItems}
-            />
-            {!displayMaxSearchPanel && (
-              <SelectPanel
-                initialSelectedItems={initialSelectedItems}
-                setSelectedItems={setSelectedItems}
-                setInitialSelectedItems={setInitialSelectedItems}
-              />
-            )}
-          </DragDropContext>
-          <Compare
+        <DragDropContext
+          onDragEnd={onDragEnd}
+          onBeforeCapture={() => openSelectPanel()}
+        >
+          <SearchPanel
+            searchResult={searchResult}
+            lists={lists}
+            initialSelectedItems={initialSelectedItems}
             setInitialSelectedItems={setInitialSelectedItems}
             selectedItems={selectedItems}
-            setSelectedItems={setSelectedItems}
           />
-        </SelectedItemsProvider>
+          {!displayMaxSearchPanel && (
+            <SelectPanel
+              initialSelectedItems={initialSelectedItems}
+              setSelectedItems={setSelectedItems}
+              setInitialSelectedItems={setInitialSelectedItems}
+            />
+          )}
+        </DragDropContext>
+        <Compare
+          setInitialSelectedItems={setInitialSelectedItems}
+          selectedItems={selectedItems}
+          setSelectedItems={setSelectedItems}
+        />
       </Container>
     </>
   );

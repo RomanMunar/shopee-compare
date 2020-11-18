@@ -94,7 +94,7 @@ const CompareItem = ({
   };
   const [showToolbar, setShowToolbar] = useState(false);
   const [shop, setShop] = useState<Shop>();
-  const [models, setModels] = useState<Model[]>();
+  const [models, setModels] = useState<Model[]>([]);
   const [offset, setOffset] = useState(0);
   // &type=0 All
   // &type=5 5 stars only
@@ -104,27 +104,42 @@ const CompareItem = ({
   // &filter=1 With Comments
   const [type] = useState(0);
   const [filter] = useState(0);
+
   useEffect(() => {
     // fetch
     if (on !== "main") return;
     // checks if we already have info we need return if yes
     // @ts-ignore
-    if (description || res.item!.description) return;
     // @ts-ignore
-    if (models || res.item!.models) return;
+
+    console.log("through");
+    const fetchItem = async () => {
+      await fetch(
+        `/api/item/get?itemid=${res.item.itemid}&shopid=${res.item.shopid}`
+      )
+        .then((r) => r.json())
+        .then((n) => {
+          setModels(n.data.models);
+          setDescription(n.data.description);
+        });
+    };
+    fetchItem();
+  }, []);
+  useEffect(() => {
+    console.log(models);
+  }, [models]);
+
+  useEffect(() => {
     if (shop) return;
-    fetch(`/api/item/get?itemid=${res.item.itemid}&shopid=${res.item.shopid}`)
-      .then((res) => res.json())
-      .then((item) => {
-        setModels(item.data.models);
-        setDescription(item.data.description);
-      });
-
-    fetch(`/api/shop/get?shopid=${res.item.shopid}`)
-      .then((res) => res.json())
-      .then((shop) => setShop(shop.data));
-  }, [on]);
-
+    const fetchItemSeller = async () => {
+      await fetch(`/api/shop/get?shopid=${res.item.shopid}`)
+        .then((r) => r.json())
+        .then((n) => {
+          setShop(n.data);
+        });
+    };
+    fetchItemSeller();
+  }, []);
   useEffect(() => {
     if (on !== "main") return;
     if (isRatingsFetched && offset === 0) return;
@@ -216,14 +231,10 @@ const CompareItem = ({
             </CompareItemTitle>
             {on === "main" && (
               <>
-                {models ||
+                <Models
                   /*//@ts-ignore */
-                  (res.item!.models && (
-                    <Models
-                      /*//@ts-ignore */
-                      models={models || res.item!.models}
-                    />
-                  ))}
+                  models={models}
+                />
                 <GridStats layout={layout} item={res.item} on='compare' />
                 <Tags item={res.item} />
               </>

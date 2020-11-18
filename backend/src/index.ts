@@ -307,9 +307,20 @@ app.get("/item/get", async (req, res) => {
     ).then((res) => res.json());
 
     const { item, error, error_msg } = response;
-
     const newData = {
+      has_lowest_price_guarantee: item.has_lowest_price_guarantee,
+      tier_variations: item.tier_variations.map((tier) => {
+        return {
+          images: tier.images,
+          name: tier.name,
+          options: tier.options
+        };
+      }),
+      liked_count: item.liked_count,
+      is_adult: item.is_adult,
+      raw_discount: item.raw_discount,
       itemid: item.itemid,
+      shopid: item.shopid,
       description: item.description,
       brand: item.brand,
       name: item.name,
@@ -328,7 +339,6 @@ app.get("/item/get", async (req, res) => {
       historical_sold: item.historical_sold,
       shopee_verified: item.shopee_verified,
       shop_location: item.shop_location,
-      tier_variations: item.tier_variations,
       models: item.models.map((m) => {
         return {
           price: m.price,
@@ -391,7 +401,6 @@ app.get("/item/get_ratings", async (req, res) => {
   // &filter=3 With Media
   // &filter=1 With Comments
   const params = new URLSearchParams(query);
-  console.log(query);
   try {
     const response: ShopeeRatingResponse<Rating[]> = await fetch(
       `https://shopee.ph/api/v2/item/get_ratings?flag=1&${params.toString()}`

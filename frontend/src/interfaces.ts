@@ -1,5 +1,12 @@
-import { UserID } from "./shared/utils/localStorage";
+export type Model = {
+  price: number;
+  name: string;
+  stock: number;
+  sold: number;
+  tier_index: [number, number];
+};
 
+import { UserID } from "./shared/utils/localStorage";
 // Metro Manila,South Luzon,North Luzon,Visayas,Mindanao,-2
 export type Message = {
   type: "bug" | "suggestion" | "question";
@@ -22,7 +29,7 @@ export type SellerLocation =
   | "Visayas"
   | "Mindanao"
   | "-2";
-export type Sort = "relevance" | "price" | "latest" | "sales";
+export type Sort = "relevancy" | "price" | "latest" | "sales";
 
 export interface ShopeeResponse<T> {
   data: T;
@@ -54,6 +61,8 @@ export interface SearchResponse {
 
 export interface SearchItem extends Item {
   adsid: number | null;
+  // description?: string;
+  // models?: Model[];
 }
 
 export type ItemRating = {
@@ -102,16 +111,7 @@ export interface Item {
 export interface ItemDetailed extends Item {
   historical_sold: number;
   description: string;
-  model: [
-    {
-      price: number;
-      image: string;
-      name: string;
-      extinfo: {
-        tier_index: [number, number];
-      };
-    }
-  ];
+  models: Model[];
 }
 
 export interface Rating {

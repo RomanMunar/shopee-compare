@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { color, font, mixin, shadows } from "../../shared/styles";
+import { color, font, shadows } from "../../shared/styles";
 
 export const MenuWrapper = styled.div`
   width: 100%;

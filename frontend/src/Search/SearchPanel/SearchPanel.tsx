@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Flex from "../../components/Flex";
 import { Icon } from "../../components/Icon";
@@ -8,10 +8,11 @@ import { List, ListItem, SearchItem } from "../../interfaces";
 import { useUI } from "../../shared/contexts/useUIContext";
 import useOnOutsideClick from "../../shared/hooks/useOnOutsideClick";
 import { arrayToNItems, sortBy } from "../../shared/utils/utils";
+import { getSettings } from "../../shared/utils/localStorage";
 import { MenuTitle } from "../Compare/SelectionPanel/SelectionPanel.styles";
 import { Results } from "../Results";
-import { Label, MenuWrapper, SearchPanelStyle } from "./SearchPanel.styles";
 import { SearchBar } from "../SearchBar";
+import { Label, MenuWrapper, SearchPanelStyle } from "./SearchPanel.styles";
 
 interface Props {
   selectedItems: SearchItem[];
@@ -40,6 +41,7 @@ const SearchPanel = ({
     maximizeSearchPanel,
     openHelp,
   } = useUI();
+  const [newest, setNewest] = useState(0);
 
   const $searchPanel = useRef<HTMLDivElement>(null);
   useOnOutsideClick($searchPanel, () => {
@@ -49,8 +51,13 @@ const SearchPanel = ({
       closeSelectPanel();
     }
   });
-  const [params, setParams] = useSearchParams();
+  const [params] = useSearchParams();
   const n = 4;
+  // useEffect(() => {
+  //   arrayToNItems(sortBy(searchResult, "sold"), n).map(
+  //     (row, index) => lists[index + 1].setItems(row) //Plus one because our first element here is the initialselected items list
+  //   );
+  // }, [searchResult]);
   const sort = (sortmethod: keyof SearchItem) =>
     arrayToNItems(sortBy(searchResult, sortmethod), n).map(
       (row, index) => lists[index + 1].setItems(row) //Plus one because our first element here is the initialselected items list
@@ -73,20 +80,20 @@ const SearchPanel = ({
         <ToolbarButton
           tooltipPlace='bottom'
           onClick={() => maximizeSearchPanel()}
-          name='Test'
+          name='Maximize'
           icon='Grid'
         />
-        <ToolbarButton
+        {/* <ToolbarButton
           onClick={() => closeSearchPanel()}
           icon='Close'
           name='Close'
           tooltipPlace='bottom'
-        />
+        /> */}
       </Toolbar>
       <MenuTitle style={{ marginRight: "auto", marginTop: "15px" }}>
         Search
       </MenuTitle>
-      <SearchBar />
+      <SearchBar newest={newest} setNewest={setNewest} />
       <MenuWrapper>
         <Label>Search results for "{params.get("keyword")}"</Label>
         <Flex align='center' justify='center'>
@@ -125,19 +132,42 @@ const SearchPanel = ({
           </Flex>
         </Flex>
       </MenuWrapper>
-      <Flex align='center' justify='flex-start' wrap='wrap' overflow='auto'>
-        {searchResult.map((row, index) => {
-          return (
-            <Results
-              lists={lists}
-              dropId={`results-${index}`}
-              results={row}
-              initialSelectedItems={initialSelectedItems}
-              setInitialSelectedItems={setInitialSelectedItems}
-            />
-          );
-        })}
-      </Flex>
+      {!params.get("keyword") ? (
+        <div
+          style={{
+            padding: "20px 40px",
+            margin: "40px auto",
+            fontSize: "25px",
+            fontFamily: "Roboto-Bold",
+            border: "7px dashed rgb(23 43 88 / 55%)",
+          }}
+        >
+          Hello there 👋👋!!
+          <span
+            style={{
+              fontSize: "18px",
+              fontFamily: "Roboto-Regular",
+              display: "block",
+            }}
+          >
+            type a keyword in the searchbar
+          </span>
+        </div>
+      ) : (
+        <Flex align='center' justify='flex-start' wrap='wrap' overflow='auto'>
+          {searchResult.map((row, index) => {
+            return (
+              <Results
+                lists={lists}
+                dropId={`results-${index}`}
+                results={row}
+                initialSelectedItems={initialSelectedItems}
+                setInitialSelectedItems={setInitialSelectedItems}
+              />
+            );
+          })}
+        </Flex>
+      )}
     </SearchPanelStyle>
   );
 };

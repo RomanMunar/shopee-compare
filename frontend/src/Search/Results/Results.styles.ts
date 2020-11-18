@@ -30,8 +30,8 @@ const GridContainer = styled.div<{ wide?: boolean; layout?: Layout }>`
   ${(props) =>
     props.wide === true
       ? props.layout !== "none"
-        ? "padding: 10px 40px"
-        : "padding: 10px 20px"
+        ? "padding: 10px 30px"
+        : "padding: 10px 10px"
       : ""};
   width: ${(props) => props.wide && "100%"};
   font-size: ${(props) => (props.wide ? "20px" : "13px")};

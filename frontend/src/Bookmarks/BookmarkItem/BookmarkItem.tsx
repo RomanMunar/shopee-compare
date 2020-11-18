@@ -25,7 +25,7 @@ import Flex from "../../components/Flex";
 import toast from "../../shared/hooks/toast";
 import { getSettings } from "../../shared/utils/localStorage";
 import { color } from "../../shared/styles";
-
+import { useNavigate } from "react-router-dom";
 interface Props {
   bookmark: BookMark;
   setSortedBookMarks: React.Dispatch<React.SetStateAction<BookMark[]>>;
@@ -45,7 +45,7 @@ const BookmarkItem = ({
   const [removed, setRemoved] = useState(false); //Optimistic ui update
   const [toolbarShown, setToolbarShown] = useState(false);
   const [ShownRemoveWarning, setShownRemoveWarning] = useState(false);
-
+  const navigate = useNavigate();
   if (removed) {
     return <div />;
   }
@@ -123,7 +123,14 @@ const BookmarkItem = ({
         <Toolbar withoutShadow withoutMargin place='default'>
           <ToolbarButton
             noTransform
-            onClick={() => ""}
+            onClick={() => {
+              const params = new URLSearchParams({
+                items: bookmark.items
+                  .map((i) => i.itemid + " " + i.shopid)
+                  .toString(),
+              });
+              navigate(`/search?${params}`);
+            }}
             tooltipPlace='bottom'
             name='Compare Items'
           >

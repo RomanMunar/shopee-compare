@@ -58,7 +58,7 @@ const GridStats = ({ on, item, layout }: Props) => {
             <Icon size={16} type='PriceLow' />
           )}
           {item.raw_discount && (
-            <Icon size={16} type='Discount' percent={item.raw_discount} />
+            <Icon size={16} type='Discount' percent={item.raw_discount || 0} />
           )}
           {item.item_rating.rating_count[0] !== 0 && (
             <Icon

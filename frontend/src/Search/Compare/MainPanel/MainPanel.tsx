@@ -38,7 +38,11 @@ const MainPanel = ({
         <Compare layout={layout} isDraggingOver={snapshot.isDraggingOver}>
           <Flex align='flex-end' justify='space-between'>
             <MenuTitle>Compare</MenuTitle>
-            <Toolbar withoutMargin place='right-top'>
+            <Toolbar
+              style={{ marginLeft: "85px" }}
+              withoutMargin
+              place='right-top'
+            >
               <ToolbarButton
                 onClick={() => {
                   setLayout("main");
@@ -69,7 +73,12 @@ const MainPanel = ({
               />
             </Toolbar>
             <Toolbar withoutMargin place='right-top'>
-              <span onClick={() => openCompareSummary()}>Show Summary</span>
+              <span
+                style={{ cursor: "pointer" }}
+                onClick={() => openCompareSummary()}
+              >
+                Show Summary
+              </span>
               <ToolbarButton
                 onClick={() => openAddToBookmarks()}
                 name='Add to bookmarks'

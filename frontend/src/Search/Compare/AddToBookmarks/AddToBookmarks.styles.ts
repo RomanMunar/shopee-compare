@@ -49,9 +49,14 @@ export const InputElement = styled.input<{ invalid?: boolean }>`
     `}
 `;
 
-export const TextAreaElement = styled.textarea<{ invalid?: boolean }>`
-  height: 100px;
-  width: 100%;
+export const TextAreaElement = styled.textarea<{
+  height?: string;
+  width?: number;
+  invalid?: boolean;
+}>`
+  ${(props) => (props.height ? props.height + "px" : "height: 100px")};
+  ${(props) => (props.width ? props.width + "%" : "width: 100%")};
+  resize: none;
   border-radius: 5px;
   border: 1px solid #dfe1e6;
   color: #172b4d;

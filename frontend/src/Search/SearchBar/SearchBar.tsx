@@ -17,14 +17,11 @@ interface Props {
   newest: number;
 }
 
-const SearchBar = ({
-  newest,
-  setNewest,
-}: Props): ReactElement => {
+const SearchBar = ({ newest, setNewest }: Props): ReactElement => {
   const { preference } = getSettings();
   const [params, setParams] = useSearchParams();
   const search = () => setParams({ ...params, ...paramsSession });
-  const [isReady, cancel, reset] = useTimeoutFn(search, 1000);
+  const [, cancel, reset] = useTimeoutFn(search, 1000);
   // This is page btw
   const [order] = useState<"desc" | "asc">("desc");
   const [keywordInput, setKeywordInput] = useState("");

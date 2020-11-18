@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Flex from "../../components/Flex";
 import { Icon } from "../../components/Icon";
@@ -8,7 +8,6 @@ import { List, ListItem, SearchItem } from "../../interfaces";
 import { useUI } from "../../shared/contexts/useUIContext";
 import useOnOutsideClick from "../../shared/hooks/useOnOutsideClick";
 import { arrayToNItems, sortBy } from "../../shared/utils/utils";
-import { getSettings } from "../../shared/utils/localStorage";
 import { MenuTitle } from "../Compare/SelectionPanel/SelectionPanel.styles";
 import { Results } from "../Results";
 import { SearchBar } from "../SearchBar";

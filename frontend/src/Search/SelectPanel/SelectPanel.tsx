@@ -36,7 +36,7 @@ const SelectPanel = ({
     closeOverlay,
     maximizeSearchPanel,
   } = useUI();
-  const [_, setParams] = useSearchParams();
+  const [, setParams] = useSearchParams();
   const onRemoveClick = (itemid: number) => {
     setInitialSelectedItems((prev) =>
       prev.filter((res) => itemid !== res.item.itemid)

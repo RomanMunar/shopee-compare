@@ -1,3 +1,4 @@
+import html2canvas from "html2canvas";
 import React, { useEffect, useRef, useState } from "react";
 import Flex from "../../../components/Flex";
 import { Icon, Trophy } from "../../../components/Icon";
@@ -30,12 +31,42 @@ const CompareSummary = ({ selectedItems }: { selectedItems: SearchItem[] }) => {
   const [sortOption, setSorOption] = useState<
     "price" | "rating" | "sales" | "likes" | "name"
   >("price");
-  const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
-  const [reponses, setReponses] = useState<SearchItem[]>(
+  const [responses, setResponses] = useState<SearchItem[]>(
     filterByUniqueField(selectedItems, "itemid")
   );
   const $summaryRef = useRef<HTMLDivElement>(null);
   const keyPressed = useKeyPress("Escape");
+  const byName = (items: SearchItem[]) =>
+    items.sort(function (a, b) {
+      var nameA = a.name.toUpperCase();
+      var nameB = b.name.toUpperCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+  const byPrice = (items: SearchItem[]) =>
+    items.sort((a, b) => a.price - b.price);
+  const byRating = (items: SearchItem[]) =>
+    items.sort(
+      (a, b) => a.item_rating.rating_count[0] - b.item_rating.rating_count[0]
+    );
+  const bySales = (items: SearchItem[]) =>
+    items.sort((a, b) => b.sold - a.sold);
+  const byLikes = (items: SearchItem[]) =>
+    items.sort((a, b) => b.liked_count - a.liked_count);
+
+  const winnersCalculate = {
+    name: [...byName(selectedItems).map((i) => i.itemid)],
+    rating: [...byRating(selectedItems).map((i) => i.itemid)],
+    sales: [...bySales(selectedItems).map((i) => i.itemid)],
+    likes: [...byLikes(selectedItems).map((i) => i.itemid)],
+    price: [...byPrice(selectedItems).map((i) => i.itemid)],
+  };
+
   useEffect(() => {
     if (keyPressed) {
       handleClose();
@@ -49,53 +80,25 @@ const CompareSummary = ({ selectedItems }: { selectedItems: SearchItem[] }) => {
     closeOverlay();
     closeCompareSummary();
   };
-  const byName = () =>
-    setReponses(
-      selectedItems.sort(function (a, b) {
-        var nameA = a.name.toUpperCase(); // ignore upper and lowercase
-        var nameB = b.name.toUpperCase(); // ignore upper and lowercase
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-
-        // names must be equal
-        return 0;
-      })
-    );
-  const byPrice = () =>
-    setReponses(selectedItems.sort((a, b) => a.price - b.price));
-  const byRating = () =>
-    setReponses(
-      selectedItems.sort(
-        (a, b) => a.item_rating.rating_count[0] - b.item_rating.rating_count[0]
-      )
-    );
   useEffect(() => {
     switch (sortOption) {
       case "name":
-        byName();
+        setResponses(byName(responses));
         break;
       case "price":
-        byPrice();
+        setResponses(byPrice(responses));
         break;
       case "sales":
-        bySales();
+        setResponses(bySales(responses));
         break;
       case "rating":
-        byRating();
+        setResponses(byRating(responses));
         break;
       case "likes":
-        byLikes();
+        setResponses(byLikes(responses));
         break;
     }
   }, [sortOption]);
-  const bySales = () =>
-    setReponses(selectedItems.sort((a, b) => b.sold - a.sold));
-  const byLikes = () =>
-    setReponses(selectedItems.sort((a, b) => b.liked_count - a.liked_count));
   // Note: For consistency, I named them type instead of icon
   const headings: { name: string; type: IconType }[] = [
     { name: "Name", type: "Product" },
@@ -104,8 +107,21 @@ const CompareSummary = ({ selectedItems }: { selectedItems: SearchItem[] }) => {
     { name: "Sales", type: "Sales" },
     { name: "Likes", type: "Like" },
   ];
-  const randomNum = () => parseInt(((Math.random() * 10) / 4).toFixed()); // random from 0-2
+  const onExport = () => {
+    const screenshotTarget: HTMLElement =
+      document.querySelector(`#summary`) || document.body;
 
+    html2canvas(screenshotTarget).then((canvas) => {
+      const image = canvas
+        .toDataURL("image/png")
+        .replace("image/png", "image/octet-stream");
+      let link = document.createElement("a"); // Which creates anchor tag
+      link.href = image; // data:image/octet-stream;base64,iVBORw0KGgoAAAAAAAA...
+      link.download = "image.png"; // New image name
+      link.innerHTML = "Download";
+      link.click();
+    });
+  };
   useEffect(() => {
     openOverlay();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -114,7 +130,7 @@ const CompareSummary = ({ selectedItems }: { selectedItems: SearchItem[] }) => {
   return (
     <DialogWrapper guide='search' ref={$summaryRef}>
       <ToolbarWrapper>
-        <Toolbar place='right-top'>
+        <Toolbar onClick={onExport} place='right-top'>
           Export to PDF
           <ToolbarButton
             tooltipPlace='bottom'
@@ -132,7 +148,7 @@ const CompareSummary = ({ selectedItems }: { selectedItems: SearchItem[] }) => {
           />
         </Toolbar>
       </ToolbarWrapper>
-      <Table>
+      <Table id='summary'>
         <TableHeader style={{ lineHeight: "40px" }}>
           <TableRow>
             {headings.map(({ type, name }) => (
@@ -146,7 +162,7 @@ const CompareSummary = ({ selectedItems }: { selectedItems: SearchItem[] }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {reponses.map((r, index) => {
+          {responses.map((r, index) => {
             const types: ["gold", "silver", "bronze"] = [
               "gold",
               "silver",
@@ -154,28 +170,79 @@ const CompareSummary = ({ selectedItems }: { selectedItems: SearchItem[] }) => {
             ];
             const { price, price_max, price_min } = r;
             return (
-              <tr style={{ background: index ? "none" : "#dadada" }}>
+              <tr style={{ background: index % 2 ? "none" : "#dadada" }}>
                 <TableData>
                   <Item>
                     <ResultItemImage src={r.image} direction='left' />
-                    <ProductTitle>
-                      {r.name.replace(/[^a-zA-Z0-9 ]/g, "")}
-                    </ProductTitle>
+                    <ProductTitle>{r.name}</ProductTitle>
                   </Item>
                 </TableData>
                 <TableData>
-                  <Trophy type={types[randomNum()]} size={13} />
-                  {priceCompare({ price, price_max, price_min })}
+                  {winnersCalculate.price.slice(0, 3).includes(r.itemid) ? (
+                    <Trophy
+                      type={
+                        types[
+                          winnersCalculate.price.findIndex(
+                            (p) => p === r.itemid
+                          )
+                        ]
+                      }
+                      size={13}
+                    />
+                  ) : (
+                    winnersCalculate.price.findIndex((p) => p === r.itemid) +
+                    1 +
+                    "th "
+                  )}
+                  ₱{priceCompare({ price, price_max, price_min })}
                 </TableData>
                 <TableData>
                   <Flex align='center' justify='center' wrap='nowrap'>
-                    <Trophy type={types[randomNum()]} size={13} />
+                    {winnersCalculate.rating.slice(0, 3).includes(r.itemid) ? (
+                      <Trophy
+                        type={
+                          types[
+                            winnersCalculate.rating.findIndex(
+                              (p) => p === r.itemid
+                            )
+                          ]
+                        }
+                        size={13}
+                      />
+                    ) : (
+                      <span>
+                        {winnersCalculate.rating.findIndex(
+                          (p) => p === r.itemid
+                        ) +
+                          1 +
+                          "th "}
+                      </span>
+                    )}
                     <span>{r.item_rating.rating_star.toFixed(1)}</span>
                   </Flex>
                 </TableData>
                 <TableData>
                   <Flex align='center' justify='center' wrap='nowrap'>
-                    <Trophy type={types[randomNum()]} size={13} />
+                    {winnersCalculate.sales.slice(0, 3).includes(r.itemid) ? (
+                      <Trophy
+                        type={
+                          types[
+                            winnersCalculate.sales.findIndex(
+                              (p) => p === r.itemid
+                            )
+                          ]
+                        }
+                        size={13}
+                      />
+                    ) : (
+                      <span>
+                        {winnersCalculate.sales.findIndex(
+                          (p) => p === r.itemid
+                        ) +
+                          1 +
+                          "th "}
+                      </span>
+                    )}
                     <div>
                       {r.sold}
                       <Small on='compare'> sold/mon </Small>
@@ -184,7 +251,26 @@ const CompareSummary = ({ selectedItems }: { selectedItems: SearchItem[] }) => {
                 </TableData>
                 <TableData>
                   <Flex align='center' justify='center' wrap='nowrap'>
-                    <Trophy type={types[randomNum()]} size={13} />
+                    {winnersCalculate.likes.slice(0, 3).includes(r.itemid) ? (
+                      <Trophy
+                        type={
+                          types[
+                            winnersCalculate.likes.findIndex(
+                              (p) => p === r.itemid
+                            )
+                          ]
+                        }
+                        size={13}
+                      />
+                    ) : (
+                      <span>
+                        {winnersCalculate.likes.findIndex(
+                          (p) => p === r.itemid
+                        ) +
+                          1 +
+                          "th "}
+                      </span>
+                    )}
                     <span>{r.liked_count}</span>
                   </Flex>
                 </TableData>

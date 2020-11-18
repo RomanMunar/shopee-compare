@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import { useSearchParams } from "react-router-dom";
 import { Layout, List, ListItem, SearchItem } from "../../interfaces";
 import { useUI } from "../../shared/contexts/useUIContext";
-import { makeListItems, move, reorder } from "../../shared/utils/utils";
 import { getDialogs, getSettings } from "../../shared/utils/localStorage";
+import { makeListItems, move, reorder } from "../../shared/utils/utils";
+import { AddToBookmarks } from "./AddToBookmarks";
 import { CompareContainer, EmptyContainer, Title } from "./Compare.styles";
 import { CompareGuide } from "./CompareGuide";
-import { AddToBookmarks } from "./AddToBookmarks";
 import { CompareSummary } from "./CompareSummary";
 import { MainPanel } from "./MainPanel";
 import { SelectionPanel } from "./SelectionPanel";
-import { useSearchParams } from "react-router-dom";
 
 export default ({
   selectedItems,
@@ -25,14 +25,26 @@ export default ({
 }) => {
   const dialogs = getDialogs();
   const [params] = useSearchParams();
-  const items = params.get("items");
-  if (items) {
-    // setSelectedItems();
-  }
+  useEffect(() => {
+    const items = params.get("items"); // returns [[itemid,shopid],[itemid,shopid]]
+    if (items) {
+      items.split(",").map((i) => {
+        const [itemid, shopid] = i.split(" ");
+        const fetchItem = async () => {
+          await fetch(`/item/get?itemid=${itemid}&shopid=${shopid}`)
+            .then((r) => r.json())
+            .then((n) => setSelectedItems((prev) => [...prev, n.data]));
+        };
+        fetchItem();
+      });
+      return;
+    }
+  }, []);
   const selectedItemsList = makeListItems(selectedItems);
   const [mainItem, setMainItem] = useState(selectedItemsList.slice(0, 2));
   const [sideItems, setSideItems] = useState(selectedItemsList.slice(2));
   const [layout, setLayout] = useState<Layout>(getSettings().preference.layout);
+
   const lists: List[] = [
     {
       setItems: setMainItem,
@@ -97,8 +109,7 @@ export default ({
   if (selectedItems.length <= 0) {
     return (
       <EmptyContainer>
-        <Title>Hey Search</Title> Search Some items then drag them in this area
-        so I can render them
+        <Title>Hey Search</Title>
       </EmptyContainer>
     );
   }

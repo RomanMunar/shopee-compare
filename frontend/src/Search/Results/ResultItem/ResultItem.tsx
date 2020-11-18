@@ -32,9 +32,7 @@ const ResultItem = ({
     .includes(item.itemid);
   return (
     <Draggable
-      isDragDisabled={initialSelectedItems
-        .map((i) => i.itemid)
-        .includes(item.itemid)}
+      isDragDisabled={selected}
       key={"compare-item-" + itm.itemid}
       draggableId={`res-${item.itemid}`}
       index={index}

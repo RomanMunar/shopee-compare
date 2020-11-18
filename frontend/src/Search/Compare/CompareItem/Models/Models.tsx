@@ -4,7 +4,7 @@ import Flex from "../../../../components/Flex";
 import { Model } from "../../../../interfaces";
 import { kFormatter, trimPrice } from "../../../../shared/utils/utils";
 import { DescriptionTitle, SectionTitle } from "../CompareItem.styles";
-import { ModelsContainer, ModelItem, Title } from "./Models.styles";
+import { ModelItem, Title } from "./Models.styles";
 
 interface Props {
   models: Model[];

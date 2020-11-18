@@ -1,10 +1,8 @@
 import React, { ReactElement, useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import { List, ListItem, SearchItem } from "../../interfaces";
-import { useUI } from "../../shared/contexts/useUIContext";
-import { getSettings } from "../../shared/utils/localStorage";
 import { ResultItem } from "./ResultItem/";
-import { AddRowButton, ResultSection } from "./Results.styles";
+import { ResultSection } from "./Results.styles";
 
 type Props = {
   results: ListItem<SearchItem>[];

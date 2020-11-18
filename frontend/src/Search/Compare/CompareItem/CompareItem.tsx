@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { ratings } from "../../../App/apireponses/mockRatings";
 import { Draggable } from "react-beautiful-dnd";
 import ReactTooltip from "react-tooltip";
 import { Author } from "../../../components/Author";
@@ -10,15 +9,25 @@ import { Icon } from "../../../components/Icon";
 import { Select } from "../../../components/Select";
 import { ToolbarButton } from "../../../components/Toolbar";
 import { Toolbar } from "../../../components/Toolbar/Styles";
-import { Layout, ListItem, SearchItem } from "../../../interfaces";
+import {
+  Layout,
+  ListItem,
+  Model,
+  Rating,
+  SearchItem,
+  Shop
+} from "../../../interfaces";
+import toast from "../../../shared/hooks/toast";
 import { useCopyToClipboard } from "../../../shared/hooks/useCopyToClipboard";
 import { MultipleImage } from "../MultipleImage";
+import { Indexes, SubImages } from "../MultipleImage/MultipleImage.styles";
 import { SellerInfo } from "../SellerInfo";
 import {
   CItem,
   CompareItemTitle,
   DescriptionParagraph,
   DescriptionTitle,
+  PaginationWrapper,
   RatingBar,
   RatingCount,
   RatingItem,
@@ -29,11 +38,10 @@ import {
   SellerSection,
   Title,
   ToolbarWrapper,
+  UpperpartContainer
 } from "./CompareItem.styles";
+import Models from "./Models/Models";
 import Tags from "./Tags";
-import toast from "../../../shared/hooks/toast";
-import { Indexes, SubImages } from "../MultipleImage/MultipleImage.styles";
-import { getSettings } from "../../../shared/utils/localStorage";
 
 interface Props {
   res: ListItem<SearchItem>;
@@ -50,32 +58,19 @@ const CompareItem = ({
   selectedItems,
   layout,
   res,
-  index,
   on,
   setInitialSelectedItems,
+  index,
 }: Props) => {
-  const isDndAllowed = getSettings().action.includes("DndInNoLayout");
   const [isDescriptionHidden, setIsDescriptionHidden] = useState(true);
-  const [isRatingsHidden, setIsRatingsHidden] = useState(true);
+  const [isRatingsHidden] = useState(true);
   const [isRatingsSummaryHidden, setIsRatingsSummaryHidden] = useState(true);
+  const [isRatingsFetched, setIsRatingsFetched] = useState(false);
   const [ratingsOption, setRatingsOption] = useState<
     "Lowest" | "Highest" | "Recent"
   >();
-  useEffect(() => {
-    switch (ratingsOption) {
-      case "Highest":
-        // setRatings( fetch item rating)
-        break;
-      case "Lowest":
-        // setRatings( fetch item rating)
-        break;
-      case "Recent":
-        // setRatings( fetch item rating)
-        break;
-    }
-  }, [ratingsOption]);
-  const str =
-    "\u3010Noise Cancelling Microphone&Headphone\u3011New Upgrade online class headset noise cancellation mic with Dual \n  3.5mm port and built-in noise reduction headphones\n                                  ************ Focus on online class use\uff0ckeep to upgrade*********\n    \n   -----------------------------------------------------\n  New Upgrade(Noise Reduction Mic):\n  -----------------------------------------------------\n  \u2605\u2605\u2605 Noise Cancellation Mic \u2605\u2605\u2605\n   -----------------------------------------------------\n  \u2605\u2605\u2605 Mic And Voice Volume Wire Control \u2605\u2605\u2605\n\nTips:\n\u2606Noise Reduction Mic \u2606----------Noise Cancellation Mic+Mic And Voice Volume Wire Control+Free splitter cable\n\u2606Grey\uff08Dual 3.5MM\uff09\u2606-----------Use for Computer. No have Mic and Voice Volume Control on the Headset Wire\n\u2606Gold(Dual 3.5mm\uff09\u2606-----------Use for Computer. No have Mic and Voice Volume Control on the Headset Wire\n\u2606White(Dual 3.5mm\uff09\u2606-----------Use for Computer. No have Mic and Voice Volume Control on the Headset Wire\n\n\u2606Grey\uff08Single 3.5MM\uff09\u2606-----------Use for Laptop and Mobile Phone. No have Mic and Voice Volume Control on the Headset Wire\n\u2606Gold\uff08Single 3.5MM\uff09\u2606-----------Use for Laptop and Mobile Phone. No have Mic and Voice Volume Control on the Headset Wire\n\n\n      Please buy from Us. Because:\n   1>We are only one Official Authorized dealer in Shopee. \n   2>Only us have the After-sale service.\n   3>Only us have stock\n\n\n   \u3010Ready Stock\u3011\n     \ud83d\udc4d100% brand new and high quality\n\n   1>Type\uff1a3.5MM Jack Port\n   2>Length\uff1a1.8M      weight: 270g\n   3>Color:Grey/Gold/White\n   4>Line quilt Material: Nylon Braided\n\n    Design\uff1aComfortable to wear\n    \ud83d\udc4dFast Shipment: Send out within 2 days!!\n\n     Package\uff1a\n    \ud83d\udc4dHave retail package\n\n\n   \ud83d\udc96If you like our store ,please follow our store to get more discount in the future!!\ud83d\udc96\n   \ud83c\udf81To be our follower,get surprise now!!!\ud83c\udf81\n\n\n#headphone #headphones #headset #online classes #online class #business #business headset #Business headset";
+  const [description, setDescription] = useState();
+  const [ratings, setRatings] = useState<Rating[]>([]);
   const [copied, copy] = useCopyToClipboard(
     `https://shopee.ph/${res.item.name.replace(/\s/gi, "-")}-i.${
       res.item.shopid
@@ -97,15 +92,64 @@ const CompareItem = ({
       prev.filter((item) => item.item.itemid !== res.item.itemid)
     );
   };
-
   const [showToolbar, setShowToolbar] = useState(false);
+  const [shop, setShop] = useState<Shop>();
+  const [models, setModels] = useState<Model[]>();
+  const [offset, setOffset] = useState(0);
+  // &type=0 All
+  // &type=5 5 stars only
+  // &type=5 4 stars only
+  //  ...
+  // &filter=3 With Media
+  // &filter=1 With Comments
+  const [type] = useState(0);
+  const [filter] = useState(0);
+  useEffect(() => {
+    // fetch
+    if (on !== "main") return;
+    // checks if we already have info we need return if yes
+    // @ts-ignore
+    if (description || res.item!.description) return;
+    // @ts-ignore
+    if (models || res.item!.models) return;
+    if (shop) return;
+    fetch(`/item/get?itemid=${res.item.itemid}&shopid=${res.item.shopid}`)
+      .then((res) => res.json())
+      .then((item) => {
+        setModels(item.data.models);
+        setDescription(item.data.description);
+      });
+
+    fetch(`/shop/get?shopid=${res.item.shopid}`)
+      .then((res) => res.json())
+      .then((shop) => setShop(shop.data));
+  }, [on]);
+
+  useEffect(() => {
+    if (on !== "main") return;
+    if (isRatingsFetched && offset === 0) return;
+    setIsRatingsFetched(true);
+    const params = new URLSearchParams({
+      offset: offset.toString(),
+      filter: filter.toString(),
+      type: type.toString(),
+      itemid: res.item.itemid.toString(),
+      shopid: res.item.shopid.toString(),
+      limit: "10",
+    });
+    fetch(`/item/get_ratings?${params.toString()}`)
+      .then((res) => res.json())
+      .then((r) => setRatings(r.data));
+  }, [offset, filter, type]);
 
   return (
     <Draggable
       key={"draggable-ci-" + res.itemid}
       draggableId={`res-${res.itemid}`}
       index={index}
-      isDragDisabled={on === "main" && layout === "none" && !isDndAllowed}
+      isDragDisabled={
+        (layout !== "none" && on === "main") || on !== "selection"
+      }
     >
       {(provided, snapshot) => (
         <CItem
@@ -133,53 +177,79 @@ const CompareItem = ({
             </ToolbarWrapper>
           )}
           <MultipleImage layout={layout} on={on} srcs={res.item.images} />
-          <CompareItemTitle on={on} layout={layout}>
-            <Title>
-              {res.item.name
-                .replace(/[^a-zA-Z0-9 ]/g, "")
-                .split(" ")
-                .map((word) => (word.length > 10 ? "" : word + " "))}
-            </Title>
+          <UpperpartContainer>
+            <CompareItemTitle on={on} layout={layout}>
+              <Title>
+                {res.item.name
+                  .replace(/[^a-zA-Z0-9 ]/g, "")
+                  .split(" ")
+                  .map((word) => (word.length > 10 ? "" : word + " "))}
+              </Title>
+              {on === "main" && (
+                <>
+                  <div
+                    onClick={() => {
+                      if (typeof copy === "boolean") {
+                        return copy;
+                      } else {
+                        return copy();
+                      }
+                    }}
+                    style={{ minWidth: "20px" }}
+                    data-for={`clipboard-${index}`}
+                    data-tip
+                  >
+                    <Icon type='Clipboard' size={18} />
+                  </div>
+                  <ReactTooltip
+                    className={"extraClass"}
+                    place='bottom'
+                    type={"success"}
+                    effect='float'
+                    arrowColor='rgba(0,0,0,0)'
+                    id={`clipboard-${index}`}
+                  >
+                    {copied ? "Copied !" : "Click to copy link"}
+                  </ReactTooltip>
+                </>
+              )}
+            </CompareItemTitle>
             {on === "main" && (
               <>
-                <div
-                  onClick={() => {
-                    if (typeof copy === "boolean") {
-                      return copy;
-                    } else {
-                      return copy();
-                    }
-                  }}
-                  style={{ minWidth: "20px" }}
-                  data-for={`clipboard-${index}`}
-                  data-tip
-                >
-                  <Icon type='Clipboard' size={18} />
-                </div>
-                <ReactTooltip
-                  className={"extraClass"}
-                  place='bottom'
-                  type={"success"}
-                  effect='float'
-                  arrowColor='rgba(0,0,0,0)'
-                  id={`clipboard-${index}`}
-                >
-                  {copied ? "Copied !" : "Click to copy link"}
-                </ReactTooltip>
+                {models ||
+                  /*//@ts-ignore */
+                  (res.item!.models && (
+                    <Models
+                      /*//@ts-ignore */
+                      models={models || res.item!.models}
+                    />
+                  ))}
+                <GridStats layout={layout} item={res.item} on='compare' />
+                <Tags item={res.item} />
               </>
             )}
-          </CompareItemTitle>
+          </UpperpartContainer>
           {on === "main" && (
             <>
-              <GridStats layout={layout} item={res.item} on='compare' />
-              <Tags item={res.item} />
-              <SellerSection>
-                <Author />
-                <SellerInfo />
-              </SellerSection>
+              {shop && (
+                <SellerSection>
+                  <Author
+                    aveStar={shop.account.total_avg_star}
+                    name={shop.name}
+                    src={shop.account.portrait}
+                  />
+                  <SellerInfo
+                    follower_count={shop.follower_count}
+                    response_rate={shop.response_rate}
+                    response_time={shop.response_time}
+                    last_active_time={shop.last_active_time}
+                  />
+                </SellerSection>
+              )}
               <div
                 style={{
                   padding: layout === "main" ? "20px 55px" : "10px 20px",
+                  width: "100%",
                 }}
               >
                 <SectionWrapper>
@@ -196,7 +266,10 @@ const CompareItem = ({
                     </Button>
                   </SectionTitle>
                   {isDescriptionHidden && (
-                    <DescriptionParagraph on='main'>{str}</DescriptionParagraph>
+                    <DescriptionParagraph on='main'>
+                      {/* @ts-ignore */}
+                      {description || res.item!.description}
+                    </DescriptionParagraph>
                   )}
                 </SectionWrapper>
                 <SectionWrapper>
@@ -232,7 +305,16 @@ const CompareItem = ({
                                   res.item.item_rating.rating_count[0]) *
                                 100
                               }
-                            ></RatingBar>
+                            />
+                            <span
+                              style={{ marginLeft: "5px", fontSize: "13px" }}
+                            >
+                              {(
+                                (rating /
+                                  res.item.item_rating.rating_count[0]) *
+                                100
+                              ).toFixed(1) + "%"}
+                            </span>
                           </RatingItem>
                         ))}
                     </RatingsSummary>
@@ -241,92 +323,122 @@ const CompareItem = ({
                 <SectionWrapper>
                   <SectionTitle>
                     <DescriptionTitle>Ratings</DescriptionTitle>
+                    <Select
+                      selectedOption={ratingsOption}
+                      setSelectedOption={setRatingsOption}
+                      title='Options'
+                      options={["Any", "With media", "With comment"]}
+                    />
                     {/*//@ts-ignore */}
-                    <Button
+                    {/* <Button
                       variant='secondary'
                       onClick={() => setIsRatingsHidden(!isRatingsHidden)}
                     >
                       <span>{isRatingsHidden ? "Hide" : "Show"}</span>
+                    </Button> */}
+                  </SectionTitle>
+                  <PaginationWrapper>
+                    {/*//@ts-ignore */}
+                    <Button
+                      variant='primary'
+                      onClick={() => setOffset(offset - 10)}
+                    >
+                      <span>Prev</span>
                     </Button>
-                  </SectionTitle>
-                  <SectionTitle>
-                    <Select
-                      selectedOption={ratingsOption}
-                      setSelectedOption={setRatingsOption}
-                      title='Sort By'
-                      options={["Lowest", "Highest", "Recent"]}
-                    />
-                    <span>Ratings 1-10</span>
-                  </SectionTitle>
+                    <span>Show only:</span>
+                    <span>
+                      1<Icon type='Star' size={13} />
+                    </span>
+                    <span>
+                      2<Icon type='Star' size={13} />
+                    </span>
+                    <span>
+                      3<Icon type='Star' size={13} />
+                    </span>
+                    <span>
+                      4<Icon type='Star' size={13} />
+                    </span>
+                    <span>
+                      5<Icon type='Star' size={13} />
+                    </span>
+                    {/*//@ts-ignore */}
+                    <Button
+                      variant='primary'
+                      onClick={() => setOffset(offset + 10)}
+                    >
+                      <span>Next</span>
+                    </Button>
+                  </PaginationWrapper>
                   {isRatingsHidden && (
                     <RatingsWrapper layout={layout}>
                       {ratings.map((rate) => (
-                        <div
-                          style={{
-                            display: "flex",
+                        /*                             display: "flex",
                             justifyContent: "center",
                             borderBottom: "1px solid rgba(0,0,0,0.5)",
-                            padding: "20px 0",
-                          }}
+                            padding: "20px 0", */
+                        <Flex
+                          style={{ minWidth: "100%" }}
+                          justify='flex-start'
+                          margin='10px 0'
+                          borderBottom='1px solid rgba(0,0,0,0.5)'
+                          dir='column'
                         >
-                          <Flex style={{ minWidth: "100%" }} dir='column'>
-                            <Author
-                              name={rate.author_username}
-                              src={rate.author_portrait}
-                              aveStar={rate.rating_star}
-                            />
-                            <div style={{ width: "80%", marginLeft: "40px" }}>
-                              <DescriptionParagraph>
-                                {rate.comment}
-                              </DescriptionParagraph>
-                              {rate.images ? (
-                                <div style={{ minHeight: "80px" }}>
-                                  <Indexes on='ratings'>
-                                    {rate.images.map((src, index) => (
-                                      <>
-                                        <SubImages
-                                          active={false}
-                                          key={`index-${index}-of-${src}`}
+                          <Author
+                            name={rate.author_username}
+                            src={rate.author_portrait}
+                            aveStar={rate.rating_star}
+                          />
+                          <div style={{ width: "80%", marginLeft: "40px" }}>
+                            <DescriptionParagraph>
+                              {rate.comment}
+                            </DescriptionParagraph>
+                            {rate.images ? (
+                              <div style={{ minHeight: "80px" }}>
+                                <Indexes on='ratings'>
+                                  {rate.images.map((src, index) => (
+                                    <>
+                                      <SubImages
+                                        active={false}
+                                        key={`index-${index}-of-${src}`}
+                                        src={"https://cf.shopee.ph/file/" + src}
+                                        data-for={`rating-img-${src}`}
+                                        data-tip
+                                      />
+                                      <ReactTooltip
+                                        className={"extraClass"}
+                                        place='bottom'
+                                        effect='float'
+                                        arrowColor='rgba(0,0,0,0)'
+                                        id={`rating-img-${src}`}
+                                      >
+                                        <img
+                                          alt={`${rate.author_username} rating`}
                                           src={
                                             "https://cf.shopee.ph/file/" + src
                                           }
-                                          data-for={`rating-img-${src}`}
-                                          data-tip
+                                          style={{
+                                            width: "300px",
+                                            height: "300px",
+                                          }}
                                         />
-                                        <ReactTooltip
-                                          className={"extraClass"}
-                                          place='bottom'
-                                          effect='float'
-                                          arrowColor='rgba(0,0,0,0)'
-                                          id={`rating-img-${src}`}
-                                        >
-                                          <img
-                                            src={
-                                              "https://cf.shopee.ph/file/" + src
-                                            }
-                                            style={{
-                                              width: "300px",
-                                              height: "300px",
-                                            }}
-                                          />
-                                        </ReactTooltip>
-                                      </>
-                                    ))}
-                                  </Indexes>
-                                </div>
-                              ) : (
-                                <div
-                                  style={{
-                                    padding: "10px",
-                                    border: "2px dashed #2F88FF",
-                                  }}
-                                >
-                                  No image
-                                </div>
-                              )}
-                            </div>
-                          </Flex>
-                        </div>
+                                      </ReactTooltip>
+                                    </>
+                                  ))}
+                                </Indexes>
+                              </div>
+                            ) : (
+                              <div
+                                style={{
+                                  padding: "10px",
+                                  border: "2px dashed #2F88FF",
+                                  marginBottom: "20px",
+                                }}
+                              >
+                                No image
+                              </div>
+                            )}
+                          </div>
+                        </Flex>
                       ))}
                     </RatingsWrapper>
                   )}

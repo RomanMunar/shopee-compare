@@ -37,7 +37,7 @@ const Tags = ({ item }: Props) => {
     },
   ];
   return (
-    <Flex wrap='wrap' padding='0 15px'>
+    <Flex wrap='wrap'>
       {tags.map(
         ({ field, type, name, percent }) =>
           field && (

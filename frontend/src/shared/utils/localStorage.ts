@@ -56,7 +56,6 @@ export const getUserID = () => {
 
 export type Action =
   | "blockSeller"
-  | "addRow"
   | "expandBookmarks"
   | "autoPin"
   | "DndInNoLayout";
@@ -82,7 +81,7 @@ const defaultSettings: Settings = {
       "-2",
     ],
   },
-  action: ["addRow", "expandBookmarks", "autoPin", "DndInNoLayout"],
+  action: [ "expandBookmarks", "autoPin", "DndInNoLayout"],
 };
 const defaultDialogs: Dialogs = ["showHelpGuide", "showCompareGuide"];
 const getDialogs = (): Dialogs => {

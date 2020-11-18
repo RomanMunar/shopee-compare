@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { color, font } from "../../shared/styles";
+import { color } from "../../shared/styles";
 
 export const SelectContainer = styled.div`
   position: relative;
@@ -14,7 +14,6 @@ export const SelectButton = styled.button`
   align-items: center;
   border: 0px;
   background-color: transparent;
-  ${font.medium}
   color: #172b4d;
   margin-left: -5px;
   text-align-last: right;

@@ -36,26 +36,27 @@ const SelectPanel = ({
     closeOverlay,
     maximizeSearchPanel,
   } = useUI();
-  const [, setParams] = useSearchParams();
+  const [params, setParams] = useSearchParams();
   const onRemoveClick = (itemid: number) => {
     setInitialSelectedItems((prev) =>
       prev.filter((res) => itemid !== res.item.itemid)
     );
   };
   const onSelectItemsSubmit = () => {
+    if (initialSelectedItems.length < 2) {
+      return toast.show({
+        type: "primary",
+        message: "Please select atleast 2 items",
+      });
+    }
+
+    console.log(params.toString());
     setParams({
       items: initialSelectedItems
         .map((i) => i.item.itemid + " " + i.item.shopid)
         .toString(),
+      ...params,
     });
-    if (initialSelectedItems.length < 2) {
-      toast.show({
-        type: "primary",
-        message: "Please select atleast 2 items",
-      });
-      return;
-    }
-
     setSelectedItems((prev) => [
       ...prev,
       ...initialSelectedItems.map((isi) => isi.item),

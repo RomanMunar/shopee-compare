@@ -131,7 +131,7 @@ const SearchPanel = ({
           </Flex>
         </Flex>
       </MenuWrapper>
-      {!params.get("keyword") ? (
+      {searchResult.length <= 0 ? (
         <div
           style={{
             padding: "20px 40px",

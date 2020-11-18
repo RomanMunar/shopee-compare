@@ -106,13 +106,7 @@ const CompareItem = ({
   const [filter] = useState(0);
 
   useEffect(() => {
-    // fetch
     if (on !== "main") return;
-    // checks if we already have info we need return if yes
-    // @ts-ignore
-    // @ts-ignore
-
-    console.log("through");
     const fetchItem = async () => {
       await fetch(
         `/api/item/get?itemid=${res.item.itemid}&shopid=${res.item.shopid}`
@@ -125,9 +119,6 @@ const CompareItem = ({
     };
     fetchItem();
   }, []);
-  useEffect(() => {
-    console.log(models);
-  }, [models]);
 
   useEffect(() => {
     if (shop) return;
@@ -141,8 +132,6 @@ const CompareItem = ({
     fetchItemSeller();
   }, []);
   useEffect(() => {
-    if (on !== "main") return;
-    if (isRatingsFetched && offset === 0) return;
     setIsRatingsFetched(true);
     const params = new URLSearchParams({
       offset: offset.toString(),
@@ -152,9 +141,13 @@ const CompareItem = ({
       shopid: res.item.shopid.toString(),
       limit: "10",
     });
-    fetch(`/api/item/get_ratings?${params.toString()}`)
-      .then((res) => res.json())
-      .then((r) => setRatings(r.data));
+    const fetchItemRatings = async () =>
+      await fetch(`/api/item/get_ratings?${params.toString()}`)
+        .then((res) => res.json())
+        .then((r) => {
+          setRatings(r.data);
+        });
+    fetchItemRatings();
   }, [offset, filter, type]);
 
   return (

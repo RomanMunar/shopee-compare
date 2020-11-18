@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BookmarkItem } from "../Bookmarks/BookmarkItem";
 import { Title } from "../Bookmarks/Bookmarks.styles";
@@ -6,6 +6,7 @@ import Container from "../components/Container";
 import Flex from "../components/Flex";
 import { Icon } from "../components/Icon";
 import { ToolbarButton } from "../components/Toolbar";
+import toast from "../shared/hooks/toast";
 import { getBookmarks } from "../shared/utils/localStorage";
 import { Messages } from "./Messages";
 
@@ -18,7 +19,19 @@ const Main = () => {
       .concat(bookmarks.filter((r) => !r.pinned).sort((a, b) => b.id - a.id))
   );
   const [toolbarShown, setToolbarShown] = useState(false);
-
+  useEffect(() => {
+    toast.show({
+      type: "primary",
+      title: "Welcome !!",
+      message: "WIP yung guide para ma-replicate niyo to locally",
+    });
+    toast.show({
+      type: "primary",
+      title: "Rejected yung affiliate application ko.",
+      message:
+        "Once na-release ko na yung guide, you'd have to use it instead :''(",
+    });
+  }, []);
   return (
     <Container>
       <Flex style={{ height: "100vh" }}>

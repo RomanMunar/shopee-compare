@@ -36,7 +36,7 @@ const SelectPanel = ({
     closeOverlay,
     maximizeSearchPanel,
   } = useUI();
-  const [params, setParams] = useSearchParams();
+  const [_, setParams] = useSearchParams();
   const onRemoveClick = (itemid: number) => {
     setInitialSelectedItems((prev) =>
       prev.filter((res) => itemid !== res.item.itemid)
@@ -44,7 +44,9 @@ const SelectPanel = ({
   };
   const onSelectItemsSubmit = () => {
     setParams({
-      items: initialSelectedItems.map((i) => i.item.itemid).toString(),
+      items: initialSelectedItems
+        .map((i) => i.item.itemid + " " + i.item.shopid)
+        .toString(),
     });
     if (initialSelectedItems.length < 2) {
       toast.show({
@@ -54,7 +56,10 @@ const SelectPanel = ({
       return;
     }
 
-    setSelectedItems(initialSelectedItems.map((isi) => isi.item));
+    setSelectedItems((prev) => [
+      ...prev,
+      ...initialSelectedItems.map((isi) => isi.item),
+    ]);
     closeSearchPanel();
     closeOverlay();
     closeSelectPanel();

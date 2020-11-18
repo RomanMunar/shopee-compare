@@ -28,7 +28,6 @@ const Settings = (): ReactElement => {
   ];
   const actions: Action[] = [
     "DndInNoLayout",
-    "addRow",
     "autoPin",
     "blockSeller",
     "expandBookmarks",

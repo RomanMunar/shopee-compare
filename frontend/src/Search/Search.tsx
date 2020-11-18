@@ -46,7 +46,7 @@ export default (): ReactElement => {
     const keyword = params.get("keyword");
     if (params.toString().search("keyword") === -1 || !keyword) return;
     const fetchResults = async () => {
-      const response = await fetch(`/search?${params.toString()}`);
+      const response = await fetch(`/api/search?${params.toString()}`);
       const data: { newItems: SearchItem[] } = await response.json();
       setSearchResults(data.newItems);
     };

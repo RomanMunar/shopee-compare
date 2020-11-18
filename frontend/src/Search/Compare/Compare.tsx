@@ -31,7 +31,7 @@ export default ({
       items.split(",").map((i) => {
         const [itemid, shopid] = i.split(" ");
         const fetchItem = async () => {
-          await fetch(`/item/get?itemid=${itemid}&shopid=${shopid}`)
+          await fetch(`/api/item/get?itemid=${itemid}&shopid=${shopid}`)
             .then((r) => r.json())
             .then((n) => setSelectedItems((prev) => [...prev, n.data]));
         };

@@ -15,7 +15,7 @@ import {
   Model,
   Rating,
   SearchItem,
-  Shop
+  Shop,
 } from "../../../interfaces";
 import toast from "../../../shared/hooks/toast";
 import { useCopyToClipboard } from "../../../shared/hooks/useCopyToClipboard";
@@ -38,7 +38,7 @@ import {
   SellerSection,
   Title,
   ToolbarWrapper,
-  UpperpartContainer
+  UpperpartContainer,
 } from "./CompareItem.styles";
 import Models from "./Models/Models";
 import Tags from "./Tags";
@@ -113,14 +113,14 @@ const CompareItem = ({
     // @ts-ignore
     if (models || res.item!.models) return;
     if (shop) return;
-    fetch(`/item/get?itemid=${res.item.itemid}&shopid=${res.item.shopid}`)
+    fetch(`/api/item/get?itemid=${res.item.itemid}&shopid=${res.item.shopid}`)
       .then((res) => res.json())
       .then((item) => {
         setModels(item.data.models);
         setDescription(item.data.description);
       });
 
-    fetch(`/shop/get?shopid=${res.item.shopid}`)
+    fetch(`/api/shop/get?shopid=${res.item.shopid}`)
       .then((res) => res.json())
       .then((shop) => setShop(shop.data));
   }, [on]);
@@ -137,7 +137,7 @@ const CompareItem = ({
       shopid: res.item.shopid.toString(),
       limit: "10",
     });
-    fetch(`/item/get_ratings?${params.toString()}`)
+    fetch(`/api/item/get_ratings?${params.toString()}`)
       .then((res) => res.json())
       .then((r) => setRatings(r.data));
   }, [offset, filter, type]);
